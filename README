@@ -7,4 +7,11 @@
 
  ABOUT
  
+ FEATURES
+ 
+ TOOLS & LIBRARIES
+ 
+ SDL for video/audio playback.
+ PhysicsFS for file and asset management.
+ 
  COMPILING
