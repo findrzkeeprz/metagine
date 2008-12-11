@@ -14,29 +14,47 @@
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdio.h>
+#include <assert.h>
 #include "CEngine.h"
 
 CEngine::CEngine( void )
 {
+    printf(" -> CEngine object created.\n");
+    
+    m_pVarManager = NULL;
 }
 
 CEngine::~CEngine( void )
 {
+    printf(" -> CEngine object destructed.\n");
+    
     Shutdown();
 }
 
 bool CEngine::Init( void )
 {
-    printf("I'm alive!\n");
+    printf(" -> CEngine::Init() called.\n");
+    
+    if( !( m_pVarManager = VarManager::GetInstance() ) ) {
+        printf(" -! ERROR creating CVarManager object.\n");
+        return false;
+    }
     
     return true;
 }
 
 void CEngine::Shutdown( void )
 {
+    printf(" -> CEngine::Shutdown() called.\n");
+    
+    // Delete allocated objects.
+    if( m_pVarManager ) {
+        delete m_pVarManager;
+    }
 }
 
 const IVarManager* CEngine::GetVarManager( void )
 {
-    return VarManager::GetInstance();
+    assert(m_pVarManager);
+    return m_pVarManager;
 }
