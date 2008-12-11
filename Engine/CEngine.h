@@ -38,6 +38,11 @@ public:
     
     /// Accessor to get a pointer to the variable manager.
     const IVarManager* GetVarManager( void );
+    
+private:
+
+    /// Pointer to the variable manager interface.
+    IVarManager* m_pVarManager;
 };
 
 typedef CSingleton<CEngine> Engine;
