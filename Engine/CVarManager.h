@@ -17,9 +17,9 @@
 #define _CVARMANAGER_H_
 
 #include <vector>
+#include "../Public/CSingleton.h"
 #include "../Interfaces/IVarManager.h"
 #include "CVar.h"
-#include "CSingleton.h"
 
 class CVarManager : public IVarManager
 {
