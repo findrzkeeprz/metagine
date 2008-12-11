@@ -37,7 +37,7 @@ public:
     void Shutdown( void );
     
     /// Accessor to get a pointer to the variable manager.
-    IVarManager* GetVarManager( void );
+    const IVarManager* GetVarManager( void );
 };
 
 typedef CSingleton<CEngine> Engine;

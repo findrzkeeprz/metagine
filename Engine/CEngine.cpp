@@ -36,7 +36,7 @@ void CEngine::Shutdown( void )
 {
 }
 
-IVarManager* CEngine::GetVarManager( void )
+const IVarManager* CEngine::GetVarManager( void )
 {
     return VarManager::GetInstance();
 }
