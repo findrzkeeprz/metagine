@@ -13,15 +13,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <stdio.h>
 #include <string.h>
 #include "CVarManager.h"
 
 CVarManager::CVarManager( void )
 {
+    printf(" -> CVarManager object created.\n");
 }
 
 CVarManager::~CVarManager( void )
 {
+    printf(" -> CVarManager object destructed.\n");
+    
     // Free all of the allocated variables.
     for( int i = 0; i < m_Container.size(); i++ ) {
         if( m_Container[i] ) {
