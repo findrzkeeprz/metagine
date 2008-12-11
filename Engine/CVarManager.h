@@ -19,6 +19,7 @@
 #include <vector>
 #include "../Interfaces/IVarManager.h"
 #include "CVar.h"
+#include "CSingleton.h"
 
 class CVarManager : public IVarManager
 {
@@ -47,5 +48,7 @@ private:
     /// Container to catalog all variables created through this class.
     std::vector<IVar*> m_Container;
 };
+
+typedef CSingleton<CVarManager> VarManager;
 
 #endif // _CVARMANAGER_H_
