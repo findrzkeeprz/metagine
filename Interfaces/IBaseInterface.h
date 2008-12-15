@@ -20,6 +20,8 @@ class IBaseInterface
 {
 public:
     
+    virtual ~IBaseInterface( void ) { };    
+
     /// Virtual function to get the interface's name.
     virtual const char* GetName( void ) = 0;
 
