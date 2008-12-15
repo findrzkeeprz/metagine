@@ -16,15 +16,16 @@
 #ifndef _IVARMANAGER_H_
 #define _IVARMANAGER_H_
 
+#include "../Interfaces/IBaseInterface.h"
 #include "../Interfaces/IVar.h"
 
-class IVarManager
+class IVarManager : public IBaseInterface
 {
 public:
     
     /// Virtual destructor method.
     virtual ~IVarManager( void ) { };
-    
+
     /// Virtual function to create a new variable and return a pointer (integer).
     virtual IVar* CreateVar( const char* pszName, int iValue ) = 0;
     
