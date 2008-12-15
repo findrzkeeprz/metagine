@@ -21,7 +21,6 @@ CEngine::CEngine( void )
 {
     printf(" -> CEngine object created.\n");
     
-    m_pVarManager = NULL;
 }
 
 CEngine::~CEngine( void )
@@ -35,8 +34,8 @@ bool CEngine::Init( void )
 {
     printf(" -> CEngine::Init() called.\n");
     
-    if( !( m_pVarManager = VarManager::GetInstance() ) ) {
-        printf(" -! ERROR creating CVarManager object.\n");
+    if( !RegisterInterface(VarManager::GetInstance()) ) {
+        printf(" -! ERROR registering CVarManager object.\n");
         return false;
     }
     
@@ -48,13 +47,37 @@ void CEngine::Shutdown( void )
     printf(" -> CEngine::Shutdown() called.\n");
     
     // Delete allocated objects.
-    if( m_pVarManager ) {
-        delete m_pVarManager;
+    for( int i = 0; i < m_Interfaces.size(); i++ ) {
+        if( m_Interfaces[i] ) {
+            delete m_Interfaces[i];
+        }
     }
+}
+
+bool CEngine::RegisterInterface( IBaseInterface* pInterface )
+{
+    assert(pInterface);
+
+    const char* pszName = pInterface->GetName();
+    const char* pszVersion = pInterface->GetVersion();
+
+    // Quick error check.    
+    if( !pszName ) {
+        printf(" -! ERROR empty/null interface name string.\n");
+        return false;
+    } else if( !pszVersion ) {
+        printf(" -! ERROR empty/null interface version string.\n");
+        return false;
+    }
+
+    printf(" -> Registering interface '%s' version '%s'.\n",pszName,pszVersion);
+    m_Interfaces.push_back(pInterface);
+    return true;
 }
 
 const IVarManager* CEngine::GetVarManager( void )
 {
-    assert(m_pVarManager);
-    return m_pVarManager;
+    /*assert(m_pVarManager);
+    return m_pVarManager;*/
+    return NULL;
 }
