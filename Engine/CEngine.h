@@ -16,6 +16,7 @@
 #ifndef _CENGINE_H_
 #define _CENGINE_H_
 
+#include <vector>
 #include "../Interfaces/IEngine.h"
 #include "CVarManager.h"
 #include "../Public/CSingleton.h"
@@ -35,14 +36,17 @@ public:
     
     /// Function to initialize the main engine functionality.
     void Shutdown( void );
+
+    /// Register a public game interface with the main game module.
+    bool RegisterInterface( IBaseInterface* pInterface );
     
     /// Accessor to get a pointer to the variable manager.
     const IVarManager* GetVarManager( void );
     
 private:
 
-    /// Pointer to the variable manager interface.
-    IVarManager* m_pVarManager;
+    /// Container of all registered game interfaces.
+    std::vector<IBaseInterface*> m_Interfaces;
 };
 
 typedef CSingleton<CEngine> Engine;
