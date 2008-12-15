@@ -18,7 +18,6 @@
 
 #include <vector>
 #include "../Interfaces/IEngine.h"
-#include "CVarManager.h"
 #include "../Public/CSingleton.h"
 
 class CEngine : public IEngine
@@ -39,9 +38,6 @@ public:
 
     /// Register a public game interface with the main game module.
     bool RegisterInterface( IBaseInterface* pInterface );
-    
-    /// Accessor to get a pointer to the variable manager.
-    const IVarManager* GetVarManager( void );
     
 private:
 

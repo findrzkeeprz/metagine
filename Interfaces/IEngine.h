@@ -30,9 +30,6 @@ public:
     
     /// Virtual function to initialize the main engine functionality.
     virtual void Shutdown( void ) = 0;
-    
-    /// Virtual accessor to get a pointer to the variable manager.
-    virtual const IVarManager* GetVarManager( void ) = 0;
 };
 
 #endif // _IENGINE_H_

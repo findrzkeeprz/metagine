@@ -16,11 +16,11 @@
 #include <stdio.h>
 #include <assert.h>
 #include "CEngine.h"
+#include "CVarManager.h"
 
 CEngine::CEngine( void )
 {
     printf(" -> CEngine object created.\n");
-    
 }
 
 CEngine::~CEngine( void )
@@ -70,14 +70,9 @@ bool CEngine::RegisterInterface( IBaseInterface* pInterface )
         return false;
     }
 
+    // Register the interface with the container.
     printf(" -> Registering interface '%s' version '%s'.\n",pszName,pszVersion);
     m_Interfaces.push_back(pInterface);
     return true;
 }
 
-const IVarManager* CEngine::GetVarManager( void )
-{
-    /*assert(m_pVarManager);
-    return m_pVarManager;*/
-    return NULL;
-}
