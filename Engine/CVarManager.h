@@ -16,6 +16,9 @@
 #ifndef _CVARMANAGER_H_
 #define _CVARMANAGER_H_
 
+#define VARMANAGER_NAME "CVarManager"
+#define VARMANAGER_VERSION "0.0.1"
+
 #include <vector>
 #include "../Public/CSingleton.h"
 #include "../Interfaces/IVarManager.h"
@@ -30,6 +33,12 @@ public:
     
     /// Destructor method.
     ~CVarManager( void );
+
+    /// Return the class interface's public name.
+    const char* GetName( void ) { return VARMANAGER_NAME; }
+
+    /// Return the class interface's version string.    
+    const char* GetVersion( void ) { return VARMANAGER_VERSION; }
     
     /// Create a new variable and return a pointer (integer).
     IVar* CreateVar( const char* pszName, int iValue );
