@@ -20,14 +20,11 @@ class IBaseInterface
 {
 public:
     
-    /// Virtual destructor method.
-    virtual ~IBaseInterface( void ) { };
-    
     /// Virtual function to get the interface's name.
-    virtual const char* GetName( void );
+    virtual const char* GetName( void ) = 0;
 
     /// Virtual function to get the interface's version string.
-    virtual const char* GetVersion( void );
+    virtual const char* GetVersion( void ) = 0;
 };
 
 #endif // _IBASEINTERFACE_H_
