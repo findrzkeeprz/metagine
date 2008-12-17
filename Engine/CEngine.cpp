@@ -15,6 +15,7 @@
 
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 #include "CEngine.h"
 #include "CVarManager.h"
 
@@ -74,5 +75,19 @@ bool CEngine::RegisterInterface( IBaseInterface* pInterface )
     printf(" -> Registering interface '%s' version '%s'.\n",pszName,pszVersion);
     m_Interfaces.push_back(pInterface);
     return true;
+}
+
+IBaseInterface* CEngine::GetInterfaceByName( const char* pszName )
+{
+    assert(pszName);
+
+    // Iterate through the list.
+    for( int i = 0; i < m_Interfaces.size(); i++ ) {
+        if( !strcmp(m_Interfaces[i]->GetName(),pszName) ) {
+            return m_Interfaces[i];
+        }
+    }
+
+    return NULL;
 }
 

@@ -38,6 +38,10 @@ public:
 
     /// Register a public game interface with the main game module.
     bool RegisterInterface( IBaseInterface* pInterface );
+
+    /// Virtual function to fetch an interface pointer via a given name.
+    /// This function should return a NULL pointer if the interface is not found.    
+    IBaseInterface* GetInterfaceByName( const char* pszName );
     
 private:
 
