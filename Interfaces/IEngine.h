@@ -34,9 +34,8 @@ public:
     /// Virtual function to register a public game interface with the main game module.
     virtual bool RegisterInterface( IBaseInterface* pInterface ) = 0;
 
-    /// Virtual function to fetch an interface pointer via a given name.
-    /// This function should return a NULL pointer if the interface is not found.    
-    virtual const IBaseInterface* GetInterfaceByName( const char* pszName ) = 0;
+    /// Virtual function to fetch an interface pointer via a given name.    
+    virtual IBaseInterface* GetInterfaceByName( const char* pszName ) = 0;
 };
 
 #endif // _IENGINE_H_
