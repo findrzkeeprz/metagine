@@ -14,7 +14,7 @@ int main( int argc, char *argv[] )
     
     // Start the main engine.
     if( !pEngine->Init() ) {
-        printf("Something has gone terribly wrong!\n");
+        printf(" ... Something has gone terribly wrong!\n");
         return 0;
     }
     
