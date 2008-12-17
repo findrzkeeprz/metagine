@@ -39,7 +39,7 @@ bool CEngine::Init( void )
         printf(" -! ERROR registering CVarManager object.\n");
         return false;
     }
-    
+
     return true;
 }
 
@@ -68,6 +68,9 @@ bool CEngine::RegisterInterface( IBaseInterface* pInterface )
         return false;
     } else if( !pszVersion ) {
         printf(" -! ERROR empty/null interface version string.\n");
+        return false;
+    } else if( GetInterfaceByName(pszName) ) {
+        printf(" -! ERROR registering interface, already exists in collection.\n");
         return false;
     }
 
