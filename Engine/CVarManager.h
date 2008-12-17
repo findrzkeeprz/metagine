@@ -17,7 +17,7 @@
 #define _CVARMANAGER_H_
 
 #define VARMANAGER_NAME "CVarManager"
-#define VARMANAGER_VERSION "0.0.1"
+#define VARMANAGER_VERSION "01"
 
 #include <vector>
 #include "../Public/CSingleton.h"
