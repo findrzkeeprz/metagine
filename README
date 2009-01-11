@@ -7,6 +7,10 @@
 
  ABOUT
  
+ Git repository: http://github.com/jdmunro/metagine/tree/master
+ Project page: http://jdmunro.github.com/metagine/
+ Supporting blog: http://learninglab.lincoln.ac.uk/blogs/jmunro/
+ 
  FEATURES
  
  TOOLS & LIBRARIES
@@ -15,3 +19,13 @@
  PhysicsFS for file and asset management.
  
  COMPILING
+ 
+ To compile, run 'make' in the project directory.
+ No installation is currently required.
+ Run './metagine' to execute the engine.
+ 
+ TICKETS
+ 
+ Tickets are now managed with Lighthouse.
+ Available below:
+ http://jdmunro.lighthouseapp.com/projects/22235-metagine/tickets
