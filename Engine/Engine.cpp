@@ -48,7 +48,7 @@ void CEngine::Shutdown( void )
     printf(" -> CEngine::Shutdown() called.\n");
     
     // Delete allocated objects.
-    for( int i = 0; i < m_Interfaces.size(); i++ ) {
+    for( int i = 0; i < (int)m_Interfaces.size(); i++ ) {
         if( m_Interfaces[i] ) {
             delete m_Interfaces[i];
         }
@@ -85,7 +85,7 @@ IBaseInterface* CEngine::GetInterfaceByName( const char* pszName )
     assert(pszName);
 
     // Iterate through the list.
-    for( int i = 0; i < m_Interfaces.size(); i++ ) {
+    for( int i = 0; i < (int)m_Interfaces.size(); i++ ) {
         if( !strcmp(m_Interfaces[i]->GetName(),pszName) ) {
             return m_Interfaces[i];
         }

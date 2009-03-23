@@ -27,7 +27,7 @@ CVarManager::~CVarManager( void )
     printf(" -> CVarManager object destructed.\n");
     
     // Free all of the allocated variables.
-    for( int i = 0; i < m_Container.size(); i++ ) {
+    for( int i = 0; i < (int)m_Container.size(); i++ ) {
         if( m_Container[i] ) {
             delete m_Container[i];
         }
@@ -73,7 +73,7 @@ IVar* CVarManager::CreateVar( const char* pszName, bool bValue )
 IVar* CVarManager::GetVarByName( const char* pszName )
 {
     // Compare each variable against the specified name.
-    for( int i = 0; i < m_Container.size(); i++ ) {
+    for( int i = 0; i < (int)m_Container.size(); i++ ) {
         if( !strcmp(m_Container[i]->GetName(),pszName) ) {
             return m_Container[i];
         }

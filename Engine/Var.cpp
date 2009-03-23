@@ -21,7 +21,7 @@
 CVar::CVar( void )
 {
     m_pszName = new char[ strlen(CVAR_NULL_STRING) + 1 ];
-    strcpy(m_pszName,CVAR_NULL_STRING);
+	strcpy_s(m_pszName,strlen(CVAR_NULL_STRING) + 1,CVAR_NULL_STRING);
     m_iValue = 0;
     m_fValue = 0.0f;
     m_bValue = false;
@@ -31,7 +31,7 @@ CVar::CVar( void )
 CVar::CVar( const char* pszName, int iValue )
 {
     m_pszName = new char[ strlen(pszName) + 1 ];
-    strcpy(m_pszName,pszName);
+	strcpy_s(m_pszName,strlen(pszName) + 1,pszName);
     m_iValue = iValue;
     m_fValue = 0.0f;
     m_bValue = false;
@@ -41,7 +41,7 @@ CVar::CVar( const char* pszName, int iValue )
 CVar::CVar( const char* pszName, float fValue )
 {
     m_pszName = new char[ strlen(pszName) + 1 ];
-    strcpy(m_pszName,pszName);
+    strcpy_s(m_pszName,strlen(pszName) + 1,pszName);
     m_fValue = fValue;
     m_iValue = 0;
     m_bValue = false;
@@ -51,7 +51,7 @@ CVar::CVar( const char* pszName, float fValue )
 CVar::CVar( const char* pszName, bool bValue )
 {
     m_pszName = new char[ strlen(pszName) + 1 ];
-    strcpy(m_pszName,pszName);
+    strcpy_s(m_pszName,strlen(pszName) + 1,pszName);
     m_bValue = bValue;
     m_iValue = 0;
     m_fValue = 0.0f;
