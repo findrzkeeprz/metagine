@@ -18,7 +18,7 @@
 
 #include "Var.h"
 
-CVar::CVar( void )
+MVar::MVar( void )
 {
     m_pszName = new char[ strlen(CVAR_NULL_STRING) + 1 ];
 	strcpy_s(m_pszName,strlen(CVAR_NULL_STRING) + 1,CVAR_NULL_STRING);
@@ -28,7 +28,7 @@ CVar::CVar( void )
     m_iType = CVAR_NULL;
 }
 
-CVar::CVar( const char* pszName, int iValue )
+MVar::MVar( const char* pszName, int iValue )
 {
     m_pszName = new char[ strlen(pszName) + 1 ];
 	strcpy_s(m_pszName,strlen(pszName) + 1,pszName);
@@ -38,7 +38,7 @@ CVar::CVar( const char* pszName, int iValue )
     m_iType = CVAR_INT;
 }
 
-CVar::CVar( const char* pszName, float fValue )
+MVar::MVar( const char* pszName, float fValue )
 {
     m_pszName = new char[ strlen(pszName) + 1 ];
     strcpy_s(m_pszName,strlen(pszName) + 1,pszName);
@@ -48,7 +48,7 @@ CVar::CVar( const char* pszName, float fValue )
     m_iType = CVAR_FLOAT;
 }
 
-CVar::CVar( const char* pszName, bool bValue )
+MVar::MVar( const char* pszName, bool bValue )
 {
     m_pszName = new char[ strlen(pszName) + 1 ];
     strcpy_s(m_pszName,strlen(pszName) + 1,pszName);
@@ -58,55 +58,55 @@ CVar::CVar( const char* pszName, bool bValue )
     m_iType = CVAR_BOOL;
 }
 
-CVar::~CVar( void )
+MVar::~MVar( void )
 {
     if( m_pszName ) {
         delete [] m_pszName;
     }
 }
 
-const char* CVar::GetName( void )
+const char* MVar::GetName( void )
 {
     return m_pszName;
 }
 
-const int CVar::GetType( void )
+const int MVar::GetType( void )
 {
     return m_iType;
 }
 
-const int CVar::GetValueInt( void )
+const int MVar::GetValueInt( void )
 {
     assert(m_iType == CVAR_INT);
     
     return m_iValue;
 }
 
-const float CVar::GetValueFloat( void )
+const float MVar::GetValueFloat( void )
 {
     assert(m_iType == CVAR_FLOAT);
     
     return m_fValue;
 }
 
-const bool CVar::GetValueBool( void )
+const bool MVar::GetValueBool( void )
 {
     assert(m_iType == CVAR_BOOL);
     
     return m_bValue;
 }
 
-void CVar::SetValueInt( int iValue )
+void MVar::SetValueInt( int iValue )
 {
     m_iValue = iValue;
 }
 
-void CVar::SetValueFloat( float fValue )
+void MVar::SetValueFloat( float fValue )
 {
     m_fValue = fValue;
 }
 
-void CVar::SetValueBool( bool bValue )
+void MVar::SetValueBool( bool bValue )
 {
     m_bValue = bValue;
 }

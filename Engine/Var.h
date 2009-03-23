@@ -20,24 +20,24 @@
 
 #define CVAR_NULL_STRING "(null)"
 
-class CVar : public IVar
+class MVar : public IVar
 {
 public:
     
     /// Default constructor (takes no arguments).
-    CVar( void );
+    MVar( void );
 
     /// Custom constructor (integer).
-    CVar( const char* pszName, int iValue );
+    MVar( const char* pszName, int iValue );
     
     /// Custom constructor (float).
-    CVar( const char* pszName, float fValue );
+    MVar( const char* pszName, float fValue );
     
     /// Custom constructor (boolean).
-    CVar( const char* pszName, bool bValue );
+    MVar( const char* pszName, bool bValue );
     
     /// Destructor method.
-    ~CVar( void );
+    ~MVar( void );
     
     /// Return the variable's name.
     const char* GetName( void );

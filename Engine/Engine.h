@@ -20,15 +20,15 @@
 #include "../Interfaces/IEngine.h"
 #include "../Public/Singleton.h"
 
-class CEngine : public IEngine
+class MEngine : public IEngine
 {
 public:
 
     /// Default constructor (takes no arguments).
-    CEngine( void );
+    MEngine( void );
     
     /// Destructor method.
-    ~CEngine( void );
+    ~MEngine( void );
     
     /// Function to initialize the main engine functionality.
     bool Init( void );
@@ -49,6 +49,6 @@ private:
     std::vector<IBaseInterface*> m_Interfaces;
 };
 
-typedef CSingleton<CEngine> Engine;
+typedef MSingleton<MEngine> Engine;
 
 #endif // _CENGINE_H_

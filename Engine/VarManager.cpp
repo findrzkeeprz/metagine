@@ -17,14 +17,14 @@
 #include <string.h>
 #include "VarManager.h"
 
-CVarManager::CVarManager( void )
+MVarManager::MVarManager( void )
 {
-    printf(" -> CVarManager object created.\n");
+    printf(" -> MVarManager object created.\n");
 }
 
-CVarManager::~CVarManager( void )
+MVarManager::~MVarManager( void )
 {
-    printf(" -> CVarManager object destructed.\n");
+    printf(" -> MVarManager object destructed.\n");
     
     // Free all of the allocated variables.
     for( int i = 0; i < (int)m_Container.size(); i++ ) {
@@ -34,43 +34,43 @@ CVarManager::~CVarManager( void )
     }
 }
 
-IVar* CVarManager::CreateVar( const char* pszName, int iValue )
+IVar* MVarManager::CreateVar( const char* pszName, int iValue )
 {
-    CVar* pResult = NULL;
+    MVar* pResult = NULL;
     
     if( !GetVarByName(pszName) ) {
-        pResult = new CVar(pszName,iValue);
+        pResult = new MVar(pszName,iValue);
         m_Container.push_back(pResult);
     }
     
     return pResult;
 }
 
-IVar* CVarManager::CreateVar( const char* pszName, float fValue )
+IVar* MVarManager::CreateVar( const char* pszName, float fValue )
 {
-    CVar* pResult = NULL;
+    MVar* pResult = NULL;
     
     if( !GetVarByName(pszName) ) {
-        pResult = new CVar(pszName,fValue);
+        pResult = new MVar(pszName,fValue);
         m_Container.push_back(pResult);
     }
     
     return pResult;
 }
 
-IVar* CVarManager::CreateVar( const char* pszName, bool bValue )
+IVar* MVarManager::CreateVar( const char* pszName, bool bValue )
 {
-    CVar* pResult = NULL;
+    MVar* pResult = NULL;
     
     if( !GetVarByName(pszName) ) {
-        pResult = new CVar(pszName,bValue);
+        pResult = new MVar(pszName,bValue);
         m_Container.push_back(pResult);
     }
     
     return pResult;
 }
 
-IVar* CVarManager::GetVarByName( const char* pszName )
+IVar* MVarManager::GetVarByName( const char* pszName )
 {
     // Compare each variable against the specified name.
     for( int i = 0; i < (int)m_Container.size(); i++ ) {

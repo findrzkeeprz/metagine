@@ -16,7 +16,7 @@
 #ifndef _CVARMANAGER_H_
 #define _CVARMANAGER_H_
 
-#define VARMANAGER_NAME "CVarManager"
+#define VARMANAGER_NAME "MVarManager"
 #define VARMANAGER_VERSION "01"
 
 #include <vector>
@@ -24,15 +24,15 @@
 #include "../Interfaces/IVarManager.h"
 #include "Var.h"
 
-class CVarManager : public IVarManager
+class MVarManager : public IVarManager
 {
 public:
 
     /// Default constructor (takes no arguments).
-    CVarManager( void );
+    MVarManager( void );
     
     /// Destructor method.
-    ~CVarManager( void );
+    ~MVarManager( void );
 
     /// Return the class interface's public name.
     const char* GetName( void ) { return VARMANAGER_NAME; }
@@ -58,6 +58,6 @@ private:
     std::vector<IVar*> m_Container;
 };
 
-typedef CSingleton<CVarManager> VarManager;
+typedef MSingleton<MVarManager> VarManager;
 
 #endif // _CVARMANAGER_H_

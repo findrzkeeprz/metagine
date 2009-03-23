@@ -23,7 +23,7 @@ int main( int argc, char *argv[] )
     printf(" -> Starting Metagine.\n");
     
     if( !( pEngine = Engine::GetInstance() ) ) {
-        printf(" >! ERROR creating CEngine object.\n");
+        printf(" >! ERROR creating MEngine object.\n");
         return 0;
     }
     

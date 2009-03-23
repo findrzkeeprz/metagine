@@ -19,33 +19,33 @@
 #include "Engine.h"
 #include "VarManager.h"
 
-CEngine::CEngine( void )
+MEngine::MEngine( void )
 {
-    printf(" -> CEngine object created.\n");
+    printf(" -> MEngine object created.\n");
 }
 
-CEngine::~CEngine( void )
+MEngine::~MEngine( void )
 {
-    printf(" -> CEngine object destructed.\n");
+    printf(" -> MEngine object destructed.\n");
     
     Shutdown();
 }
 
-bool CEngine::Init( void )
+bool MEngine::Init( void )
 {
-    printf(" -> CEngine::Init() called.\n");
+    printf(" -> MEngine::Init() called.\n");
     
     if( !RegisterInterface(VarManager::GetInstance()) ) {
-        printf(" -! ERROR registering CVarManager object.\n");
+        printf(" -! ERROR registering MVarManager object.\n");
         return false;
     }
 
     return true;
 }
 
-void CEngine::Shutdown( void )
+void MEngine::Shutdown( void )
 {
-    printf(" -> CEngine::Shutdown() called.\n");
+    printf(" -> MEngine::Shutdown() called.\n");
     
     // Delete allocated objects.
     for( int i = 0; i < (int)m_Interfaces.size(); i++ ) {
@@ -55,7 +55,7 @@ void CEngine::Shutdown( void )
     }
 }
 
-bool CEngine::RegisterInterface( IBaseInterface* pInterface )
+bool MEngine::RegisterInterface( IBaseInterface* pInterface )
 {
     assert(pInterface);
 
@@ -80,7 +80,7 @@ bool CEngine::RegisterInterface( IBaseInterface* pInterface )
     return true;
 }
 
-IBaseInterface* CEngine::GetInterfaceByName( const char* pszName )
+IBaseInterface* MEngine::GetInterfaceByName( const char* pszName )
 {
     assert(pszName);
 

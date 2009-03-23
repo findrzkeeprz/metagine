@@ -17,15 +17,15 @@
 #define _CSINGLETON_H_
 
 template <class T>
-class CSingleton
+class MSingleton
 {
 protected:
 
     /// Default constructor, called only once.
-    CSingleton( void );
+    MSingleton( void );
     
     /// Destructor method.
-    ~CSingleton( void );
+    ~MSingleton( void );
 
 private:
 
@@ -46,6 +46,6 @@ public:
     }   
 };
 
-template <class T> T* CSingleton<T>::m_Singleton = NULL;
+template <class T> T* MSingleton<T>::m_Singleton = NULL;
 
 #endif // _CSINGLETON_H_
