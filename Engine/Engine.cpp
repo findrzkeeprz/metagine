@@ -16,8 +16,8 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
-#include "CEngine.h"
-#include "CVarManager.h"
+#include "Engine.h"
+#include "VarManager.h"
 
 CEngine::CEngine( void )
 {

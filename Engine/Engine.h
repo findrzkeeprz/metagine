@@ -18,7 +18,7 @@
 
 #include <vector>
 #include "../Interfaces/IEngine.h"
-#include "../Public/CSingleton.h"
+#include "../Public/Singleton.h"
 
 class CEngine : public IEngine
 {

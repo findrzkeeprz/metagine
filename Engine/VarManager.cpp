@@ -15,7 +15,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "CVarManager.h"
+#include "VarManager.h"
 
 CVarManager::CVarManager( void )
 {

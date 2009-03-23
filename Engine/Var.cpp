@@ -16,7 +16,7 @@
 #include <string.h>
 #include <assert.h>
 
-#include "CVar.h"
+#include "Var.h"
 
 CVar::CVar( void )
 {

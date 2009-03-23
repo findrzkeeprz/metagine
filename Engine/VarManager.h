@@ -20,9 +20,9 @@
 #define VARMANAGER_VERSION "01"
 
 #include <vector>
-#include "../Public/CSingleton.h"
+#include "../Public/Singleton.h"
 #include "../Interfaces/IVarManager.h"
-#include "CVar.h"
+#include "Var.h"
 
 class CVarManager : public IVarManager
 {
