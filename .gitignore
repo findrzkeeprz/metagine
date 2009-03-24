@@ -1,0 +1,7 @@
+Thumbs.db
+*.obj
+*.exe
+*.pdb
+*.user
+*.ncb
+*.suo

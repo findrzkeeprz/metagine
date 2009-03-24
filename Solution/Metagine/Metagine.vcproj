@@ -179,6 +179,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Engine\Renderer.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Engine\Var.cpp"
 				>
 			</File>
@@ -194,6 +198,10 @@
 			>
 			<File
 				RelativePath="..\..\Engine\Engine.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Engine\Renderer.h"
 				>
 			</File>
 			<File
@@ -223,6 +231,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Interfaces\IRenderer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Interfaces\IVar.h"
 				>
 			</File>
@@ -234,10 +246,30 @@
 		<Filter
 			Name="Public"
 			>
-			<File
-				RelativePath="..\..\Public\Singleton.h"
+			<Filter
+				Name="Source Files"
 				>
-			</File>
+				<File
+					RelativePath="..\..\Public\Math.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\Public\Math.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Public\Singleton.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Public\Vector3.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
