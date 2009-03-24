@@ -39,6 +39,9 @@ public:
     /// Register a public game interface with the main game module.
     bool RegisterInterface( IBaseInterface* pInterface );
 
+	/// Main application loop.
+	void Run( void );
+
     /// Virtual function to fetch an interface pointer via a given name.
     /// This function should return a NULL pointer if the interface is not found.    
     IBaseInterface* GetInterfaceByName( const char* pszName );
@@ -47,6 +50,9 @@ private:
 
     /// Container of all registered game interfaces.
     std::vector<IBaseInterface*> m_Interfaces;
+
+	// Is the engine currently running.
+	bool m_bActive;
 };
 
 typedef MSingleton<MEngine> Engine;

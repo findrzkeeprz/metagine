@@ -32,6 +32,9 @@ int main( int argc, char *argv[] )
         printf(" ... Something has gone terribly wrong!\n");
         return 0;
     }
+
+	// Enter the main game loop.
+	pEngine->Run();
     
     delete pEngine;
     

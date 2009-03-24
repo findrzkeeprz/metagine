@@ -36,6 +36,9 @@ public:
 
     /// Virtual function to fetch an interface pointer via a given name.    
     virtual IBaseInterface* GetInterfaceByName( const char* pszName ) = 0;
+
+	/// Virtual function for main application loop.
+	virtual void Run( void ) = 0;
 };
 
 #endif // _IENGINE_H_

@@ -16,12 +16,16 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+#include <windows.h>
 #include "Engine.h"
 #include "VarManager.h"
+#include "Renderer.h"
 
 MEngine::MEngine( void )
 {
     printf(" -> MEngine object created.\n");
+
+	m_bActive = true;
 }
 
 MEngine::~MEngine( void )
@@ -38,7 +42,10 @@ bool MEngine::Init( void )
     if( !RegisterInterface(VarManager::GetInstance()) ) {
         printf(" -! ERROR registering MVarManager object.\n");
         return false;
-    }
+	} else if( !RegisterInterface(Renderer::GetInstance()) ) {
+		printf(" -! ERROR registering MRenderer object.\n");
+		return false;
+	}
 
     return true;
 }
@@ -50,7 +57,8 @@ void MEngine::Shutdown( void )
     // Delete allocated objects.
     for( int i = 0; i < (int)m_Interfaces.size(); i++ ) {
         if( m_Interfaces[i] ) {
-            delete m_Interfaces[i];
+            m_Interfaces[i]->Shutdown();
+			delete m_Interfaces[i];
         }
     }
 }
@@ -78,6 +86,13 @@ bool MEngine::RegisterInterface( IBaseInterface* pInterface )
     printf(" -> Registering interface '%s' version '%s'.\n",pszName,pszVersion);
     m_Interfaces.push_back(pInterface);
     return true;
+}
+
+void MEngine::Run( void )
+{
+	while( m_bActive ) {
+		Sleep(60);
+	}
 }
 
 IBaseInterface* MEngine::GetInterfaceByName( const char* pszName )
