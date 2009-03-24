@@ -27,6 +27,9 @@ public:
 
     /// Virtual function to get the interface's version string.
     virtual const char* GetVersion( void ) = 0;
+
+	// This gives interfaces an opportunity to wrap up their operations.
+	virtual void Shutdown( void ) { };
 };
 
 #endif // _IBASEINTERFACE_H_
