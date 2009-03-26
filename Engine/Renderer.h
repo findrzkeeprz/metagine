@@ -19,6 +19,8 @@
 #define RENDERER_NAME "MRenderer"
 #define RENDERER_VERSION "01"
 
+#include <sdl.h>
+#include <sdl_ttf.h>
 #include "../Public/Singleton.h"
 #include "../Interfaces/IRenderer.h"
 
@@ -38,10 +40,18 @@ public:
 	/// Return the class interface's version string.    
 	const char* GetVersion( void ) { return RENDERER_VERSION; }
 
+	bool Init( void );
+
+	void Shutdown( void );
+
+	// Called once per game frame.
+	void Frame( void );
+
 private:
 
-	/// ...
-
+	// Private render variables.
+	SDL_Surface* m_Screen;
+	TTF_Font* m_Font;
 };
 
 typedef MSingleton<MRenderer> Renderer;

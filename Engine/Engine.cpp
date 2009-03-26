@@ -26,6 +26,9 @@ MEngine::MEngine( void )
     printf(" -> MEngine object created.\n");
 
 	m_bActive = true;
+	m_iFrameStart = 0;
+	m_iFrameEnd = 0;
+	m_iFrameDuration = 0;
 }
 
 MEngine::~MEngine( void )
@@ -46,6 +49,9 @@ bool MEngine::Init( void )
 		printf(" -! ERROR registering MRenderer object.\n");
 		return false;
 	}
+
+	// Setup the subsystems.
+	Renderer::GetInstance()->Init();
 
     return true;
 }
@@ -91,7 +97,18 @@ bool MEngine::RegisterInterface( IBaseInterface* pInterface )
 void MEngine::Run( void )
 {
 	while( m_bActive ) {
-		Sleep(60);
+		// Get the frame start time.
+		m_iFrameStart = SDL_GetTicks();
+		
+		HandleInput();
+		Renderer::GetInstance()->Frame();
+
+		// Limit the frame rate.
+		m_iFrameEnd = SDL_GetTicks();
+		m_iFrameDuration = m_iFrameEnd - m_iFrameStart;
+		if( m_iFrameDuration < ( 1000 / 60 ) ) {
+			SDL_Delay((1000 / 60) - m_iFrameDuration);
+		}
 	}
 }
 
@@ -107,5 +124,15 @@ IBaseInterface* MEngine::GetInterfaceByName( const char* pszName )
     }
 
     return NULL;
+}
+
+void MEngine::HandleInput( void )
+{
+	while( SDL_PollEvent(&m_Event) ) {
+		// Quit the application.
+		if( m_Event.type == SDL_QUIT ) { 
+			m_bActive = false;
+		} 
+	}
 }
 

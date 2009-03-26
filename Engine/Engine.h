@@ -17,6 +17,7 @@
 #define _CENGINE_H_
 
 #include <vector>
+#include <sdl.h>
 #include "../Interfaces/IEngine.h"
 #include "../Public/Singleton.h"
 
@@ -45,6 +46,9 @@ public:
     /// Virtual function to fetch an interface pointer via a given name.
     /// This function should return a NULL pointer if the interface is not found.    
     IBaseInterface* GetInterfaceByName( const char* pszName );
+
+	// Handle player input.
+	void HandleInput( void );
     
 private:
 
@@ -53,6 +57,14 @@ private:
 
 	// Is the engine currently running.
 	bool m_bActive;
+
+	// SDL event object.
+	SDL_Event m_Event;
+
+	// Current frame details.
+	int m_iFrameStart;
+	int m_iFrameEnd;
+	int m_iFrameDuration;
 };
 
 typedef MSingleton<MEngine> Engine;
