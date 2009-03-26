@@ -25,7 +25,6 @@ MEngine::MEngine( void )
 {
     printf(" -> MEngine object created.\n");
 
-	m_bActive = true;
 	m_iFrameStart = 0;
 	m_iFrameEnd = 0;
 	m_iFrameDuration = 0;
@@ -42,6 +41,7 @@ bool MEngine::Init( void )
 {
     printf(" -> MEngine::Init() called.\n");
     
+	// Register the main interfaces here.
     if( !RegisterInterface(VarManager::GetInstance()) ) {
         printf(" -! ERROR registering MVarManager object.\n");
         return false;
@@ -51,8 +51,12 @@ bool MEngine::Init( void )
 	}
 
 	// Setup the subsystems.
-	Renderer::GetInstance()->Init();
+	if( !Renderer::GetInstance()->Init() ) {
+		printf(" -! ERROR in Renderer::GetInstance()->Init(), aborting.");
+		return false;
+	}
 
+	m_bActive = true;
     return true;
 }
 
