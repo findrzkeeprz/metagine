@@ -19,6 +19,7 @@
 #include <vector>
 #include <sdl.h>
 #include "../Interfaces/IEngine.h"
+#include "../Interfaces/IGame.h"
 #include "../Public/Singleton.h"
 
 class MEngine : public IEngine
@@ -68,6 +69,9 @@ private:
 	int m_iFrameStart;
 	int m_iFrameEnd;
 	int m_iFrameDuration;
+
+	// Game interface pointer.
+	IGame* m_pGame;
 };
 
 typedef MSingleton<MEngine> Engine;

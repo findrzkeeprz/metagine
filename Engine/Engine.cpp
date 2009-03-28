@@ -29,6 +29,7 @@ MEngine::MEngine( void )
 	m_iFrameStart = 0;
 	m_iFrameEnd = 0;
 	m_iFrameDuration = 0;
+	m_pGame = NULL;
 }
 
 MEngine::~MEngine( void )
@@ -60,6 +61,12 @@ bool MEngine::Init( void )
 	// Load the game module.
 	if( !LoadGameModule() ) {
 		printf(" -! ERROR unable to load game module, aborting.\n");
+		return false;
+	}
+
+	// Get the game interface pointer.
+	if( !( m_pGame = (IGame*)GetInterfaceByName("MGame") ) ) {
+		printf(" -! ERROR unable to get game interface, aborting.\n");
 		return false;
 	}
 
@@ -112,6 +119,7 @@ void MEngine::Run( void )
 		m_iFrameStart = SDL_GetTicks();
 		
 		HandleInput();
+		m_pGame->Frame();
 		Renderer::GetInstance()->Frame();
 
 		// Limit the frame rate.

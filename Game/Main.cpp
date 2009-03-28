@@ -16,9 +16,8 @@
 #include <windows.h>
 #include <stdio.h>
 #include "Game86.h"
+#include "Game.h"
 #include "../Public/Exports.h"
-
-EngineExports_t Exports;
 
 extern "C" GAME86_API bool InitGameModule( IEngine* pEngine )
 {
@@ -28,14 +27,16 @@ extern "C" GAME86_API bool InitGameModule( IEngine* pEngine )
 		return false;
 	}
 
-	printf(" -> InitGameModule() received engine interface pointer: 0x%X.\n",pEngine);
+	IGame* pGame = NULL;
 
-	// Grab the interface exports.
-	if( !( Exports.pVarManager = (IVarManager*)pEngine->GetInterfaceByName("MVarManager") ) ) {
-		printf(" -! ERROR null MVarManager interface pointer.\n");
-		return false;
-	} else if( !( Exports.pRenderer = (IRenderer*)pEngine->GetInterfaceByName("MRenderer") ) ) {
-		printf(" -! ERROR null MRenderer interface pointer.\n");
+	if( !( pGame = Game::GetInstance() ) ) {
+		printf(" >! ERROR creating MGame object.\n");
+		return 0;
+	}
+
+	// Start the game module.
+	if( !pGame->Init(pEngine) ) {
+		printf(" ... Something has gone terribly wrong!\n");
 		return false;
 	}
 
