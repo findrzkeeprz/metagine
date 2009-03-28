@@ -20,6 +20,7 @@
 #include "Engine.h"
 #include "VarManager.h"
 #include "Renderer.h"
+#include "../Public/Exports.h"
 
 MEngine::MEngine( void )
 {
@@ -52,7 +53,13 @@ bool MEngine::Init( void )
 
 	// Setup the subsystems.
 	if( !Renderer::GetInstance()->Init() ) {
-		printf(" -! ERROR in Renderer::GetInstance()->Init(), aborting.");
+		printf(" -! ERROR in Renderer::GetInstance()->Init(), aborting.\n");
+		return false;
+	}
+
+	// Load the game module.
+	if( !LoadGameModule() ) {
+		printf(" -! ERROR unable to load game module, aborting.\n");
 		return false;
 	}
 
@@ -138,5 +145,34 @@ void MEngine::HandleInput( void )
 			m_bActive = false;
 		} 
 	}
+}
+
+bool MEngine::LoadGameModule( void )
+{
+	printf(" -> MEngine::LoadGameModule() called.\n");
+	
+	HMODULE hGame = LoadLibraryA("Game86.dll");
+	
+	if( !hGame ) {
+		printf(" -! ERROR loading game module.\n");
+		return false;
+	}
+
+	// Find the exported function.
+	InitGameModule_t pFunc = (InitGameModule_t)GetProcAddress(
+		hGame,"InitGameModule");
+
+	if( !pFunc ) {
+		printf(" -! ERROR finding InitGameModule export.\n");
+		return false;
+	}
+
+	// Call the function.
+	if( !pFunc(this) ) {
+		printf(" -! ERROR something wrong in InitGameModule().\n");
+		return false;
+	}
+	
+	return true;
 }
 

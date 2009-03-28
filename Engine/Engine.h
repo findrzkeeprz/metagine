@@ -49,6 +49,9 @@ public:
 
 	// Handle player input.
 	void HandleInput( void );
+
+	// Load the game module.
+	bool LoadGameModule( void );
     
 private:
 
