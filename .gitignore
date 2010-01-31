@@ -5,3 +5,9 @@ Thumbs.db
 *.user
 *.ncb
 *.suo
+*.ilk
+*.htm
+*.dep
+*.idb
+*.manifest
+*.res
