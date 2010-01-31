@@ -22,6 +22,7 @@
 
 #include "../Includes/SDL/SDL.h"
 #include "../Includes/SDL/SDL_ttf.h"
+#include "../Includes/Box2D/Box2D.h"
 
 #include "../Interfaces/IEngine.h"
 //#include "../Interfaces/IGame.h"
