@@ -18,6 +18,7 @@
 #include "Console.h"
 #include "InputManager.h"
 #include "Renderer.h"
+#include "VarManager.h"
 
 MConsole::MConsole( void ) :
 m_iScrollPoint(0),
@@ -36,6 +37,8 @@ MConsole::~MConsole( void )
 
 bool MConsole::Init( void )
 {	
+	m_bActive = VarManager::GetInstance()->CreateVar("bconactive",true);
+	
 	m_Font = new MOutlineFont("m01.TTF",15,255,255,255);
 	m_Font->SetColour(255,255,255);
 	m_Font->SetColourBG(120,120,255);
@@ -70,15 +73,55 @@ void MConsole::Echo( const char* pszText )
 	m_BackBuffer.push_back(sTemp);
 }
 
-void MConsole::Execute( const char* pszString )
+void MConsole::Execute( const std::string& sCmd )
 {
-	pszString += 2;
-	Echo(pszString);
+	std::string sArg0;
+	std::string sArg1;
+	size_t split;
+	bool bMultipleArgs = false;
+	
+	if( ( split = sCmd.find_first_of(" ") ) != std::string::npos ) {
+		sArg0 = sCmd.substr(0,split);
+		sArg1 = sCmd.substr(split + 1);
+	
+		// Discard the remainder of the string.
+		if( ( split = sArg1.find_first_of(" ") ) != std::string::npos )
+			sArg1.erase(split);
+	}
+	
+	bMultipleArgs = sArg0.empty() ? false : true;
+
+	IVar* pVar = VarManager::GetInstance()->GetVarByName(bMultipleArgs ? sArg0.c_str() : sCmd.c_str());
+
+	if( pVar ) {
+		switch( pVar->GetType() ) {
+			case MVar::CVAR_INT: 
+				{ 
+					if( bMultipleArgs ) pVar->SetValueInt(atoi(sArg1.c_str()));
+					else Echo("Value...");
+				} break;
+			case MVar::CVAR_BOOL:
+				{
+					if( bMultipleArgs ) {
+						if( sArg1[0] == '0' ) pVar->SetValueBool(false);
+						else if( sArg1[0] == '1' ) pVar->SetValueBool(true);
+						else Echo("Invalid boolean value...");
+					} else Echo("Value...");
+				} break;
+			case MVar::CVAR_FLOAT:
+				{
+					if( bMultipleArgs ) pVar->SetValueFloat((float)atof(sArg1.c_str()));
+					else Echo("Value...");
+				} break;
+			
+			default: break;
+		}
+	} else Echo("Variable not found!"); // Be more verbose...
 }
 
 bool MConsole::GetActive( void )
 {
-	return m_bActive;
+	return m_bActive->GetValueBool();
 }
 
 void MConsole::Render( void* pSurface )
@@ -99,7 +142,7 @@ void MConsole::Render( void* pSurface )
 		}
 		else {
 			m_bToggleAnimUp = false;
-			m_bActive = false;
+			m_bActive->SetValueBool(false);
 			m_bToggling = false;
 		}
 	}
@@ -121,10 +164,10 @@ void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 {
 	// Toggle the console.
 	if( bKeys[SDLK_F5] && !m_bToggling ) {
-		if( m_bActive )
+		if( m_bActive->GetValueBool() )
 			m_bToggleAnimUp = true;
 		else {
-			m_bActive = true;
+			m_bActive->SetValueBool(true);
 			m_bToggleAnimDown = true;
 		}
 	}
@@ -132,7 +175,6 @@ void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 	if( m_bActive && bKeyDown ) {
 		bool bShiftMod = (bKeys[SDLK_LSHIFT] || bKeys[SDLK_RSHIFT]) ? true : false;
 		switch( iKey ) {
-			//case SDLK_a: { m_sCurrentBuffer.append("a"); } break;
 			case SDLK_a: { m_sCurrentBuffer.append((bShiftMod == true) ? "A" : "a"); } break;
 			case SDLK_b: { m_sCurrentBuffer.append((bShiftMod == true) ? "B" : "b"); } break;
 			case SDLK_c: { m_sCurrentBuffer.append((bShiftMod == true) ? "C" : "c"); } break;
@@ -176,8 +218,10 @@ void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 			// Some special cases.
 			case SDLK_RETURN: 
 				{ 
-					Execute(m_sCurrentBuffer.c_str());
-					m_sCurrentBuffer = "> ";
+					if( m_sCurrentBuffer.length() > 2) {
+						Execute(m_sCurrentBuffer.c_str()+2);
+						m_sCurrentBuffer = "> ";
+					}
 				} break;
 			case SDLK_BACKSPACE: 
 				{ 

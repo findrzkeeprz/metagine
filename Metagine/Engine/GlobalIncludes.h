@@ -16,16 +16,23 @@
 #ifndef _GLOBALINCLUDES_H_
 #define _GLOBALINCLUDES_H_
 
+// Standards.
 #include <stdio.h>
 #include <vector>
 #include <string.h>
 
+// Third-party.
 #include "../Includes/SDL/SDL.h"
 #include "../Includes/SDL/SDL_ttf.h"
 #include "../Includes/Box2D/Box2D.h"
 
+// Concretes.
+#include "VarManager.h"
+#include "Var.h"
+
+// Interfaces.
 #include "../Interfaces/IEngine.h"
-//#include "../Interfaces/IGame.h"
+#include "../Interfaces/IVar.h"
 #include "../Public/Singleton.h"
 
 #endif // _GLOBALINCLUDES_H_

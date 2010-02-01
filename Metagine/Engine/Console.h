@@ -59,11 +59,11 @@ public:
 private:
 
 	// Documented in IConsole.h
-	void Execute( const char* pszString );
+	void Execute( const  std::string& sCmd );
 
 private:
 
-	bool m_bActive;								///< Determines whether visible/receiving input.
+	IVar* m_bActive;							///< Determines whether visible/receiving input.
 	bool m_bToggleAnimUp;						///< Toggle the scroll iout animation.
 	bool m_bToggleAnimDown;						///< Toggle the scroll in animation.
 	bool m_bToggling;							///< Currently toggling animation - don't interrupt.
