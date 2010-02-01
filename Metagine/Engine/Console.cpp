@@ -117,13 +117,8 @@ void MConsole::Render( void* pSurface )
 	m_Font->Render(pSurface);
 }
 
-void MConsole::UpdateInput( bool bKeys[] )
+void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown )
 {
-	// Quick hack...
-	//if( !bKeys ) return;
-	//bool keysHeld[323] = { false };
-	//keysHeld[event.key.keysym.sym] = true;	}
-	
 	// Toggle the console.
 	if( bKeys[SDLK_F5] && !m_bToggling ) {
 		if( m_bActive )
@@ -134,92 +129,46 @@ void MConsole::UpdateInput( bool bKeys[] )
 		}
 	}
 	
-	if( m_bActive ) {
+	if( m_bActive && bKeyDown ) {
 		bool bShiftMod = (bKeys[SDLK_LSHIFT] || bKeys[SDLK_RSHIFT]) ? true : false;
-		if( bKeys[SDLK_a] ) m_sCurrentBuffer.append((bShiftMod == true) ? "A" : "a");
-		else if( bKeys[SDLK_b] ) m_sCurrentBuffer.append((bShiftMod == true) ? "B" : "b");
-		else if( bKeys[SDLK_c] ) m_sCurrentBuffer.append((bShiftMod == true) ? "C" : "c");
-		else if( bKeys[SDLK_d] ) m_sCurrentBuffer.append((bShiftMod == true) ? "D" : "d");
-		else if( bKeys[SDLK_e] ) m_sCurrentBuffer.append((bShiftMod == true) ? "E" : "e");
-		else if( bKeys[SDLK_f] ) m_sCurrentBuffer.append((bShiftMod == true) ? "F" : "f");
-		else if( bKeys[SDLK_g] ) m_sCurrentBuffer.append((bShiftMod == true) ? "G" : "g");
-		else if( bKeys[SDLK_h] ) m_sCurrentBuffer.append((bShiftMod == true) ? "H" : "h");
-		else if( bKeys[SDLK_i] ) m_sCurrentBuffer.append((bShiftMod == true) ? "I" : "i");
-		else if( bKeys[SDLK_j] ) m_sCurrentBuffer.append((bShiftMod == true) ? "J" : "j");
-		else if( bKeys[SDLK_k] ) m_sCurrentBuffer.append((bShiftMod == true) ? "K" : "k");
-		else if( bKeys[SDLK_l] ) m_sCurrentBuffer.append((bShiftMod == true) ? "L" : "l");
-		else if( bKeys[SDLK_m] ) m_sCurrentBuffer.append((bShiftMod == true) ? "M" : "m");
-		else if( bKeys[SDLK_n] ) m_sCurrentBuffer.append((bShiftMod == true) ? "N" : "n");
-		else if( bKeys[SDLK_o] ) m_sCurrentBuffer.append((bShiftMod == true) ? "O" : "o");
-		else if( bKeys[SDLK_p] ) m_sCurrentBuffer.append((bShiftMod == true) ? "P" : "p");
-		else if( bKeys[SDLK_q] ) m_sCurrentBuffer.append((bShiftMod == true) ? "Q" : "q");
-		else if( bKeys[SDLK_r] ) m_sCurrentBuffer.append((bShiftMod == true) ? "R" : "r");
-		else if( bKeys[SDLK_s] ) m_sCurrentBuffer.append((bShiftMod == true) ? "S" : "s");
-		else if( bKeys[SDLK_t] ) m_sCurrentBuffer.append((bShiftMod == true) ? "T" : "t");
-		else if( bKeys[SDLK_u] ) m_sCurrentBuffer.append((bShiftMod == true) ? "U" : "u");
-		else if( bKeys[SDLK_v] ) m_sCurrentBuffer.append((bShiftMod == true) ? "V" : "v");
-		else if( bKeys[SDLK_w] ) m_sCurrentBuffer.append((bShiftMod == true) ? "W" : "w");
-		else if( bKeys[SDLK_x] ) m_sCurrentBuffer.append((bShiftMod == true) ? "X" : "x");
-		else if( bKeys[SDLK_y] ) m_sCurrentBuffer.append((bShiftMod == true) ? "Y" : "y");
-		else if( bKeys[SDLK_z] ) m_sCurrentBuffer.append((bShiftMod == true) ? "Z" : "z");
-		else if( bKeys[SDLK_0] ) m_sCurrentBuffer.append((bShiftMod == true) ? ")" : "0");
-		else if( bKeys[SDLK_1] ) m_sCurrentBuffer.append((bShiftMod == true) ? "!" : "1");
-		else if( bKeys[SDLK_2] ) m_sCurrentBuffer.append((bShiftMod == true) ? "\"" : "2");
-		else if( bKeys[SDLK_3] ) m_sCurrentBuffer.append((bShiftMod == true) ? "£" : "3");
-		else if( bKeys[SDLK_4] ) m_sCurrentBuffer.append((bShiftMod == true) ? "$" : "4");
-		else if( bKeys[SDLK_5] ) m_sCurrentBuffer.append((bShiftMod == true) ? "%" : "5");
-		else if( bKeys[SDLK_6] ) m_sCurrentBuffer.append((bShiftMod == true) ? "^" : "6");
-		else if( bKeys[SDLK_7] ) m_sCurrentBuffer.append((bShiftMod == true) ? "&" : "7");
-		else if( bKeys[SDLK_8] ) m_sCurrentBuffer.append((bShiftMod == true) ? "*" : "8");
-		else if( bKeys[SDLK_9] ) m_sCurrentBuffer.append((bShiftMod == true) ? "(" : "9");
-
-		// Special cases.
-		else if( bKeys[SDLK_RETURN] ) {
-			Execute(m_sCurrentBuffer.c_str());
-			m_sCurrentBuffer = "> ";
-		} else if( bKeys[SDLK_BACKSPACE] ) {
-			if( m_sCurrentBuffer.length() > 2 )
-				m_sCurrentBuffer.erase(m_sCurrentBuffer.end() - 1);
-		}
-
-		/*switch( iKey ) { // (day == WEEKEND) ? 12 : 9;
+		switch( iKey ) {
 			//case SDLK_a: { m_sCurrentBuffer.append("a"); } break;
 			case SDLK_a: { m_sCurrentBuffer.append((bShiftMod == true) ? "A" : "a"); } break;
-			case SDLK_b: { m_sCurrentBuffer.append("b"); } break;
-			case SDLK_c: { m_sCurrentBuffer.append("c"); } break;
-			case SDLK_d: { m_sCurrentBuffer.append("d"); } break;
-			case SDLK_e: { m_sCurrentBuffer.append("e"); } break;
-			case SDLK_f: { m_sCurrentBuffer.append("f"); } break;
-			case SDLK_g: { m_sCurrentBuffer.append("g"); } break;
-			case SDLK_h: { m_sCurrentBuffer.append("h"); } break;
-			case SDLK_i: { m_sCurrentBuffer.append("i"); } break;
-			case SDLK_j: { m_sCurrentBuffer.append("j"); } break;
-			case SDLK_k: { m_sCurrentBuffer.append("k"); } break;
-			case SDLK_l: { m_sCurrentBuffer.append("l"); } break;
-			case SDLK_m: { m_sCurrentBuffer.append("m"); } break;
-			case SDLK_n: { m_sCurrentBuffer.append("n"); } break;
-			case SDLK_o: { m_sCurrentBuffer.append("o"); } break;
-			case SDLK_p: { m_sCurrentBuffer.append("p"); } break;
-			case SDLK_q: { m_sCurrentBuffer.append("q"); } break;
-			case SDLK_r: { m_sCurrentBuffer.append("r"); } break;
-			case SDLK_s: { m_sCurrentBuffer.append("s"); } break;
-			case SDLK_t: { m_sCurrentBuffer.append("t"); } break;
-			case SDLK_u: { m_sCurrentBuffer.append("u"); } break;
-			case SDLK_v: { m_sCurrentBuffer.append("v"); } break;
-			case SDLK_w: { m_sCurrentBuffer.append("w"); } break;
-			case SDLK_x: { m_sCurrentBuffer.append("x"); } break;
-			case SDLK_y: { m_sCurrentBuffer.append("y"); } break;
-			case SDLK_z: { m_sCurrentBuffer.append("z"); } break;
-			case SDLK_0: { m_sCurrentBuffer.append("0"); } break;
-			case SDLK_1: { m_sCurrentBuffer.append("1"); } break;
-			case SDLK_2: { m_sCurrentBuffer.append("2"); } break;
-			case SDLK_3: { m_sCurrentBuffer.append("3"); } break;
-			case SDLK_4: { m_sCurrentBuffer.append("4"); } break;
-			case SDLK_5: { m_sCurrentBuffer.append("5"); } break;
-			case SDLK_6: { m_sCurrentBuffer.append("6"); } break;
-			case SDLK_7: { m_sCurrentBuffer.append("7"); } break;
-			case SDLK_8: { m_sCurrentBuffer.append("8"); } break;
-			case SDLK_9: { m_sCurrentBuffer.append("9"); } break;
+			case SDLK_b: { m_sCurrentBuffer.append((bShiftMod == true) ? "B" : "b"); } break;
+			case SDLK_c: { m_sCurrentBuffer.append((bShiftMod == true) ? "C" : "c"); } break;
+			case SDLK_d: { m_sCurrentBuffer.append((bShiftMod == true) ? "D" : "d"); } break;
+			case SDLK_e: { m_sCurrentBuffer.append((bShiftMod == true) ? "E" : "e"); } break;
+			case SDLK_f: { m_sCurrentBuffer.append((bShiftMod == true) ? "F" : "f"); } break;
+			case SDLK_g: { m_sCurrentBuffer.append((bShiftMod == true) ? "G" : "g"); } break;
+			case SDLK_h: { m_sCurrentBuffer.append((bShiftMod == true) ? "H" : "h"); } break;
+			case SDLK_i: { m_sCurrentBuffer.append((bShiftMod == true) ? "I" : "i"); } break;
+			case SDLK_j: { m_sCurrentBuffer.append((bShiftMod == true) ? "J" : "j"); } break;
+			case SDLK_k: { m_sCurrentBuffer.append((bShiftMod == true) ? "K" : "k"); } break;
+			case SDLK_l: { m_sCurrentBuffer.append((bShiftMod == true) ? "L" : "l"); } break;
+			case SDLK_m: { m_sCurrentBuffer.append((bShiftMod == true) ? "M" : "m"); } break;
+			case SDLK_n: { m_sCurrentBuffer.append((bShiftMod == true) ? "N" : "n"); } break;
+			case SDLK_o: { m_sCurrentBuffer.append((bShiftMod == true) ? "O" : "o"); } break;
+			case SDLK_p: { m_sCurrentBuffer.append((bShiftMod == true) ? "P" : "p"); } break;
+			case SDLK_q: { m_sCurrentBuffer.append((bShiftMod == true) ? "Q" : "q"); } break;
+			case SDLK_r: { m_sCurrentBuffer.append((bShiftMod == true) ? "R" : "r"); } break;
+			case SDLK_s: { m_sCurrentBuffer.append((bShiftMod == true) ? "S" : "s"); } break;
+			case SDLK_t: { m_sCurrentBuffer.append((bShiftMod == true) ? "T" : "t"); } break;
+			case SDLK_u: { m_sCurrentBuffer.append((bShiftMod == true) ? "U" : "u"); } break;
+			case SDLK_v: { m_sCurrentBuffer.append((bShiftMod == true) ? "V" : "v"); } break;
+			case SDLK_w: { m_sCurrentBuffer.append((bShiftMod == true) ? "W" : "w"); } break;
+			case SDLK_x: { m_sCurrentBuffer.append((bShiftMod == true) ? "X" : "x"); } break;
+			case SDLK_y: { m_sCurrentBuffer.append((bShiftMod == true) ? "Y" : "y"); } break;
+			case SDLK_z: { m_sCurrentBuffer.append((bShiftMod == true) ? "Z" : "z"); } break;
+			case SDLK_0: { m_sCurrentBuffer.append((bShiftMod == true) ? ")" : "0"); } break;
+			case SDLK_1: { m_sCurrentBuffer.append((bShiftMod == true) ? "!" : "1"); } break;
+			case SDLK_2: { m_sCurrentBuffer.append((bShiftMod == true) ? "\"" : "2"); } break;
+			case SDLK_3: { m_sCurrentBuffer.append((bShiftMod == true) ? "£" : "3"); } break;
+			case SDLK_4: { m_sCurrentBuffer.append((bShiftMod == true) ? "$" : "4"); } break;
+			case SDLK_5: { m_sCurrentBuffer.append((bShiftMod == true) ? "%" : "5"); } break;
+			case SDLK_6: { m_sCurrentBuffer.append((bShiftMod == true) ? "^" : "6"); } break;
+			case SDLK_7: { m_sCurrentBuffer.append((bShiftMod == true) ? "&" : "7"); } break;
+			case SDLK_8: { m_sCurrentBuffer.append((bShiftMod == true) ? "*" : "8"); } break;
+			case SDLK_9: { m_sCurrentBuffer.append((bShiftMod == true) ? "(" : "9"); } break;
 			case SDLK_PERIOD: { m_sCurrentBuffer.append("."); } break;
 			case SDLK_UNDERSCORE: { m_sCurrentBuffer.append("_"); } break;
 			case SDLK_SPACE: { m_sCurrentBuffer.append(" "); } break;
@@ -233,11 +182,10 @@ void MConsole::UpdateInput( bool bKeys[] )
 			case SDLK_BACKSPACE: 
 				{ 
 					if( m_sCurrentBuffer.length() > 2 )
-						m_sCurrentBuffer.erase(m_sCurrentBuffer.end() - 1); 
-					
+						m_sCurrentBuffer.erase(m_sCurrentBuffer.end() - 1); 		
 				} break;
 
 			default: break;
-		}*/
+		}
 	}
 }

@@ -55,15 +55,15 @@ void MSprite::SetPosition( int x, int y )
 	m_Coords[1] = y;
 }
 
-bool MSprite::LoadImageFile( const char* pszFileName )
+bool MSprite::LoadImageFile( const std::string& sFileName )
 {
-	if( !pszFileName ) {
+	if( !sFileName.c_str() ) {
 		printf(" -! ERROR invalid file name in MSprite::LoadImageFile().\n");
 		return false;
 	}
 
 	SDL_Surface* TempSurf = NULL;
-	TempSurf = SDL_LoadBMP(pszFileName);
+	TempSurf = SDL_LoadBMP(sFileName.c_str());
 	/*if( ( TempSurf = SDL_LoadBMP(pszFileName) ) == NULL ) {
 		printf(" -! ERROR SDL_LoadBMP() returned a NULL object.\n");
 		return false;

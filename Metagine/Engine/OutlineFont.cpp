@@ -25,7 +25,8 @@ MFont()
 }
 
 MOutlineFont::MOutlineFont( const char *pszName, int iSize, int iRed, int iGreen, int iBlue ) :
-MFont(pszName,iSize,iRed,iGreen,iBlue)
+MFont(pszName,iSize,iRed,iGreen,iBlue),
+m_SurfaceBG(NULL)
 {
 }
 
@@ -60,6 +61,11 @@ void MOutlineFont::SetText( const std::string& sText )
 
 void MOutlineFont::Render( void* pSurface )
 {
+	if( !m_Surface || !m_SurfaceBG ) {
+		printf(" -! ERROR invalid surfaces in MOutlineFont::Render().\n");
+		return;
+	}
+	
 	SDL_Rect Rect;
 	SDL_Rect RectBG;
 
@@ -67,7 +73,7 @@ void MOutlineFont::Render( void* pSurface )
 	Rect.y = m_Coords[1];
 
 	// Create the outline effect.
-	RectBG.x = m_Coords[0] - 3;
+	RectBG.x = m_Coords[0] - 2;
 	RectBG.y = m_Coords[1];
 	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
 	RectBG.x = m_Coords[0] + 2;

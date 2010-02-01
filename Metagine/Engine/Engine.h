@@ -46,7 +46,7 @@ public:
     bool Init( void );
     void Shutdown( void );
     bool RegisterInterface( IBaseInterface* pInterface );
-    IBaseInterface* GetInterfaceByName( const char* pszName );
+	IBaseInterface* GetInterfaceByName( const std::string& sName );
 
 private:
 

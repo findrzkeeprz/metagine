@@ -16,6 +16,7 @@
 #ifndef _SPRITE_H_
 #define _SPRITE_H_
 
+#include "GlobalIncludes.h"
 #include "../Includes/SDL/SDL.h"
 #include "../Interfaces/IDrawable.h"
 
@@ -31,7 +32,7 @@ public:
 	/// Destructor method.
 	~MSprite( void );
 
-	bool LoadImageFile( const char *pszFileName );
+	bool LoadImageFile( const std::string& sFileName );
 
 	void SetPosition( int x, int y );
 

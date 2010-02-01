@@ -154,13 +154,11 @@ void MEngine::Run( void )
 	}
 }
 
-IBaseInterface* MEngine::GetInterfaceByName( const char* pszName )
+IBaseInterface* MEngine::GetInterfaceByName( const std::string& sName )
 {
-    assert(pszName);
-
-    // Iterate through the list.
+	// Iterate through the list.
     for( int i = 0; i < (int)m_Interfaces.size(); i++ ) {
-        if( !strcmp(m_Interfaces[i]->GetName(),pszName) ) {
+        if( !strcmp(m_Interfaces[i]->GetName(),sName.c_str()) ) {
             return m_Interfaces[i];
         }
     }

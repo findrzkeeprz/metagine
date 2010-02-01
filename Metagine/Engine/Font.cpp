@@ -16,21 +16,24 @@
 #include "Font.h"
 #include "Renderer.h"
 
-MFont::MFont( void )
+MFont::MFont( void ) :
+m_Surface(NULL),
+m_Font(NULL),
+m_bActive(false)
 {
 	printf(" -> MFont object created (default).\n");
 
-	m_Surface = NULL;
-	m_Font = NULL;
 	m_Colour.r = 0;
 	m_Colour.g = 0;
 	m_Colour.b = 0;
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
-	m_bActive = false;
 }
 
-MFont::MFont( const char *pszName, int iSize, int iRed, int iGreen, int iBlue )
+MFont::MFont( const char *pszName, int iSize, int iRed, int iGreen, int iBlue ) :
+m_Surface(NULL),
+m_Font(NULL),
+m_bActive(false)
 {
 	printf(" -> MFont object created (%s,%i,%i,%i,%i).\n",
 			pszName,iSize,iRed,iGreen,iBlue);
@@ -50,8 +53,6 @@ MFont::MFont( const char *pszName, int iSize, int iRed, int iGreen, int iBlue )
 	m_Colour.b = iBlue;
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
-	m_bActive = false;
-	m_Surface = NULL;
 
 	// Push back to the renderer queue.
 	Renderer::GetInstance()->RegisterDrawable(this);
@@ -110,6 +111,11 @@ bool MFont::GetActive( void )
 
 void MFont::Render( void* pSurface )
 {
+	if( !m_Surface ) {
+		printf(" -! ERROR invalid surface in MOutline::Render().\n");
+		return;
+	}
+	
 	SDL_Rect Rect;
 	Rect.x = m_Coords[0];
 	Rect.y = m_Coords[1];

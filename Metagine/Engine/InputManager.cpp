@@ -60,11 +60,10 @@ void MInputManager::RemoveListener( IInputListener* pListener )
 
 void MInputManager::Update( int iKey, bool bKeyDown )
 {
-	memset(&m_bKeysHeld,0,sizeof(m_bKeysHeld));
 	m_bKeysHeld[iKey] = bKeyDown ? true : false;
 	
 	std::vector<IInputListener*>::iterator it;
 	for( it = m_Listeners.begin(); it < m_Listeners.end(); it++ ) {
-		(*it)->UpdateInput(m_bKeysHeld);
+		(*it)->UpdateInput(m_bKeysHeld,iKey,bKeyDown);
 	}
 }

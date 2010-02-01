@@ -54,7 +54,7 @@ public:
 	bool GetActive( void );
 
 	// Documented in IInputListener.h
-	void UpdateInput( bool bKeys[] );
+	void UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown );
 
 private:
 

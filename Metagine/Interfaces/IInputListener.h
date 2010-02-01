@@ -24,7 +24,7 @@ public:
     virtual ~IInputListener( void ) { };
 
     /// Virtual method to update the listener.
-	virtual void UpdateInput( bool bKeys[] ) = 0;
+	virtual void UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown ) = 0;
 };
 
 #endif // _IINPUTLISTENER_H_
