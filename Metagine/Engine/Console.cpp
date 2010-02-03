@@ -62,15 +62,20 @@ void MConsole::Shutdown( void )
 	Renderer::GetInstance()->RemoveDrawable(this);
 }
 
-void MConsole::Echo( const char* pszText )
+void MConsole::Echo( const char* pszText, ... )
 {
 	if( !pszText ) {
 		// Error here.
 		return;
 	}
 
-	std::string sTemp(pszText);
-	m_BackBuffer.push_back(sTemp);
+	char szTmp[512] = "";
+	va_list va_alist; 
+	va_start(va_alist,pszText); 
+	vsprintf(szTmp,pszText,va_alist); 
+	va_end(va_alist); 
+
+	m_BackBuffer.push_back(szTmp);
 }
 
 void MConsole::Execute( const std::string& sCmd )
@@ -90,6 +95,7 @@ void MConsole::Execute( const std::string& sCmd )
 	}
 	
 	bMultipleArgs = sArg0.empty() ? false : true;
+	if( !bMultipleArgs ) sArg0 = sCmd;
 
 	IVar* pVar = VarManager::GetInstance()->GetVarByName(bMultipleArgs ? sArg0.c_str() : sCmd.c_str());
 
@@ -98,25 +104,29 @@ void MConsole::Execute( const std::string& sCmd )
 			case MVar::CVAR_INT: 
 				{ 
 					if( bMultipleArgs ) pVar->SetValueInt(atoi(sArg1.c_str()));
-					else Echo("Value...");
+					Echo("\"%s\" (int) = %i",sArg0.c_str(),pVar->GetValueInt());
 				} break;
 			case MVar::CVAR_BOOL:
 				{
 					if( bMultipleArgs ) {
 						if( sArg1[0] == '0' ) pVar->SetValueBool(false);
 						else if( sArg1[0] == '1' ) pVar->SetValueBool(true);
-						else Echo("Invalid boolean value...");
-					} else Echo("Value...");
+						else {
+							Echo("Invalid boolean value...");
+							break;
+						}
+					}
+					Echo("\"%s\" (bool) = %i",sArg0.c_str(),pVar->GetValueBool());
 				} break;
 			case MVar::CVAR_FLOAT:
 				{
 					if( bMultipleArgs ) pVar->SetValueFloat((float)atof(sArg1.c_str()));
-					else Echo("Value...");
+					else Echo("\"%s\" (int) = %2.f",sArg0.c_str(),pVar->GetValueFloat());
 				} break;
 			
 			default: break;
 		}
-	} else Echo("Variable not found!"); // Be more verbose...
+	} else Echo("Error: \"%s\" is not a valid variable or command.",sArg0.c_str());
 }
 
 bool MConsole::GetActive( void )

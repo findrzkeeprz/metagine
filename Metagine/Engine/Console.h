@@ -46,7 +46,7 @@ public:
 	// Documented in IConsole.h
 	bool Init( void );
 	void Shutdown( void );
-	void Echo( const char* pszText );
+	void Echo( const char* pszText, ... );
 	//bool RegisterCommand( IConCommand* pCommand );
 
 	// Documented in IDrawable.h
