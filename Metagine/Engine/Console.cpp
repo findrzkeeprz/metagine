@@ -45,6 +45,10 @@ bool MConsole::Init( void )
 
 	InputManager::GetInstance()->RegisterListener(this);
 	Renderer::GetInstance()->RegisterDrawable(this);
+
+	// Tmp.
+	m_TestSprite = new MSprite("mariosprite.bmp",true,true);
+	m_TestSprite->SetPosition(150,150);
 	
 	return true;
 }
@@ -168,6 +172,12 @@ void MConsole::Render( void* pSurface )
 	m_Font->SetPosition(10,m_iScrollPoint + 20);
 	m_Font->SetText(m_sCurrentBuffer);
 	m_Font->Render(pSurface);
+
+	//for( int i = 0; i < 359; i++ )
+	static int test = 0;
+	if( test < 359 ) test++;
+	else test = 0;
+	m_TestSprite->SetRotation(test);
 }
 
 void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown )

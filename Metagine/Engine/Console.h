@@ -26,6 +26,8 @@
 #include "../Interfaces/IInputListener.h"
 #include "../Interfaces/IDrawable.h"
 
+#include "Sprite.h"
+
 /// Fix me.
 class MConsole : public IConsole, public IInputListener, public IDrawable
 {
@@ -72,6 +74,7 @@ private:
 	std::string m_sCurrentBuffer;				///< Current command input buffer.
 	MOutlineFont* m_Font;						///< Font to draw the console buffer.
 	int m_iScrollPoint;
+	MSprite* m_TestSprite;
 };
 
 typedef MSingleton<MConsole> Console;

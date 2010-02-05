@@ -60,7 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(SolutionDir)\$(ProjectName)\Libraries\SDL.lib $(SolutionDir)\$(ProjectName)\Libraries\SDLmain.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_ttf.lib $(SolutionDir)\$(ProjectName)\Libraries\Box2D.lib"
+				AdditionalDependencies="$(SolutionDir)\$(ProjectName)\Libraries\SDL.lib $(SolutionDir)\$(ProjectName)\Libraries\SDLmain.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_ttf.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_gfx.lib $(SolutionDir)\$(ProjectName)\Libraries\Box2D.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -185,6 +185,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Public\Timer.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Public\Vector3.h"
 					>
 				</File>
@@ -194,6 +198,10 @@
 				>
 				<File
 					RelativePath=".\Public\Math.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Public\Timer.cpp"
 					>
 				</File>
 			</Filter>

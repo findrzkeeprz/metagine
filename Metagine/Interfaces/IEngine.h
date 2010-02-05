@@ -16,6 +16,7 @@
 #ifndef _IENGINE_H_
 #define _IENGINE_H_
 
+#include <string>
 #include "../Interfaces/IVarManager.h"
 
 /// Public interface for the MEngine class.
@@ -49,7 +50,7 @@ public:
     /// engine with only access to a class interface definition. This function
     /// should return a NULL pointer if the interface is not found.
     /// @param pszName The agreed name of the registered game interface.
-    virtual IBaseInterface* GetInterfaceByName( const char* pszName ) = 0;
+	virtual IBaseInterface* GetInterfaceByName( const std::string& sName ) = 0;
 
     /// Main game engine loop.
     /// Responsible for updating all main game components at regular frame

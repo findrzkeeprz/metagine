@@ -24,6 +24,7 @@
 // Third-party.
 #include "../Includes/SDL/SDL.h"
 #include "../Includes/SDL/SDL_ttf.h"
+#include "../Includes/SDL/SDL_rotozoom.h"
 #include "../Includes/Box2D/Box2D.h"
 
 // Concretes.

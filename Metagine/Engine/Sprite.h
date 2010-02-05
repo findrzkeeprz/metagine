@@ -27,7 +27,7 @@ public:
 	/// Default constructor (takes no arguments).
 	MSprite( void );
 
-	MSprite( const char* pszFileName );
+	MSprite( const char* pszFileName, bool bRotate, bool bSmooth );
 
 	/// Destructor method.
 	~MSprite( void );
@@ -35,6 +35,7 @@ public:
 	bool LoadImageFile( const std::string& sFileName );
 
 	void SetPosition( int x, int y );
+	void SetRotation( int iAngle );
 
 	bool GetActive( void );
 
@@ -44,8 +45,11 @@ public:
 private:
 
 	SDL_Surface* m_Surface;
+	SDL_Surface** m_RotSurfaces;
 	int m_Coords[2];
+	int m_iAngle;
 	bool m_bActive;
+	bool m_bRotatable;
 };
 
 #endif // _SPRITE_H_

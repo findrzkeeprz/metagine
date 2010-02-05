@@ -23,14 +23,18 @@ MSprite::MSprite( void )
 	m_Surface = NULL;
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
+	m_iAngle = 0;
 	m_bActive = false;
+	m_bRotatable = false;
 }
 
-MSprite::MSprite( const char *pszFileName )
+MSprite::MSprite( const char *pszFileName, bool bRotate, bool bSmooth )
 {
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
+	m_iAngle = 0;
 	m_bActive = true;
+	m_bRotatable = true;
 
 	if( !this->LoadImageFile(pszFileName)) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
@@ -46,6 +50,14 @@ MSprite::~MSprite( void )
 	Renderer::GetInstance()->RemoveDrawable(this);
 	SDL_FreeSurface(m_Surface);
 
+	// We skip [0] since it points to m_Surface.
+	if( m_bRotatable ) {
+		for( int i = 1; i < 359; i++ ) {
+			SDL_FreeSurface(m_RotSurfaces[i]);
+		}
+		delete[] m_RotSurfaces;
+	}
+
 	printf(" -> MSprite object destructed.\n");
 }
 
@@ -53,6 +65,11 @@ void MSprite::SetPosition( int x, int y )
 {
 	m_Coords[0] = x;
 	m_Coords[1] = y;
+}
+
+void MSprite::SetRotation( int iAngle )
+{
+	m_iAngle = iAngle;
 }
 
 bool MSprite::LoadImageFile( const std::string& sFileName )
@@ -63,14 +80,22 @@ bool MSprite::LoadImageFile( const std::string& sFileName )
 	}
 
 	SDL_Surface* TempSurf = NULL;
-	TempSurf = SDL_LoadBMP(sFileName.c_str());
-	/*if( ( TempSurf = SDL_LoadBMP(pszFileName) ) == NULL ) {
+	if( ( TempSurf = SDL_LoadBMP(sFileName.c_str()) ) == NULL ) {
 		printf(" -! ERROR SDL_LoadBMP() returned a NULL object.\n");
 		return false;
-	}*/
+	}
 
 	m_Surface = SDL_DisplayFormat(TempSurf);
 	SDL_FreeSurface(TempSurf);
+
+	if( m_bRotatable ) {
+		m_RotSurfaces = new SDL_Surface* [360];
+		m_RotSurfaces[0] = m_Surface;
+
+		for( int i = 1; i < 360; i++ ) {
+			m_RotSurfaces[i] = rotozoomSurface(m_RotSurfaces[0],(double)i,1.0,0);
+		}
+	}
 
 	return true;
 }
@@ -83,8 +108,11 @@ bool MSprite::GetActive( void )
 void MSprite::Render( void* pSurface )
 {
 	SDL_Rect Rect;
-	Rect.x = m_Coords[0];
-	Rect.y = m_Coords[1];
+	
+	// Scale to give impression of rotation around the center.
+	Rect.x = m_bRotatable? m_Coords[0] - (m_RotSurfaces[m_iAngle]->w / 2): m_Coords[0];
+	Rect.y = m_bRotatable? m_Coords[1] - (m_RotSurfaces[m_iAngle]->h / 2): m_Coords[1];
 
-	SDL_BlitSurface(m_Surface,NULL,(SDL_Surface*)pSurface,&Rect);
+	if( !m_bRotatable ) SDL_BlitSurface(m_Surface,NULL,(SDL_Surface*)pSurface,&Rect);
+	else SDL_BlitSurface(m_RotSurfaces[m_iAngle],NULL,(SDL_Surface*)pSurface,&Rect);
 }
