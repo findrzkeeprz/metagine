@@ -367,11 +367,35 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Interfaces\ISprite.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Interfaces\IVar.h"
 					>
 				</File>
 				<File
 					RelativePath=".\Interfaces\IVarManager.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Game"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath=".\Game\Ship.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath=".\Game\Ship.cpp"
 					>
 				</File>
 			</Filter>

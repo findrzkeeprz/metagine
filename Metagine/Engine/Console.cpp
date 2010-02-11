@@ -47,8 +47,10 @@ bool MConsole::Init( void )
 	Renderer::GetInstance()->RegisterDrawable(this);
 
 	// Tmp.
-	m_TestSprite = new MSprite("mariosprite.bmp",true,true);
-	m_TestSprite->SetPosition(150,150);
+	//m_TestSprite = new MSprite("gogorisset1.bmp",true,true,6,6,39,45);
+	// m_TestSprite = new MSprite("gogorisset1.bmp",true,true,6,6,39,10);
+	//m_TestSprite = new MSprite("mariosprite.bmp",false,false);
+	//m_TestSprite->SetPosition(150,150);
 	
 	return true;
 }

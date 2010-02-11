@@ -34,9 +34,26 @@ MSprite::MSprite( const char *pszFileName, bool bRotate, bool bSmooth )
 	m_Coords[1] = 0;
 	m_iAngle = 0;
 	m_bActive = true;
-	m_bRotatable = true;
+	m_bRotatable = bRotate;
 
 	if( !this->LoadImageFile(pszFileName)) {
+		printf(" -! ERROR unable to load image file in MSprite().\n");
+		return;
+	}
+
+	// Push back to the renderer queue.
+	Renderer::GetInstance()->RegisterDrawable(this);
+}
+
+MSprite::MSprite( const char* pszFileName, bool bRotate, bool bSmooth, int x, int y, int iWidth, int iHeight )
+{
+	m_Coords[0] = 0;
+	m_Coords[1] = 0;
+	m_iAngle = 0;
+	m_bActive = true;
+	m_bRotatable = bRotate;
+
+	if( !this->LoadImageFileClipped(pszFileName,x,y,iWidth,iHeight)) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
 		return;
 	}
@@ -85,6 +102,8 @@ bool MSprite::LoadImageFile( const std::string& sFileName )
 		return false;
 	}
 
+	int iColKey = SDL_MapRGB(TempSurf->format,0xFF,0,0xFF);
+	SDL_SetColorKey(TempSurf,SDL_SRCCOLORKEY,iColKey);
 	m_Surface = SDL_DisplayFormat(TempSurf);
 	SDL_FreeSurface(TempSurf);
 
@@ -93,7 +112,54 @@ bool MSprite::LoadImageFile( const std::string& sFileName )
 		m_RotSurfaces[0] = m_Surface;
 
 		for( int i = 1; i < 360; i++ ) {
-			m_RotSurfaces[i] = rotozoomSurface(m_RotSurfaces[0],(double)i,1.0,0);
+			SDL_Surface* rotSurf = rotozoomSurface(m_RotSurfaces[0],(double)i,1.0,0);
+			int iColKey = SDL_MapRGB(rotSurf->format,0xFF,0,0xFF);
+			SDL_SetColorKey(rotSurf,SDL_SRCCOLORKEY,iColKey);
+			m_RotSurfaces[i] = SDL_DisplayFormat(rotSurf);
+			SDL_FreeSurface(rotSurf);
+		}
+	}
+
+	return true;
+}
+
+bool MSprite::LoadImageFileClipped( const std::string& sFileName, int x, int y, int iWidth, int iHeight )
+{
+	if( !sFileName.c_str() ) {
+		printf(" -! ERROR invalid file name in MSprite::LoadImageFileClipped().\n");
+		return false;
+	}
+
+	SDL_Surface* TempSurf = NULL;
+	if( ( TempSurf = SDL_LoadBMP(sFileName.c_str()) ) == NULL ) {
+		printf(" -! ERROR SDL_LoadBMP() returned a NULL object.\n");
+		return false;
+	}
+
+	SDL_Rect srcRect = { x, y, iWidth, iHeight };
+	SDL_Rect dstRect = { 0, 0, iWidth, iHeight };
+	
+	// Create an empty surface and blit clipped surface to it.
+	SDL_Surface* NewSurf = SDL_CreateRGBSurface(SDL_SWSURFACE,iWidth,iHeight,32,0,0,0,0);
+	SDL_BlitSurface(TempSurf,&srcRect,NewSurf,&dstRect);
+	SDL_FreeSurface(TempSurf);
+
+	// Set the colour key to enable transparency.
+	int iColKey = SDL_MapRGB(NewSurf->format,0xFF,0,0xFF);
+	SDL_SetColorKey(NewSurf,SDL_SRCCOLORKEY,iColKey);
+	m_Surface = SDL_DisplayFormatAlpha(NewSurf);
+	SDL_FreeSurface(NewSurf);
+
+	if( m_bRotatable ) {
+		m_RotSurfaces = new SDL_Surface* [360];
+		m_RotSurfaces[0] = m_Surface;
+
+		for( int i = 1; i < 360; i++ ) {
+			SDL_Surface* rotSurf = rotozoomSurface(m_RotSurfaces[0],(double)i,1.0,1);
+			int iColKey = SDL_MapRGB(rotSurf->format,0xFF,0,0xFF);
+			SDL_SetColorKey(rotSurf,SDL_SRCCOLORKEY,iColKey);
+			m_RotSurfaces[i] = SDL_DisplayFormatAlpha(rotSurf);
+			SDL_FreeSurface(rotSurf);
 		}
 	}
 
@@ -107,11 +173,10 @@ bool MSprite::GetActive( void )
 
 void MSprite::Render( void* pSurface )
 {
-	SDL_Rect Rect;
-	
 	// Scale to give impression of rotation around the center.
-	Rect.x = m_bRotatable? m_Coords[0] - (m_RotSurfaces[m_iAngle]->w / 2): m_Coords[0];
-	Rect.y = m_bRotatable? m_Coords[1] - (m_RotSurfaces[m_iAngle]->h / 2): m_Coords[1];
+	SDL_Rect Rect;
+	Rect.x = m_bRotatable ? m_Coords[0] - (m_RotSurfaces[m_iAngle]->w / 2) : m_Coords[0];
+	Rect.y = m_bRotatable ? m_Coords[1] - (m_RotSurfaces[m_iAngle]->h / 2) : m_Coords[1];
 
 	if( !m_bRotatable ) SDL_BlitSurface(m_Surface,NULL,(SDL_Surface*)pSurface,&Rect);
 	else SDL_BlitSurface(m_RotSurfaces[m_iAngle],NULL,(SDL_Surface*)pSurface,&Rect);

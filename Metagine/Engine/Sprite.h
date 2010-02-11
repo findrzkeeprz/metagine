@@ -18,9 +18,9 @@
 
 #include "GlobalIncludes.h"
 #include "../Includes/SDL/SDL.h"
-#include "../Interfaces/IDrawable.h"
+#include "../Interfaces/ISprite.h"
 
-class MSprite : public IDrawable
+class MSprite : public ISprite
 {
 public:
 
@@ -29,11 +29,14 @@ public:
 
 	MSprite( const char* pszFileName, bool bRotate, bool bSmooth );
 
+	MSprite( const char* pszFileName, bool bRotate, bool bSmooth, int x, int y, int iWidth, int iHeight );
+
 	/// Destructor method.
 	~MSprite( void );
 
+	// Documented in ISprite.h
 	bool LoadImageFile( const std::string& sFileName );
-
+	bool LoadImageFileClipped( const std::string& sFileName, int x, int y, int iWidth, int iHeight );
 	void SetPosition( int x, int y );
 	void SetRotation( int iAngle );
 

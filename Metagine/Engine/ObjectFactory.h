@@ -22,7 +22,7 @@
 #include <vector>
 #include "../Public/Singleton.h"
 #include "../Interfaces/IObjectFactory.h"
-//#include "../Interfaces/IDrawable.h"
+#include "../Interfaces/ISprite.h"
 
 /// Manages game object creation.
 /// This class is responsible for the creation and tracking of game
@@ -48,11 +48,6 @@ public:
 
 	// Documented in IObjectFactory.h
 	void Shutdown( void );
-
-	/// Initialize the renderer component.
-	/// Initialise the graphical subsystems and allocate any required resources
-	/// such as the SDL and TTF libraries.
-	//bool Init( void );
 
 private:
 

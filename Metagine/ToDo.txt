@@ -1,7 +1,10 @@
 
 Stuff to do:
 -----------------
+
 * Object factory class implementation.
 * Re-seperate game logic into external module.
 * Sound/music playback support.
-* Developer console that interfaces with engine components.
+* Developer console that interfaces with engine components (Mostly done).
+* Dynamic approximation for rotational sprites, currently inefficient.
+* Renderer needs to maintain multiple drawable lists for z-depth sorting.

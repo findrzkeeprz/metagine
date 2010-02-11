@@ -26,13 +26,16 @@
 #include "Console.h"
 #include "../Public/Exports.h"
 
-MEngine::MEngine( void )
+MEngine::MEngine( void ) :
+m_iFrameStart(0),
+m_iFrameEnd(0),
+m_iFrameDuration(0)
 {
     printf(" -> MEngine object created.\n");
 
-	m_iFrameStart = 0;
-	m_iFrameEnd = 0;
-	m_iFrameDuration = 0;
+	//m_iFrameStart = 0;
+	//m_iFrameEnd = 0;
+	//m_iFrameDuration = 0;
 	//m_pGame = NULL;
 }
 

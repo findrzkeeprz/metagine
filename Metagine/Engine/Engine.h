@@ -59,6 +59,7 @@ private:
 	bool LoadGameModule( void );
 
     std::vector<IBaseInterface*> m_Interfaces; 	///< Container of all registered game interfaces.
+	//std::vector<IEntity*> m_Entities;			///< Collection of all game entities.
 	bool m_bActive;							   	///< Identifies whether the engine is currently active.
 	SDL_Event m_Event;							///< SDL event object.
 	int m_iFrameStart;							///< The elapsed time at the start of the current frame.
