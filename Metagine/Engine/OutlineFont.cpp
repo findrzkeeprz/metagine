@@ -24,8 +24,8 @@ MFont()
 	m_ColourBG.b = 0;
 }
 
-MOutlineFont::MOutlineFont( const char *pszName, int iSize, int iRed, int iGreen, int iBlue ) :
-MFont(pszName,iSize,iRed,iGreen,iBlue),
+MOutlineFont::MOutlineFont( const char *pszName, int iSize, int iRed, int iGreen, int iBlue, float fDepth ) :
+MFont(pszName,iSize,iRed,iGreen,iBlue,fDepth),
 m_SurfaceBG(NULL)
 {
 }

@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <vector>
 #include <string.h>
+#include <algorithm>
 
 // Third-party.
 #include "../Includes/SDL/SDL.h"

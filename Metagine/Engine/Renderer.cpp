@@ -13,15 +13,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <stdio.h>
 #include "Renderer.h"
 
-MRenderer::MRenderer( void )
+MRenderer::MRenderer( void ) :
+m_Screen(NULL),
+m_bFontLibLoaded(false)
 {
     printf(" -> MRenderer object created.\n");
-
-	m_Screen = NULL;
-	m_bFontLibLoaded = false;
 }
 
 MRenderer::~MRenderer( void )
@@ -74,26 +72,24 @@ void MRenderer::RegisterDrawable( IDrawable* pDrawable )
 		return;
 	}
 
+	// Push back and then re-sort the container based on depth.
 	m_RenderQueue.push_back(pDrawable);
+	std::sort(m_RenderQueue.begin(),m_RenderQueue.end(),MRenderer::SpriteSortFunc);
+	
 	printf(" -> Registered object (0x%X) with rendering queue.\n",pDrawable);
 }
 
 void MRenderer::RemoveDrawable( IDrawable* pDrawable )
 {
-	/*std::vector<IDrawable*>::iterator it;
-	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); it++ ) {
-		if( (*it) == pDrawable ) {
-			printf(" -> Removing object (0x%X) from rendering queue.\n",pDrawable);
-			it = m_RenderQueue.erase(it);
-		}
-	}*/
-
 	std::vector<IDrawable*>::iterator it = m_RenderQueue.begin();
 	while( it != m_RenderQueue.end() ) {
 		if( *it == pDrawable )
 			it = m_RenderQueue.erase(it);
 		else ++it;
 	}
+
+	// Resort based on depth.
+	std::sort(m_RenderQueue.begin(),m_RenderQueue.end(),MRenderer::SpriteSortFunc);
 }
 
 void MRenderer::Frame( void )
@@ -107,4 +103,9 @@ void MRenderer::Frame( void )
 			(*it)->Render((void*)m_Screen);
 
 	SDL_Flip(m_Screen);
+}
+
+bool MRenderer::SpriteSortFunc( IDrawable* pData1, IDrawable* pData2 )
+{
+	return pData1->GetDepth() > pData2->GetDepth();
 }

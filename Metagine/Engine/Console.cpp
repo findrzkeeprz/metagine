@@ -39,7 +39,7 @@ bool MConsole::Init( void )
 {	
 	m_bActive = VarManager::GetInstance()->CreateVar("bconactive",true);
 	
-	m_Font = new MOutlineFont("m01.TTF",15,255,255,255);
+	m_Font = new MOutlineFont("m01.TTF",15,255,255,255,0.0f);
 	m_Font->SetColour(255,255,255);
 	m_Font->SetColourBG(120,120,255);
 
@@ -47,10 +47,10 @@ bool MConsole::Init( void )
 	Renderer::GetInstance()->RegisterDrawable(this);
 
 	// Tmp.
-	//m_TestSprite = new MSprite("gogorisset1.bmp",true,true,6,6,39,45);
+	m_TestSprite = new MSprite("gogorisset1.bmp",360,true,6,6,39,45,0.5f);
 	// m_TestSprite = new MSprite("gogorisset1.bmp",true,true,6,6,39,10);
 	//m_TestSprite = new MSprite("mariosprite.bmp",false,false);
-	//m_TestSprite->SetPosition(150,150);
+	m_TestSprite->SetPosition(100,100);
 	
 	return true;
 }
@@ -140,6 +140,12 @@ bool MConsole::GetActive( void )
 	return m_bActive->GetValueBool();
 }
 
+float MConsole::GetDepth( void )
+{
+	// We want this on top of all layers.
+	return 0.0f;
+}
+
 void MConsole::Render( void* pSurface )
 {
 	if( m_bToggleAnimDown ) {
@@ -175,7 +181,6 @@ void MConsole::Render( void* pSurface )
 	m_Font->SetText(m_sCurrentBuffer);
 	m_Font->Render(pSurface);
 
-	//for( int i = 0; i < 359; i++ )
 	static int test = 0;
 	if( test < 359 ) test++;
 	else test = 0;
@@ -193,6 +198,15 @@ void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 			m_bToggleAnimDown = true;
 		}
 	}
+
+	//static int test = 0;
+	//if( test < 359 ) test++;
+	/*if( bKeys[SDLK_a] ) {
+		m_TestSprite->SetRotation(test++);
+	} else if( bKeys[SDLK_b] ) {
+		m_TestSprite->SetRotation(test--);
+	}*/
+	//m_TestSprite->SetRotation(test);
 	
 	if( m_bActive && bKeyDown ) {
 		bool bShiftMod = (bKeys[SDLK_LSHIFT] || bKeys[SDLK_RSHIFT]) ? true : false;

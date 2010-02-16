@@ -16,25 +16,27 @@
 #include "Sprite.h"
 #include "Renderer.h"
 
-MSprite::MSprite( void )
+MSprite::MSprite( void ) :
+m_Surface(NULL),
+m_dAngle(0.0),
+m_bActive(false),
+m_iRotateSteps(0),
+m_fDepth(0.0f)
 {
-	printf(" -> MSprite object created (default).\n");
-
-	m_Surface = NULL;
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
-	m_iAngle = 0;
-	m_bActive = false;
-	m_bRotatable = false;
+	
+	printf(" -> MSprite object created (default).\n");
 }
 
-MSprite::MSprite( const char *pszFileName, bool bRotate, bool bSmooth )
+MSprite::MSprite( const char *pszFileName, int iRotateSteps, bool bSmooth, float fDepth ) :
+m_dAngle(0.0),
+m_bActive(true),
+m_iRotateSteps(iRotateSteps),
+m_fDepth(fDepth)
 {
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
-	m_iAngle = 0;
-	m_bActive = true;
-	m_bRotatable = bRotate;
 
 	if( !this->LoadImageFile(pszFileName)) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
@@ -45,13 +47,14 @@ MSprite::MSprite( const char *pszFileName, bool bRotate, bool bSmooth )
 	Renderer::GetInstance()->RegisterDrawable(this);
 }
 
-MSprite::MSprite( const char* pszFileName, bool bRotate, bool bSmooth, int x, int y, int iWidth, int iHeight )
+MSprite::MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, int x, int y, int iWidth, int iHeight, float fDepth ) :
+m_dAngle(0.0),
+m_bActive(true),
+m_iRotateSteps(iRotateSteps),
+m_fDepth(fDepth)
 {
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
-	m_iAngle = 0;
-	m_bActive = true;
-	m_bRotatable = bRotate;
 
 	if( !this->LoadImageFileClipped(pszFileName,x,y,iWidth,iHeight)) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
@@ -68,8 +71,8 @@ MSprite::~MSprite( void )
 	SDL_FreeSurface(m_Surface);
 
 	// We skip [0] since it points to m_Surface.
-	if( m_bRotatable ) {
-		for( int i = 1; i < 359; i++ ) {
+	if( m_iRotateSteps > 0 ) {
+		for( int i = 0; i < m_iRotateSteps; i++ ) {
 			SDL_FreeSurface(m_RotSurfaces[i]);
 		}
 		delete[] m_RotSurfaces;
@@ -84,9 +87,19 @@ void MSprite::SetPosition( int x, int y )
 	m_Coords[1] = y;
 }
 
-void MSprite::SetRotation( int iAngle )
+void MSprite::SetRotation( double iAngle )
 {
-	m_iAngle = iAngle;
+	/*double dFraction = 360.00 / m_iRotateSteps;
+	
+	
+	for( int i = 0; i < m_iRotateSteps; i++ ) {
+		if( iAngle > (i * dFraction) && iAngle < (i + 1) * dFraction) {
+		//if(isBetween(iAngle,i * dFraction,(i + 1) * dFraction))
+			m_iAngle = i;
+			return;
+		}
+	}*/
+	m_dAngle = iAngle;
 }
 
 bool MSprite::LoadImageFile( const std::string& sFileName )
@@ -107,11 +120,11 @@ bool MSprite::LoadImageFile( const std::string& sFileName )
 	m_Surface = SDL_DisplayFormat(TempSurf);
 	SDL_FreeSurface(TempSurf);
 
-	if( m_bRotatable ) {
-		m_RotSurfaces = new SDL_Surface* [360];
+	if( m_iRotateSteps > 0 ) {
+		m_RotSurfaces = new SDL_Surface* [m_iRotateSteps];
 		m_RotSurfaces[0] = m_Surface;
 
-		for( int i = 1; i < 360; i++ ) {
+		for( int i = 1; i < m_iRotateSteps; i++ ) {
 			SDL_Surface* rotSurf = rotozoomSurface(m_RotSurfaces[0],(double)i,1.0,0);
 			int iColKey = SDL_MapRGB(rotSurf->format,0xFF,0,0xFF);
 			SDL_SetColorKey(rotSurf,SDL_SRCCOLORKEY,iColKey);
@@ -150,12 +163,12 @@ bool MSprite::LoadImageFileClipped( const std::string& sFileName, int x, int y, 
 	m_Surface = SDL_DisplayFormatAlpha(NewSurf);
 	SDL_FreeSurface(NewSurf);
 
-	if( m_bRotatable ) {
-		m_RotSurfaces = new SDL_Surface* [360];
+	if( m_iRotateSteps > 0 ) {
+		m_RotSurfaces = new SDL_Surface* [m_iRotateSteps];
 		m_RotSurfaces[0] = m_Surface;
 
-		for( int i = 1; i < 360; i++ ) {
-			SDL_Surface* rotSurf = rotozoomSurface(m_RotSurfaces[0],(double)i,1.0,1);
+		for( int i = 1; i < m_iRotateSteps; i++ ) {
+			SDL_Surface* rotSurf = rotozoomSurface(m_RotSurfaces[0],(double)((360 / m_iRotateSteps) * i),1.0,1);
 			int iColKey = SDL_MapRGB(rotSurf->format,0xFF,0,0xFF);
 			SDL_SetColorKey(rotSurf,SDL_SRCCOLORKEY,iColKey);
 			m_RotSurfaces[i] = SDL_DisplayFormatAlpha(rotSurf);
@@ -171,13 +184,18 @@ bool MSprite::GetActive( void )
 	return m_bActive;
 }
 
+float MSprite::GetDepth( void )
+{
+	return m_fDepth;
+}
+
 void MSprite::Render( void* pSurface )
 {
 	// Scale to give impression of rotation around the center.
 	SDL_Rect Rect;
-	Rect.x = m_bRotatable ? m_Coords[0] - (m_RotSurfaces[m_iAngle]->w / 2) : m_Coords[0];
-	Rect.y = m_bRotatable ? m_Coords[1] - (m_RotSurfaces[m_iAngle]->h / 2) : m_Coords[1];
+	Rect.x = m_iRotateSteps > 0 ? m_Coords[0] - (m_RotSurfaces[(int)m_dAngle]->w / 2) : m_Coords[0];
+	Rect.y = m_iRotateSteps > 0 ? m_Coords[1] - (m_RotSurfaces[(int)m_dAngle]->h / 2) : m_Coords[1];
 
-	if( !m_bRotatable ) SDL_BlitSurface(m_Surface,NULL,(SDL_Surface*)pSurface,&Rect);
-	else SDL_BlitSurface(m_RotSurfaces[m_iAngle],NULL,(SDL_Surface*)pSurface,&Rect);
+	if( m_iRotateSteps == 0 ) SDL_BlitSurface(m_Surface,NULL,(SDL_Surface*)pSurface,&Rect);
+	else SDL_BlitSurface(m_RotSurfaces[(int)m_dAngle],NULL,(SDL_Surface*)pSurface,&Rect);
 }

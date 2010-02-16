@@ -44,7 +44,7 @@ public:
 	/// passed to the constructor. Sets the current sprite texture to a pre-
 	/// cached surface previously created.
 	/// @param iAngle An angle between 0 and 359.
-	virtual void SetRotation( int iAngle ) = 0;
+	virtual void SetRotation( double iAngle ) = 0;
 };
 
 #endif // _ISPRITE_H_

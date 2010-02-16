@@ -25,7 +25,7 @@ public:
 	/// Default constructor (takes no arguments).
 	MOutlineFont( void );
 
-	MOutlineFont( const char* pszName, int iSize, int iRed, int iGreen, int iBlue );
+	MOutlineFont( const char* pszName, int iSize, int iRed, int iGreen, int iBlue, float fDepth );
 
 	/// Destructor method.
 	~MOutlineFont( void );

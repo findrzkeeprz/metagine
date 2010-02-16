@@ -54,6 +54,7 @@ public:
 	// Documented in IDrawable.h
 	void Render( void* pSurface );
 	bool GetActive( void );
+	float GetDepth( void );
 
 	// Documented in IInputListener.h
 	void UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown );

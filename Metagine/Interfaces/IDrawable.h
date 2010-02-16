@@ -28,6 +28,8 @@ public:
 
     /// Virtual accessor to determine object validity.
     virtual bool GetActive( void ) = 0;
+
+	virtual float GetDepth( void ) = 0;
 };
 
 #endif // _IDRAWABLE_H_

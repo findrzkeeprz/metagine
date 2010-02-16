@@ -19,7 +19,7 @@
 #define RENDERER_NAME "MRenderer"
 #define RENDERER_VERSION "01"
 
-#include <vector>
+#include "GlobalIncludes.h"
 #include "../Includes/SDL/SDL.h"
 #include "../Includes/SDL/SDL_ttf.h"
 #include "../Public/Singleton.h"
@@ -78,6 +78,8 @@ public:
 	void Frame( void );
 
 private:
+
+	static bool SpriteSortFunc( IDrawable* pData1, IDrawable* pData2 );
 
 	SDL_Surface* m_Screen;					///< Main SDL screen surface.
 	bool m_bFontLibLoaded;					///< Shows the status of the TTF library.

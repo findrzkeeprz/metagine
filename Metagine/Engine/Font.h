@@ -28,7 +28,7 @@ public:
 	/// Default constructor (takes no arguments).
 	MFont( void );
 
-	MFont( const char* pszName, int iSize, int iRed, int iGreen, int iBlue );
+	MFont( const char* pszName, int iSize, int iRed, int iGreen, int iBlue, float fDepth );
 
 	/// Destructor method.
 	~MFont( void );
@@ -40,6 +40,7 @@ public:
 	virtual void SetPosition( int x, int y );
 
 	bool GetActive( void );
+	float GetDepth( void );
 
 	// Render the drawable object.
 	virtual void Render( void* pSurface );
@@ -52,6 +53,7 @@ protected:
 	TTF_Font* m_Font;
 	int m_Coords[2];
 	bool m_bActive;
+	float m_fDepth;
 };
 
 #endif // _FONT_H_

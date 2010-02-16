@@ -19,7 +19,8 @@
 MFont::MFont( void ) :
 m_Surface(NULL),
 m_Font(NULL),
-m_bActive(false)
+m_bActive(false),
+m_fDepth(0.0f)
 {
 	printf(" -> MFont object created (default).\n");
 
@@ -30,10 +31,11 @@ m_bActive(false)
 	m_Coords[1] = 0;
 }
 
-MFont::MFont( const char *pszName, int iSize, int iRed, int iGreen, int iBlue ) :
+MFont::MFont( const char *pszName, int iSize, int iRed, int iGreen, int iBlue, float fDepth ) :
 m_Surface(NULL),
 m_Font(NULL),
-m_bActive(false)
+m_bActive(false),
+m_fDepth(fDepth)
 {
 	printf(" -> MFont object created (%s,%i,%i,%i,%i).\n",
 			pszName,iSize,iRed,iGreen,iBlue);
@@ -107,6 +109,11 @@ void MFont::SetPosition( int x, int y )
 bool MFont::GetActive( void )
 {
 	return m_bActive;
+}
+
+float MFont::GetDepth( void )
+{
+	return m_fDepth;
 }
 
 void MFont::Render( void* pSurface )

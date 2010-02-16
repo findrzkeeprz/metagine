@@ -27,9 +27,9 @@ public:
 	/// Default constructor (takes no arguments).
 	MSprite( void );
 
-	MSprite( const char* pszFileName, bool bRotate, bool bSmooth );
+	MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, float fDepth );
 
-	MSprite( const char* pszFileName, bool bRotate, bool bSmooth, int x, int y, int iWidth, int iHeight );
+	MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, int x, int y, int iWidth, int iHeight, float fDepth );
 
 	/// Destructor method.
 	~MSprite( void );
@@ -38,9 +38,10 @@ public:
 	bool LoadImageFile( const std::string& sFileName );
 	bool LoadImageFileClipped( const std::string& sFileName, int x, int y, int iWidth, int iHeight );
 	void SetPosition( int x, int y );
-	void SetRotation( int iAngle );
+	void SetRotation( double iAngle );
 
 	bool GetActive( void );
+	float GetDepth( void );
 
 	// Render the drawable object.
 	virtual void Render( void* pSurface );
@@ -50,9 +51,10 @@ private:
 	SDL_Surface* m_Surface;
 	SDL_Surface** m_RotSurfaces;
 	int m_Coords[2];
-	int m_iAngle;
+	double m_dAngle;
 	bool m_bActive;
-	bool m_bRotatable;
+	int m_iRotateSteps;
+	float m_fDepth;
 };
 
 #endif // _SPRITE_H_
