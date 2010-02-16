@@ -57,7 +57,6 @@ void MOutlineFont::SetText( const std::string& sText )
 
 	m_Surface = TTF_RenderText_Solid(m_Font,sText.c_str(),m_Colour);
 	m_SurfaceBG = TTF_RenderText_Solid(m_Font,sText.c_str(),m_ColourBG);
-	//m_bActive = true;
 }
 
 void MOutlineFont::Render( void* pSurface )
@@ -72,6 +71,8 @@ void MOutlineFont::Render( void* pSurface )
 
 	Rect.x = m_Coords[0];
 	Rect.y = m_Coords[1];
+	SDL_SetAlpha(m_SurfaceBG,SDL_RLEACCEL|SDL_SRCALPHA,m_iAlpha);
+	SDL_SetAlpha(m_Surface,SDL_RLEACCEL|SDL_SRCALPHA,m_iAlpha);
 
 	// o o o
 	// x o o

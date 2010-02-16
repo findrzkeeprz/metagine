@@ -34,6 +34,7 @@ public:
 	~MFont( void );
 
 	void SetColour( int iRed, int iGreen, int iBlue );
+	void SetAlpha( int iAlpha );
 
 	void SetText( std::string& sMsg );
 
@@ -52,6 +53,7 @@ protected:
 	SDL_Color m_Colour;
 	TTF_Font* m_Font;
 	int m_Coords[2];
+	int m_iAlpha;
 	bool m_bActive;
 	float m_fDepth;
 };

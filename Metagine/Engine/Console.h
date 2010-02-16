@@ -67,7 +67,12 @@ private:
 private:
 
 	IVar* m_bActive;							///< Determines whether visible/receiving input.
-	bool m_bToggleAnimUp;						///< Toggle the scroll iout animation.
+	IVar* m_iFontSpacing;						///< Font spacing between console lines.
+	IVar* m_iPositionX;							///< X coordinate of the console;
+	IVar* m_iPositionYon;						///< Y coordinate of the console (on-screen);
+	IVar* m_iPositionYoff;						///< Y coordinate of the console (off-screen);
+	IVar* m_iScrollFactor;						///< The rate at which the console scrolls in and out.
+	bool m_bToggleAnimUp;						///< Toggle the scroll out animation.
 	bool m_bToggleAnimDown;						///< Toggle the scroll in animation.
 	bool m_bToggling;							///< Currently toggling animation - don't interrupt.
 	std::vector<std::string> m_BackBuffer;		///< Main console buffer storage.

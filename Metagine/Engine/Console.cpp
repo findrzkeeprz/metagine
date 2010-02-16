@@ -38,6 +38,11 @@ MConsole::~MConsole( void )
 bool MConsole::Init( void )
 {	
 	m_bActive = VarManager::GetInstance()->CreateVar("bconactive",true);
+	m_iFontSpacing = VarManager::GetInstance()->CreateVar("bconfontspacing",15);
+	m_iPositionX = VarManager::GetInstance()->CreateVar("bconposx",10);
+	m_iPositionYon = VarManager::GetInstance()->CreateVar("bconposy_on",90);
+	m_iPositionYoff = VarManager::GetInstance()->CreateVar("bconposy_off",-10);
+	m_iScrollFactor = VarManager::GetInstance()->CreateVar("bconscrollfactor",3);
 	
 	m_Font = new MOutlineFont("ariblk.ttf",15,255,255,255,1,0.0f);
 	m_Font->SetColour(255,255,255);
@@ -149,8 +154,8 @@ float MConsole::GetDepth( void )
 void MConsole::Render( void* pSurface )
 {
 	if( m_bToggleAnimDown ) {
-		if( m_iScrollPoint < 90 ) {
-			m_iScrollPoint += 3;
+		if( m_iScrollPoint < m_iPositionYon->GetValueInt() ) {
+			m_iScrollPoint += m_iScrollFactor->GetValueInt();
 			m_bToggling = true;
 		}
 		else {
@@ -158,8 +163,8 @@ void MConsole::Render( void* pSurface )
 			m_bToggling = false;
 		}
 	} if( m_bToggleAnimUp ) {
-		if( m_iScrollPoint > -10 ) {
-			m_iScrollPoint -= 3;
+		if( m_iScrollPoint > m_iPositionYoff->GetValueInt() ) {
+			m_iScrollPoint -= m_iScrollFactor->GetValueInt();
 			m_bToggling = true;
 		}
 		else {
@@ -171,13 +176,13 @@ void MConsole::Render( void* pSurface )
 	
 	for( int i = 0; i < 5; i++ ) {
 		if( m_BackBuffer[i].c_str() ) {
-			m_Font->SetPosition(10,m_iScrollPoint - (i * 20));
+			m_Font->SetPosition(m_iPositionX->GetValueInt(),m_iScrollPoint - (i * m_iFontSpacing->GetValueInt()));
 			m_Font->SetText(m_BackBuffer[(m_BackBuffer.size() - 1) - i]);
 			m_Font->Render(pSurface);
 		}
 	}
 
-	m_Font->SetPosition(10,m_iScrollPoint + 20);
+	m_Font->SetPosition(m_iPositionX->GetValueInt(),m_iScrollPoint + m_iFontSpacing->GetValueInt());
 	m_Font->SetText(m_sCurrentBuffer);
 	m_Font->Render(pSurface);
 
@@ -199,15 +204,6 @@ void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 		}
 	}
 
-	//static int test = 0;
-	//if( test < 359 ) test++;
-	/*if( bKeys[SDLK_a] ) {
-		m_TestSprite->SetRotation(test++);
-	} else if( bKeys[SDLK_b] ) {
-		m_TestSprite->SetRotation(test--);
-	}*/
-	//m_TestSprite->SetRotation(test);
-	
 	if( m_bActive && bKeyDown ) {
 		bool bShiftMod = (bKeys[SDLK_LSHIFT] || bKeys[SDLK_RSHIFT]) ? true : false;
 		switch( iKey ) {

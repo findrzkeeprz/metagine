@@ -52,7 +52,7 @@ public:
     const float GetValueFloat( void );
     
     /// Return the variable's boolean value.
-    const bool GetValueBool( void );
+	const bool GetValueBool( void );
     
     /// Set the variable's integer value.
     void SetValueInt( int iValue );

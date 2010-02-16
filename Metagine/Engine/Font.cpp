@@ -20,7 +20,8 @@ MFont::MFont( void ) :
 m_Surface(NULL),
 m_Font(NULL),
 m_bActive(false),
-m_fDepth(0.0f)
+m_fDepth(0.0f),
+m_iAlpha(255)
 {
 	printf(" -> MFont object created (default).\n");
 
@@ -35,7 +36,8 @@ MFont::MFont( const char *pszName, int iSize, int iRed, int iGreen, int iBlue, f
 m_Surface(NULL),
 m_Font(NULL),
 m_bActive(false),
-m_fDepth(fDepth)
+m_fDepth(fDepth),
+m_iAlpha(255)
 {
 	printf(" -> MFont object created (%s,%i,%i,%i,%i).\n",
 			pszName,iSize,iRed,iGreen,iBlue);
@@ -83,6 +85,11 @@ void MFont::SetColour( int iRed, int iGreen, int iBlue )
 	m_Colour.b = iBlue;
 }
 
+void MFont::SetAlpha( int iAlpha )
+{
+	m_iAlpha = iAlpha;
+}
+
 void MFont::SetText( std::string& sMsg )
 {
 	if( !sMsg.c_str() ) {
@@ -127,5 +134,6 @@ void MFont::Render( void* pSurface )
 	Rect.x = m_Coords[0];
 	Rect.y = m_Coords[1];
 
+	SDL_SetAlpha(m_Surface,SDL_RLEACCEL|SDL_SRCALPHA,m_iAlpha);
 	SDL_BlitSurface(m_Surface,NULL,(SDL_Surface*)pSurface,&Rect);
 }

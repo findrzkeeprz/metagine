@@ -30,13 +30,13 @@ public:
     virtual const int GetType( void ) = 0;
     
     /// Virtual accessor to return the variable's integer value.
-    virtual const int GetValueInt( void ) = 0;
+    const virtual int GetValueInt( void ) = 0;
     
     /// Virtual accessor to return the variable's float value.
-    virtual const float GetValueFloat( void ) = 0;
+    const virtual float GetValueFloat( void ) = 0;
     
     /// Virtual accessor to return the variable's boolean value.
-    virtual const bool GetValueBool( void ) = 0;
+    const virtual bool GetValueBool( void ) = 0;
     
     /// Virtual accessor to set the variable's integer value.
     virtual void SetValueInt( int iValue ) = 0;
