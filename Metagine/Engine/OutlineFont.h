@@ -25,7 +25,7 @@ public:
 	/// Default constructor (takes no arguments).
 	MOutlineFont( void );
 
-	MOutlineFont( const char* pszName, int iSize, int iRed, int iGreen, int iBlue, float fDepth );
+	MOutlineFont( const char* pszName, int iSize, int iRed, int iGreen, int iBlue, int iStep, float fDepth );
 
 	/// Destructor method.
 	~MOutlineFont( void );
@@ -42,6 +42,7 @@ private:
 	// Private outline font variables.
 	SDL_Color m_ColourBG;
 	SDL_Surface* m_SurfaceBG;
+	int m_iStep;
 };
 
 #endif // _OUTLINEFONT_H_

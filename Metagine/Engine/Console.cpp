@@ -39,9 +39,9 @@ bool MConsole::Init( void )
 {	
 	m_bActive = VarManager::GetInstance()->CreateVar("bconactive",true);
 	
-	m_Font = new MOutlineFont("m01.TTF",15,255,255,255,0.0f);
+	m_Font = new MOutlineFont("ariblk.ttf",15,255,255,255,1,0.0f);
 	m_Font->SetColour(255,255,255);
-	m_Font->SetColourBG(120,120,255);
+	m_Font->SetColourBG(0,120,0);
 
 	InputManager::GetInstance()->RegisterListener(this);
 	Renderer::GetInstance()->RegisterDrawable(this);

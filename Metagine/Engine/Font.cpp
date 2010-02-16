@@ -96,7 +96,7 @@ void MFont::SetText( std::string& sMsg )
 	if( m_Surface )
 		SDL_FreeSurface(m_Surface);
 
-	m_Surface = TTF_RenderText_Solid(m_Font,sMsg.c_str(),m_Colour);
+	m_Surface = TTF_RenderText_Blended(m_Font,sMsg.c_str(),m_Colour);
 	//m_bActive = true;
 }
 

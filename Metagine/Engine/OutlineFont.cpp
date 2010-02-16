@@ -24,9 +24,10 @@ MFont()
 	m_ColourBG.b = 0;
 }
 
-MOutlineFont::MOutlineFont( const char *pszName, int iSize, int iRed, int iGreen, int iBlue, float fDepth ) :
+MOutlineFont::MOutlineFont( const char *pszName, int iSize, int iRed, int iGreen, int iBlue, int iStep, float fDepth ) :
 MFont(pszName,iSize,iRed,iGreen,iBlue,fDepth),
-m_SurfaceBG(NULL)
+m_SurfaceBG(NULL),
+m_iStep(iStep)
 {
 }
 
@@ -72,19 +73,64 @@ void MOutlineFont::Render( void* pSurface )
 	Rect.x = m_Coords[0];
 	Rect.y = m_Coords[1];
 
-	// Create the outline effect.
-	RectBG.x = m_Coords[0] - 2;
+	// o o o
+	// x o o
+	// o o o
+	RectBG.x = m_Coords[0] - m_iStep;
 	RectBG.y = m_Coords[1];
 	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
-	RectBG.x = m_Coords[0] + 2;
+	
+	// o o o
+	// o o x
+	// o o o
+	RectBG.x = m_Coords[0] + m_iStep;
 	RectBG.y = m_Coords[1];
 	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+	
+	// o x o
+	// o o o
+	// o o o
 	RectBG.x = m_Coords[0];
-	RectBG.y = m_Coords[1] - 2;
+	RectBG.y = m_Coords[1] - m_iStep;
 	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+	
+	// o o o
+	// o o o
+	// o x o
 	RectBG.x = m_Coords[0];
-	RectBG.y = m_Coords[1] + 2;
+	RectBG.y = m_Coords[1] + m_iStep;
+	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
 
+	// x o o
+	// o o o
+	// o o o
+	RectBG.x = m_Coords[0] - m_iStep;
+	RectBG.y = m_Coords[1] - m_iStep;
 	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+
+	// o o x
+	// o o o
+	// o o o
+	RectBG.x = m_Coords[0] + m_iStep;
+	RectBG.y = m_Coords[1] - m_iStep;
+	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+
+	// o o o
+	// o o o
+	// o o x
+	RectBG.x = m_Coords[0] + m_iStep;
+	RectBG.y = m_Coords[1] + m_iStep;
+	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+
+	// o o o
+	// o o o
+	// x o o
+	RectBG.x = m_Coords[0] - m_iStep;
+	RectBG.y = m_Coords[1] + m_iStep;
+	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+	
+	// o o o
+	// o x o
+	// o o o
 	SDL_BlitSurface(m_Surface,NULL,(SDL_Surface*)pSurface,&Rect);
 }
