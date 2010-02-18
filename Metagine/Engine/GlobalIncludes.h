@@ -27,6 +27,7 @@
 #include "../Includes/SDL/SDL_ttf.h"
 #include "../Includes/SDL/SDL_rotozoom.h"
 #include "../Includes/Box2D/Box2D.h"
+#include "../Includes/TinyXml/tinyxml.h"
 
 // Concretes.
 #include "VarManager.h"

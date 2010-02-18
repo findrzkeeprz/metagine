@@ -7,4 +7,7 @@ Stuff to do:
 * Sound/music playback support.
 * Developer console that interfaces with engine components (Mostly done).
 * Dynamic approximation for rotational sprites, currently inefficient.
-* Renderer needs to maintain multiple drawable lists for z-depth sorting.
+* Tile engine that integrates with sprite and renderer classes.
+* Animated sprites.
+* Loading of assets from XML files (via TinyXml).
+* Game state management (menus, pause screen etc).
