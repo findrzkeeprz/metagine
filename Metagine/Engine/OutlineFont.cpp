@@ -55,8 +55,14 @@ void MOutlineFont::SetText( const std::string& sText )
 		return;
 	}
 
-	m_Surface = TTF_RenderText_Solid(m_Font,sText.c_str(),m_Colour);
-	m_SurfaceBG = TTF_RenderText_Solid(m_Font,sText.c_str(),m_ColourBG);
+	// Quick hack to fix memory leakage.
+	if( m_Surface )
+		SDL_FreeSurface(m_Surface);
+	if( m_SurfaceBG )
+		SDL_FreeSurface(m_SurfaceBG);
+	
+	m_Surface = TTF_RenderText_Blended(m_Font,sText.c_str(),m_Colour);
+	m_SurfaceBG = TTF_RenderText_Blended(m_Font,sText.c_str(),m_ColourBG);
 }
 
 void MOutlineFont::Render( void* pSurface )

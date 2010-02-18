@@ -8,6 +8,6 @@ Stuff to do:
 * Developer console that interfaces with engine components (Mostly done).
 * Dynamic approximation for rotational sprites, currently inefficient.
 * Tile engine that integrates with sprite and renderer classes.
-* Animated sprites.
-* Loading of assets from XML files (via TinyXml).
+* Loading of assets from XML files (via TinyXml) - sprites done.
 * Game state management (menus, pause screen etc).
+* Need ability to set sprite colour key from XML file.

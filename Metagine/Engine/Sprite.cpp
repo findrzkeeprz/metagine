@@ -139,11 +139,6 @@ void MSprite::SetFrame( int iFrame )
 		printf(" -! ERROR specified sprite frame out of bounds in MSprite::SetFrame().\n");
 		return;
 	}
-
-	//if( m_FrameTimer.GetTicks() > m_iFrameDelay ) {
-	//	m_iFrame = iFrame;
-	//	m_FrameTimer.Start();
-	//}
 }
 
 int MSprite::GetFrame( void )
