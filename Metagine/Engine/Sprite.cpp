@@ -17,7 +17,6 @@
 #include "Renderer.h"
 
 MSprite::MSprite( void ) :
-m_Surface(NULL),
 m_dAngle(0.0),
 m_bActive(false),
 m_iRotateSteps(0),
@@ -47,7 +46,7 @@ m_iFrame(0)
 	}
 
 	// Add to the frame list and rendering queue.
-	m_Frames.push_back(pSurface);
+	m_FramesCache.push_back(pSurface);
 	Renderer::GetInstance()->RegisterDrawable(this);
 }
 
@@ -68,7 +67,7 @@ m_iFrame(0)
 	}
 
 	// Add to the frame list and rendering queue.
-	m_Frames.push_back(pSurface);
+	m_FramesCache.push_back(pSurface);
 	Renderer::GetInstance()->RegisterDrawable(this);
 }
 
@@ -85,6 +84,8 @@ m_iFrame(0)
 	}
 	
 	Renderer::GetInstance()->RegisterDrawable(this);
+
+	m_FrameTimer.Start();
 }
 
 MSprite::~MSprite( void )
@@ -101,7 +102,7 @@ MSprite::~MSprite( void )
 	//}
 	int iFrames = 0;
 	std::vector<SDL_Surface*>::iterator it;
-	for( it = m_Frames.begin(); it < m_Frames.end(); it++ ) {
+	for( it = m_FramesCache.begin(); it < m_FramesCache.end(); it++ ) {
 		if( *it ) {
 			SDL_FreeSurface(*it);
 			iFrames++;
@@ -139,7 +140,10 @@ void MSprite::SetFrame( int iFrame )
 		return;
 	}
 
-	m_iFrame = iFrame;
+	//if( m_FrameTimer.GetTicks() > m_iFrameDelay ) {
+	//	m_iFrame = iFrame;
+	//	m_FrameTimer.Start();
+	//}
 }
 
 int MSprite::GetFrame( void )
@@ -149,7 +153,17 @@ int MSprite::GetFrame( void )
 
 int MSprite::GetNumFrames( void )
 {
-	return (int)m_Frames.size();
+	return (int)m_FramesCache.size();
+}
+
+void MSprite::Animate( bool bLoop )
+{
+	if( m_FrameTimer.GetTicks() > m_iFrameDelay ) {
+		if( m_iFrame < ( GetNumFrames() - 1 ) )
+			++m_iFrame;
+		else m_iFrame = 0;
+		m_FrameTimer.Start();
+	}
 }
 
 SDL_Surface* MSprite::SurfFromFile( const std::string& sFileName )
@@ -253,6 +267,7 @@ bool MSprite::ParseFromXml( const char* pszXmlFile )
 	// We do this here because depth is a per-sprite (not frame) attribute
 	// and there is little sense in using frames from multiple files.
 	m_fDepth = (float)atof(pRoot->Attribute("depth"));
+	m_iFrameDelay = atoi(pRoot->Attribute("frameDelay"));
 	std::string sFileName = pRoot->Attribute("fileName");
 
 	// Recursively load every sprite frame from the XML file.
@@ -276,7 +291,7 @@ bool MSprite::ParseFromXml( const char* pszXmlFile )
 			return false;
 		}
 
-		m_Frames.push_back(pSurface);
+		m_FramesCache.push_back(pSurface);
 	}
 
 	xmlDoc.Clear();
@@ -301,6 +316,6 @@ void MSprite::Render( void* pSurface )
 	Rect.y = m_iRotateSteps > 0 ? m_Coords[1] - (m_RotSurfaces[(int)m_dAngle]->h / 2) : m_Coords[1];
 
 	/*if( m_iRotateSteps == 0 )*/ 
-	SDL_BlitSurface(m_Frames[m_iFrame],NULL,(SDL_Surface*)pSurface,&Rect);
+	SDL_BlitSurface(m_FramesCache[m_iFrame],NULL,(SDL_Surface*)pSurface,&Rect);
 	//else SDL_BlitSurface(m_RotSurfaces[(int)m_dAngle],NULL,(SDL_Surface*)pSurface,&Rect);
 }

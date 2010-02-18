@@ -26,10 +26,7 @@
 #include "Console.h"
 #include "../Public/Exports.h"
 
-MEngine::MEngine( void ) :
-m_iFrameStart(0),
-m_iFrameEnd(0),
-m_iFrameDuration(0)
+MEngine::MEngine( void )
 {
     printf(" -> MEngine object created.\n");
 
@@ -95,6 +92,9 @@ bool MEngine::Init( void )
 		return false;
 	}*/
 
+	m_iFpsMax = VarManager::GetInstance()->CreateVar("ifpsmax",60);
+	m_bFpsCap = VarManager::GetInstance()->CreateVar("bfpscap",true);
+
 	m_bActive = true;
     return true;
 }
@@ -141,18 +141,17 @@ bool MEngine::RegisterInterface( IBaseInterface* pInterface )
 void MEngine::Run( void )
 {
 	while( m_bActive ) {
-		// Get the frame start time.
-		m_iFrameStart = SDL_GetTicks();
+		m_FpsTimer.Start();
 		
 		HandleInput();
 		//m_pGame->Frame();
 		Renderer::GetInstance()->Frame();
 
 		// Limit the frame rate.
-		m_iFrameEnd = SDL_GetTicks();
-		m_iFrameDuration = m_iFrameEnd - m_iFrameStart;
-		if( m_iFrameDuration < ( 1000 / 60 ) ) {
-			SDL_Delay((1000 / 60) - m_iFrameDuration);
+		if( m_bFpsCap->GetValueBool() ) {
+			if( m_FpsTimer.GetTicks() < ( 1000 / m_iFpsMax->GetValueInt()) ) {
+				SDL_Delay( ( 1000 / m_iFpsMax->GetValueInt() ) - m_FpsTimer.GetTicks());
+			}
 		}
 	}
 }

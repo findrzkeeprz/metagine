@@ -21,6 +21,7 @@
 #include "../Interfaces/IEngine.h"
 //#include "../Interfaces/IGame.h"
 #include "../Public/Singleton.h"
+#include "../Public/Timer.h"
 
 /// Main game engine interface.
 /// This object is responsible for the creation and
@@ -58,13 +59,15 @@ private:
     // Load the game module.
 	bool LoadGameModule( void );
 
+private:
+
     std::vector<IBaseInterface*> m_Interfaces; 	///< Container of all registered game interfaces.
 	//std::vector<IEntity*> m_Entities;			///< Collection of all game entities.
 	bool m_bActive;							   	///< Identifies whether the engine is currently active.
 	SDL_Event m_Event;							///< SDL event object.
-	int m_iFrameStart;							///< The elapsed time at the start of the current frame.
-	int m_iFrameEnd;							///< The elapsed time at the end of the current frame.
-	int m_iFrameDuration;						///< The duration of the current frame.
+	MTimer m_FpsTimer;
+	IVar* m_iFpsMax;							///< Maximum FPS limit.
+	IVar* m_bFpsCap;							///< Whether the FPS is regulated or not.			
 
 	// Game interface pointer.
 	//IGame* m_pGame;

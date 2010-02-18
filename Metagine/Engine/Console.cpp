@@ -53,10 +53,10 @@ bool MConsole::Init( void )
 
 	// Tmp.
 	//m_TestSprite = new MSprite("gogorisset1.bmp",0,false,6,6,39,45,0.5f);
-	m_TestSprite = new MSprite("TestSprite.xml");
+	m_TestSprite = new MSprite("Explosion1.xml");
 	// m_TestSprite = new MSprite("gogorisset1.bmp",true,true,6,6,39,10);
 	//m_TestSprite = new MSprite("mariosprite.bmp",false,false);
-	m_TestSprite->SetPosition(50,50);
+	m_TestSprite->SetPosition(200,200);
 	
 	return true;
 }
@@ -154,6 +154,8 @@ float MConsole::GetDepth( void )
 
 void MConsole::Render( void* pSurface )
 {
+	m_TestSprite->Animate(true);
+	
 	if( m_bToggleAnimDown ) {
 		if( m_iScrollPoint < m_iPositionYon->GetValueInt() ) {
 			m_iScrollPoint += m_iScrollFactor->GetValueInt();

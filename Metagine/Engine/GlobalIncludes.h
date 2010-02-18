@@ -32,10 +32,11 @@
 // Concretes.
 #include "VarManager.h"
 #include "Var.h"
+#include "../Public/Singleton.h"
+#include "../Public/Timer.h"
 
 // Interfaces.
 #include "../Interfaces/IEngine.h"
 #include "../Interfaces/IVar.h"
-#include "../Public/Singleton.h"
 
 #endif // _GLOBALINCLUDES_H_

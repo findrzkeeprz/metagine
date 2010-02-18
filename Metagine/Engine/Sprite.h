@@ -39,12 +39,11 @@ public:
 	void SetFrame( int iFrame );
 	int GetFrame( void );
 	int GetNumFrames( void );
+	void Animate( bool bLoop );
 
 	// Documented in IDrawable.h
 	bool GetActive( void );
 	float GetDepth( void );
-
-	// Render the drawable object.
 	virtual void Render( void* pSurface );
 
 private:
@@ -55,10 +54,11 @@ private:
 
 private:
 
-	SDL_Surface* m_Surface;
 	SDL_Surface** m_RotSurfaces;
-	std::vector<SDL_Surface*> m_Frames;
+	std::vector<SDL_Surface*> m_FramesCache;
+	MTimer m_FrameTimer;
 	int m_iFrame;
+	int m_iFrameDelay;
 	int m_Coords[2];
 	double m_dAngle;
 	bool m_bActive;
