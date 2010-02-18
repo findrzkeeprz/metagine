@@ -30,7 +30,7 @@ public:
 	/// The file should be of a correct image format, which will then
 	/// be converted to the correct screen format.
 	/// @param sName The relative file name of the external image.
-	virtual bool LoadImageFile( const std::string& sFileName ) = 0;
+	//virtual void* LoadImageFile( const std::string& sFileName ) = 0;
 	
 	/// Sets the screen position of the sprite.
 	/// This will set the 2D position of the sprite on the game screen. Setting

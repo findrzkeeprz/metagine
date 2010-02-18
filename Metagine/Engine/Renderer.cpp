@@ -58,6 +58,29 @@ void MRenderer::Shutdown( void )
 	// Do some housekeeping.
 	SDL_Quit();
 	TTF_Quit();
+
+	std::vector<IDrawable*> DelQueue;
+	std::vector<IDrawable*>::iterator it = m_RenderQueue.begin();
+	
+	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); it++ ) {
+		if( (*it) ) {
+			printf(" -> Scheduling drawable object for deletion (0x%X).\n",(*it));
+			DelQueue.push_back((*it));
+		}
+	}
+
+	// We do this so that the actual render queue is not modified while iterating
+	// as it was causing some nasty NULL pointer bugs.
+	it = DelQueue.begin();
+	for( it = DelQueue.begin(); it < DelQueue.end(); it++ ) {
+		if( *it ) {
+			printf(" -> Deleting queued drawable object (0x%X).\n",(*it));
+			delete (*it);
+		}
+	}
+	
+	m_RenderQueue.clear();
+	DelQueue.clear();
 }
 
 bool MRenderer::FontLibLoaded( void )
@@ -83,9 +106,10 @@ void MRenderer::RemoveDrawable( IDrawable* pDrawable )
 {
 	std::vector<IDrawable*>::iterator it = m_RenderQueue.begin();
 	while( it != m_RenderQueue.end() ) {
-		if( *it == pDrawable )
+		if( (*it) && (*it == pDrawable) ) {
+			printf(" -> Removing object (0x%X) from rendering queue.\n",pDrawable);
 			it = m_RenderQueue.erase(it);
-		else ++it;
+		} else ++it;
 	}
 
 	// Resort based on depth.

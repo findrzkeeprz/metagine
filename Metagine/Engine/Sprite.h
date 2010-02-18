@@ -26,20 +26,21 @@ public:
 
 	/// Default constructor (takes no arguments).
 	MSprite( void );
-
 	MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, float fDepth );
-
 	MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, int x, int y, int iWidth, int iHeight, float fDepth );
+	MSprite( const char* pszXmlFile );
 
 	/// Destructor method.
 	~MSprite( void );
-
+	
 	// Documented in ISprite.h
-	bool LoadImageFile( const std::string& sFileName );
-	bool LoadImageFileClipped( const std::string& sFileName, int x, int y, int iWidth, int iHeight );
 	void SetPosition( int x, int y );
 	void SetRotation( double iAngle );
+	void SetFrame( int iFrame );
+	int GetFrame( void );
+	int GetNumFrames( void );
 
+	// Documented in IDrawable.h
 	bool GetActive( void );
 	float GetDepth( void );
 
@@ -48,8 +49,16 @@ public:
 
 private:
 
+	SDL_Surface* SurfFromFile( const std::string& sFileName );
+	SDL_Surface* ClippedSurfFromFile( const std::string& sFileName, int x, int y, int iWidth, int iHeight );
+	bool ParseFromXml( const char* pszXmlFile );
+
+private:
+
 	SDL_Surface* m_Surface;
 	SDL_Surface** m_RotSurfaces;
+	std::vector<SDL_Surface*> m_Frames;
+	int m_iFrame;
 	int m_Coords[2];
 	double m_dAngle;
 	bool m_bActive;

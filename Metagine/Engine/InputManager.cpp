@@ -49,12 +49,20 @@ void MInputManager::RegisterListener( IInputListener* pListener )
 
 void MInputManager::RemoveListener( IInputListener* pListener )
 {
-	std::vector<IInputListener*>::iterator it;
+	/*std::vector<IInputListener*>::iterator it;
 	for( it = m_Listeners.begin(); it < m_Listeners.end(); it++ ) {
 		if( (*it) == pListener ) {
 			printf(" -> Removing object (0x%X) from input listeners.\n",pListener);
 			m_Listeners.erase(it);
 		}
+	}*/
+
+	std::vector<IInputListener*>::iterator it = m_Listeners.begin();
+	while( it != m_Listeners.end() ) {
+		if( *it == pListener ) {
+			printf(" -> Removing object (0x%X) from input listeners.\n",pListener);
+			it = m_Listeners.erase(it);
+		} else ++it;
 	}
 }
 

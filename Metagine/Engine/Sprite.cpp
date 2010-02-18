@@ -21,7 +21,8 @@ m_Surface(NULL),
 m_dAngle(0.0),
 m_bActive(false),
 m_iRotateSteps(0),
-m_fDepth(0.0f)
+m_fDepth(0.0f),
+m_iFrame(0)
 {
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
@@ -33,17 +34,20 @@ MSprite::MSprite( const char *pszFileName, int iRotateSteps, bool bSmooth, float
 m_dAngle(0.0),
 m_bActive(true),
 m_iRotateSteps(iRotateSteps),
-m_fDepth(fDepth)
+m_fDepth(fDepth),
+m_iFrame(0)
 {
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
 
-	if( !this->LoadImageFile(pszFileName)) {
+	SDL_Surface* pSurface = NULL;
+	if( ( pSurface = SurfFromFile(pszFileName) ) == NULL ) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
 		return;
 	}
 
-	// Push back to the renderer queue.
+	// Add to the frame list and rendering queue.
+	m_Frames.push_back(pSurface);
 	Renderer::GetInstance()->RegisterDrawable(this);
 }
 
@@ -51,34 +55,60 @@ MSprite::MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, int x
 m_dAngle(0.0),
 m_bActive(true),
 m_iRotateSteps(iRotateSteps),
-m_fDepth(fDepth)
+m_fDepth(fDepth),
+m_iFrame(0)
 {
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
-
-	if( !this->LoadImageFileClipped(pszFileName,x,y,iWidth,iHeight)) {
+	
+	SDL_Surface* pSurface = NULL;
+	if( ( pSurface = ClippedSurfFromFile(pszFileName,x,y,iWidth,iHeight) ) == NULL ) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
 		return;
 	}
 
-	// Push back to the renderer queue.
+	// Add to the frame list and rendering queue.
+	m_Frames.push_back(pSurface);
+	Renderer::GetInstance()->RegisterDrawable(this);
+}
+
+MSprite::MSprite( const char* pszXmlFile ) :
+m_dAngle(0.0),
+m_bActive(true),
+m_iRotateSteps(0),
+m_fDepth(0.0f),
+m_iFrame(0)
+{
+	if( !ParseFromXml(pszXmlFile) ) {
+		printf(" -! ERROR unable to parse XML file in MSprite().\n");
+		return;
+	}
+	
 	Renderer::GetInstance()->RegisterDrawable(this);
 }
 
 MSprite::~MSprite( void )
 {
 	Renderer::GetInstance()->RemoveDrawable(this);
-	SDL_FreeSurface(m_Surface);
+	//SDL_FreeSurface(m_Surface);
 
 	// We skip [0] since it points to m_Surface.
-	if( m_iRotateSteps > 0 ) {
-		for( int i = 0; i < m_iRotateSteps; i++ ) {
-			SDL_FreeSurface(m_RotSurfaces[i]);
+	//if( m_iRotateSteps > 0 ) {
+	//	for( int i = 0; i < m_iRotateSteps; i++ ) {
+	//		SDL_FreeSurface(m_RotSurfaces[i]);
+	//	}
+	//	delete[] m_RotSurfaces;
+	//}
+	int iFrames = 0;
+	std::vector<SDL_Surface*>::iterator it;
+	for( it = m_Frames.begin(); it < m_Frames.end(); it++ ) {
+		if( *it ) {
+			SDL_FreeSurface(*it);
+			iFrames++;
 		}
-		delete[] m_RotSurfaces;
 	}
 
-	printf(" -> MSprite object destructed.\n");
+	printf(" -> MSprite object destructed (%i frames).\n",iFrames);
 }
 
 void MSprite::SetPosition( int x, int y )
@@ -102,25 +132,48 @@ void MSprite::SetRotation( double iAngle )
 	m_dAngle = iAngle;
 }
 
-bool MSprite::LoadImageFile( const std::string& sFileName )
+void MSprite::SetFrame( int iFrame )
+{
+	if( iFrame > (GetNumFrames() - 1) ) {
+		printf(" -! ERROR specified sprite frame out of bounds in MSprite::SetFrame().\n");
+		return;
+	}
+
+	m_iFrame = iFrame;
+}
+
+int MSprite::GetFrame( void )
+{
+	return m_iFrame;
+}
+
+int MSprite::GetNumFrames( void )
+{
+	return (int)m_Frames.size();
+}
+
+SDL_Surface* MSprite::SurfFromFile( const std::string& sFileName )
 {
 	if( !sFileName.c_str() ) {
 		printf(" -! ERROR invalid file name in MSprite::LoadImageFile().\n");
-		return false;
+		return NULL;
 	}
 
-	SDL_Surface* TempSurf = NULL;
-	if( ( TempSurf = SDL_LoadBMP(sFileName.c_str()) ) == NULL ) {
+	SDL_Surface* pTemp = NULL;
+	SDL_Surface* pResult = NULL;
+
+	
+	if( ( pTemp = SDL_LoadBMP(sFileName.c_str()) ) == NULL ) {
 		printf(" -! ERROR SDL_LoadBMP() returned a NULL object.\n");
 		return false;
 	}
 
-	int iColKey = SDL_MapRGB(TempSurf->format,0xFF,0,0xFF);
-	SDL_SetColorKey(TempSurf,SDL_SRCCOLORKEY,iColKey);
-	m_Surface = SDL_DisplayFormat(TempSurf);
-	SDL_FreeSurface(TempSurf);
+	int iColKey = SDL_MapRGB(pTemp->format,0xFF,0,0xFF);
+	SDL_SetColorKey(pTemp,SDL_SRCCOLORKEY,iColKey);
+	pResult = SDL_DisplayFormat(pTemp);
+	SDL_FreeSurface(pTemp);
 
-	if( m_iRotateSteps > 0 ) {
+	/*if( m_iRotateSteps > 0 ) {
 		m_RotSurfaces = new SDL_Surface* [m_iRotateSteps];
 		m_RotSurfaces[0] = m_Surface;
 
@@ -131,39 +184,42 @@ bool MSprite::LoadImageFile( const std::string& sFileName )
 			m_RotSurfaces[i] = SDL_DisplayFormat(rotSurf);
 			SDL_FreeSurface(rotSurf);
 		}
-	}
+	}*/
 
-	return true;
+	return pResult;
 }
 
-bool MSprite::LoadImageFileClipped( const std::string& sFileName, int x, int y, int iWidth, int iHeight )
+SDL_Surface* MSprite::ClippedSurfFromFile( const std::string& sFileName, int x, int y, int iWidth, int iHeight )
 {
 	if( !sFileName.c_str() ) {
-		printf(" -! ERROR invalid file name in MSprite::LoadImageFileClipped().\n");
-		return false;
+		printf(" -! ERROR invalid file name in MSprite::ClippedSurfFromFile().\n");
+		return NULL;
 	}
 
-	SDL_Surface* TempSurf = NULL;
-	if( ( TempSurf = SDL_LoadBMP(sFileName.c_str()) ) == NULL ) {
+	SDL_Surface* pTemp = NULL;
+	SDL_Surface* pResult = NULL;
+	SDL_Surface* pEmpty = NULL;
+
+	if( ( pTemp = SDL_LoadBMP(sFileName.c_str()) ) == NULL ) {
 		printf(" -! ERROR SDL_LoadBMP() returned a NULL object.\n");
-		return false;
+		return NULL;
 	}
 
 	SDL_Rect srcRect = { x, y, iWidth, iHeight };
 	SDL_Rect dstRect = { 0, 0, iWidth, iHeight };
 	
 	// Create an empty surface and blit clipped surface to it.
-	SDL_Surface* NewSurf = SDL_CreateRGBSurface(SDL_SWSURFACE,iWidth,iHeight,32,0,0,0,0);
-	SDL_BlitSurface(TempSurf,&srcRect,NewSurf,&dstRect);
-	SDL_FreeSurface(TempSurf);
+	pEmpty = SDL_CreateRGBSurface(SDL_SWSURFACE,iWidth,iHeight,32,0,0,0,0);
+	SDL_BlitSurface(pTemp,&srcRect,pEmpty,&dstRect);
+	SDL_FreeSurface(pTemp);
 
 	// Set the colour key to enable transparency.
-	int iColKey = SDL_MapRGB(NewSurf->format,0xFF,0,0xFF);
-	SDL_SetColorKey(NewSurf,SDL_SRCCOLORKEY,iColKey);
-	m_Surface = SDL_DisplayFormatAlpha(NewSurf);
-	SDL_FreeSurface(NewSurf);
+	int iColKey = SDL_MapRGB(pEmpty->format,0xFF,0,0xFF);
+	SDL_SetColorKey(pEmpty,SDL_SRCCOLORKEY,iColKey);
+	pResult = SDL_DisplayFormatAlpha(pEmpty);
+	SDL_FreeSurface(pEmpty);
 
-	if( m_iRotateSteps > 0 ) {
+	/*if( m_iRotateSteps > 0 ) {
 		m_RotSurfaces = new SDL_Surface* [m_iRotateSteps];
 		m_RotSurfaces[0] = m_Surface;
 
@@ -174,8 +230,54 @@ bool MSprite::LoadImageFileClipped( const std::string& sFileName, int x, int y, 
 			m_RotSurfaces[i] = SDL_DisplayFormatAlpha(rotSurf);
 			SDL_FreeSurface(rotSurf);
 		}
+	}*/
+
+	return pResult;
+}
+
+bool MSprite::ParseFromXml( const char* pszXmlFile )
+{
+	TiXmlDocument xmlDoc(pszXmlFile);
+	TiXmlElement* pRoot = NULL;
+
+	if( !xmlDoc.LoadFile() ) {
+		printf(" -! ERROR unable to load XML file in MSprite::ParseFromXml().\n");
+		return false;
 	}
 
+	else if( ( pRoot = xmlDoc.FirstChildElement("SpriteEntry") ) == NULL ) {
+		printf(" -! ERROR invalid XML format in MSprite().\n");
+		return false;
+	}
+
+	// We do this here because depth is a per-sprite (not frame) attribute.
+	m_fDepth = (float)atof(pRoot->Attribute("depth"));
+
+	// Recursively load every sprite frame from the XML file.
+	for( TiXmlNode *pNode = pRoot->FirstChild("SpriteFrame"); pNode; 
+		pNode = pNode->NextSibling("SpriteFrame") )
+	{
+		TiXmlElement* pSpriteFrame = NULL;
+		if( ( pSpriteFrame = pNode->ToElement() ) == NULL ) {
+			printf(" -! ERROR invalid SpriteFrame in MSprite::ParseFromXml().\n");
+			return false;
+		}
+
+		int x = atoi(pSpriteFrame->Attribute("clipX"));
+		int y = atoi(pSpriteFrame->Attribute("clipY"));
+		int w = atoi(pSpriteFrame->Attribute("clipW"));
+		int h = atoi(pSpriteFrame->Attribute("clipH"));
+
+		SDL_Surface* pSurface = NULL;
+		if( ( pSurface = ClippedSurfFromFile(pSpriteFrame->Attribute("fileName"),x,y,w,h) ) == NULL ) {
+			printf(" -! ERROR unable to load sprite file in MSprite::ParseFromXml().\n");
+			return false;
+		}
+
+		m_Frames.push_back(pSurface);
+	}
+
+	xmlDoc.Clear();
 	return true;
 }
 
@@ -196,6 +298,7 @@ void MSprite::Render( void* pSurface )
 	Rect.x = m_iRotateSteps > 0 ? m_Coords[0] - (m_RotSurfaces[(int)m_dAngle]->w / 2) : m_Coords[0];
 	Rect.y = m_iRotateSteps > 0 ? m_Coords[1] - (m_RotSurfaces[(int)m_dAngle]->h / 2) : m_Coords[1];
 
-	if( m_iRotateSteps == 0 ) SDL_BlitSurface(m_Surface,NULL,(SDL_Surface*)pSurface,&Rect);
-	else SDL_BlitSurface(m_RotSurfaces[(int)m_dAngle],NULL,(SDL_Surface*)pSurface,&Rect);
+	/*if( m_iRotateSteps == 0 )*/ 
+	SDL_BlitSurface(m_Frames[m_iFrame],NULL,(SDL_Surface*)pSurface,&Rect);
+	//else SDL_BlitSurface(m_RotSurfaces[(int)m_dAngle],NULL,(SDL_Surface*)pSurface,&Rect);
 }

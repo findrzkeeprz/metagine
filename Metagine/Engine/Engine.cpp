@@ -105,7 +105,7 @@ void MEngine::Shutdown( void )
     
     // Delete allocated objects.
     std::vector<IBaseInterface*>::reverse_iterator it;
-	for( it = m_Interfaces.rbegin(); it > m_Interfaces.rend(); it++ )
+	for( it = m_Interfaces.rbegin(); it < m_Interfaces.rend(); it++ )
 		if( (*it) ) {
 			(*it)->Shutdown();
 			delete (*it);
