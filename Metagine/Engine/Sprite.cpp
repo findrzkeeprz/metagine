@@ -250,8 +250,10 @@ bool MSprite::ParseFromXml( const char* pszXmlFile )
 		return false;
 	}
 
-	// We do this here because depth is a per-sprite (not frame) attribute.
+	// We do this here because depth is a per-sprite (not frame) attribute
+	// and there is little sense in using frames from multiple files.
 	m_fDepth = (float)atof(pRoot->Attribute("depth"));
+	std::string sFileName = pRoot->Attribute("fileName");
 
 	// Recursively load every sprite frame from the XML file.
 	for( TiXmlNode *pNode = pRoot->FirstChild("SpriteFrame"); pNode; 
@@ -269,7 +271,7 @@ bool MSprite::ParseFromXml( const char* pszXmlFile )
 		int h = atoi(pSpriteFrame->Attribute("clipH"));
 
 		SDL_Surface* pSurface = NULL;
-		if( ( pSurface = ClippedSurfFromFile(pSpriteFrame->Attribute("fileName"),x,y,w,h) ) == NULL ) {
+		if( ( pSurface = ClippedSurfFromFile(sFileName,x,y,w,h) ) == NULL ) {
 			printf(" -! ERROR unable to load sprite file in MSprite::ParseFromXml().\n");
 			return false;
 		}
