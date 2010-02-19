@@ -13,31 +13,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _GLOBALINCLUDES_H_
-#define _GLOBALINCLUDES_H_
+#include "GameBoard.h"
+#include "../Engine/Sprite.h"
+#include "../Engine/GlobalIncludes.h"
 
-// Standards.
-#include <stdio.h>
-#include <vector>
-#include <string.h>
-#include <algorithm>
+MGameBoard::MGameBoard( void )
+{
 
-// Third-party.
-#include "../Includes/SDL/SDL.h"
-#include "../Includes/SDL/SDL_ttf.h"
-#include "../Includes/SDL/SDL_rotozoom.h"
-#include "../Includes/SDL/SDL_image.h"
-#include "../Includes/Box2D/Box2D.h"
-#include "../Includes/TinyXml/tinyxml.h"
+}
 
-// Concretes.
-#include "VarManager.h"
-#include "Var.h"
-#include "../Public/Singleton.h"
-#include "../Public/Timer.h"
+MGameBoard::~MGameBoard( void )
+{
+	if( m_PlayerShip ) {
+		delete m_PlayerShip;
+		m_PlayerShip = NULL;
+	}
+}
 
-// Interfaces.
-#include "../Interfaces/IEngine.h"
-#include "../Interfaces/IVar.h"
-
-#endif // _GLOBALINCLUDES_H_
+void MGameBoard::Init( void )
+{
+	m_BgSprite = new MSprite("SpaceBG.png",0,true,1.0f);
+	m_PlayerShip = new MShip();
+}

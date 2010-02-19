@@ -53,7 +53,7 @@ public:
 	/// Initialize the renderer component.
 	/// Initialise the graphical subsystems and allocate any required resources
 	/// such as the SDL and TTF libraries.
-	bool Init( void );
+	bool Init( int iWidth, int iHeight );
 
 	/// Determines whether the TTF font library has been loaded.
 	bool FontLibLoaded( void );
@@ -77,6 +77,9 @@ public:
 	/// currently tracking.
 	void Frame( void );
 
+	int GetScreenWidth( void );
+	int GetScreenHeight( void );
+
 private:
 
 	static bool SpriteSortFunc( IDrawable* pData1, IDrawable* pData2 );
@@ -84,6 +87,7 @@ private:
 	SDL_Surface* m_Screen;					///< Main SDL screen surface.
 	bool m_bFontLibLoaded;					///< Shows the status of the TTF library.
 	std::vector<IDrawable*> m_RenderQueue;	///< A queue of IDrawable objects to render every frame.
+	int m_iResolution[2];						///< Resolution of the engine screen.
 };
 
 typedef MSingleton<MRenderer> Renderer;

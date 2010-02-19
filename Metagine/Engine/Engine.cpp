@@ -63,7 +63,7 @@ bool MEngine::Init( void )
 	}
 
 	// Setup the subsystems.
-	if( !Renderer::GetInstance()->Init() ) {
+	if( !Renderer::GetInstance()->Init(500,650) ) {
 		printf(" -! ERROR in Renderer::GetInstance()->Init(), aborting.\n");
 		return false;
 	} else if( !InputManager::GetInstance()->Init() ) {
@@ -92,8 +92,12 @@ bool MEngine::Init( void )
 		return false;
 	}*/
 
+	m_GameBoard.Init();
+
 	m_iFpsMax = VarManager::GetInstance()->CreateVar("ifpsmax",60);
 	m_bFpsCap = VarManager::GetInstance()->CreateVar("bfpscap",true);
+
+	m_GameTimer.Start();
 
 	m_bActive = true;
     return true;
@@ -144,7 +148,7 @@ void MEngine::Run( void )
 		m_FpsTimer.Start();
 		
 		HandleInput();
-		//m_pGame->Frame();
+		UpdateEntities();
 		Renderer::GetInstance()->Frame();
 
 		// Limit the frame rate.
@@ -168,10 +172,43 @@ IBaseInterface* MEngine::GetInterfaceByName( const std::string& sName )
     return NULL;
 }
 
+void MEngine::UpdateEntities( void )
+{
+	std::vector<IEntity*>::iterator it;
+	for( it = m_Entities.begin(); it < m_Entities.end(); it++ )
+		if( (*it)->GetActive() )
+			(*it)->UpdateLogic(m_GameTimer.GetTicks());	// Is this a problem?
+	
+	// Reset the timer.
+	m_GameTimer.Start();
+}
+
+bool MEngine::RegisterEntity( IEntity* pEntity )
+{
+	if( !pEntity ) {
+		// Error msg here
+		return false;
+	}
+
+	m_Entities.push_back(pEntity);
+	printf(" -> Registered entity (0x%X) with logic queue.\n",pEntity);
+	
+	return true;
+}
+
+void MEngine::RemoveEntity( IEntity* pEntity )
+{
+	std::vector<IEntity*>::iterator it = m_Entities.begin();
+	while( it != m_Entities.end() ) {
+		if( (*it) && (*it == pEntity) ) {
+			printf(" -> Removing entity (0x%X) from logic queue.\n",pEntity);
+			it = m_Entities.erase(it);
+		} else ++it;
+	}
+}
+
 void MEngine::HandleInput( void )
 {
-	//Console::GetInstance()->Echo("I pressed something!");
-	
 	while( SDL_PollEvent(&m_Event) ) {
 		// Quit the application.
 		if( m_Event.type == SDL_QUIT ) { 

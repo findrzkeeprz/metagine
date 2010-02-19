@@ -19,9 +19,11 @@
 #include <vector>
 #include "../Includes/SDL/SDL.h"
 #include "../Interfaces/IEngine.h"
+#include "../Interfaces/IEntity.h"
 //#include "../Interfaces/IGame.h"
 #include "../Public/Singleton.h"
 #include "../Public/Timer.h"
+#include "../Game/GameBoard.h"
 
 /// Main game engine interface.
 /// This object is responsible for the creation and
@@ -49,6 +51,10 @@ public:
     bool RegisterInterface( IBaseInterface* pInterface );
 	IBaseInterface* GetInterfaceByName( const std::string& sName );
 
+	void UpdateEntities( void );
+	bool RegisterEntity( IEntity* pEntity );
+	void RemoveEntity( IEntity* pEntity );
+
 private:
 
     void Run( void );
@@ -62,12 +68,17 @@ private:
 private:
 
     std::vector<IBaseInterface*> m_Interfaces; 	///< Container of all registered game interfaces.
-	//std::vector<IEntity*> m_Entities;			///< Collection of all game entities.
+	std::vector<IEntity*> m_Entities;			///< Collection of all game entities.
 	bool m_bActive;							   	///< Identifies whether the engine is currently active.
+	
 	SDL_Event m_Event;							///< SDL event object.
 	MTimer m_FpsTimer;
+	MTimer m_GameTimer;
 	IVar* m_iFpsMax;							///< Maximum FPS limit.
-	IVar* m_bFpsCap;							///< Whether the FPS is regulated or not.			
+	IVar* m_bFpsCap;							///< Whether the FPS is regulated or not.	
+	IVar* m_iGameRefresh;
+
+	MGameBoard m_GameBoard;
 
 	// Game interface pointer.
 	//IGame* m_pGame;

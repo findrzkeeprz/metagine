@@ -45,6 +45,9 @@ public:
 	/// cached surface previously created.
 	/// @param iAngle An angle between 0 and 359.
 	virtual void SetRotation( double iAngle ) = 0;
+
+	virtual int GetWidth( void ) = 0;
+	virtual int GetHeight( void ) = 0;
 };
 
 #endif // _ISPRITE_H_

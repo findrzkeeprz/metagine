@@ -40,8 +40,8 @@ bool MConsole::Init( void )
 	m_bActive = VarManager::GetInstance()->CreateVar("bconactive",true);
 	m_iFontSpacing = VarManager::GetInstance()->CreateVar("bconfontspacing",15);
 	m_iPositionX = VarManager::GetInstance()->CreateVar("bconposx",10);
-	m_iPositionYon = VarManager::GetInstance()->CreateVar("bconposy_on",90);
-	m_iPositionYoff = VarManager::GetInstance()->CreateVar("bconposy_off",-10);
+	m_iPositionYon = VarManager::GetInstance()->CreateVar("bconposyon",60);
+	m_iPositionYoff = VarManager::GetInstance()->CreateVar("bconposyoff",-30);
 	m_iScrollFactor = VarManager::GetInstance()->CreateVar("bconscrollfactor",3);
 	
 	m_Font = new MOutlineFont("ariblk.ttf",15,255,255,255,1,0.0f);
@@ -199,11 +199,13 @@ void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 {
 	// Toggle the console.
 	if( bKeys[SDLK_F5] && !m_bToggling ) {
-		if( m_bActive->GetValueBool() )
+		if( m_bActive->GetValueBool() ) {
 			m_bToggleAnimUp = true;
-		else {
+			InputManager::GetInstance()->SetKeyRepeat(1,1);
+		} else {
 			m_bActive->SetValueBool(true);
 			m_bToggleAnimDown = true;
+			InputManager::GetInstance()->SetKeyRepeat(500,SDL_DEFAULT_REPEAT_INTERVAL);
 		}
 	}
 

@@ -24,7 +24,7 @@ public:
     virtual ~IEntity( void ) { };
 
     /// Virtual method to update the entity.
-    virtual void Frame( float fDelta ) = 0;
+    virtual void UpdateLogic( int iDelta ) = 0;
 
     /// Virtual accessor to determine object validity.
     virtual bool GetActive( void ) = 0;

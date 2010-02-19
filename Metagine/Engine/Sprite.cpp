@@ -21,7 +21,8 @@ m_dAngle(0.0),
 m_bActive(false),
 m_iRotateSteps(0),
 m_fDepth(0.0f),
-m_iFrame(0)
+m_iFrame(0),
+m_iFrameDelay(0)
 {
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
@@ -34,7 +35,8 @@ m_dAngle(0.0),
 m_bActive(true),
 m_iRotateSteps(iRotateSteps),
 m_fDepth(fDepth),
-m_iFrame(0)
+m_iFrame(0),
+m_iFrameDelay(0)
 {
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
@@ -50,18 +52,20 @@ m_iFrame(0)
 	Renderer::GetInstance()->RegisterDrawable(this);
 }
 
-MSprite::MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, int x, int y, int iWidth, int iHeight, float fDepth ) :
+MSprite::MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, 
+				 int x, int y, int iWidth, int iHeight, int r, int g, int b, float fDepth ) :
 m_dAngle(0.0),
 m_bActive(true),
 m_iRotateSteps(iRotateSteps),
 m_fDepth(fDepth),
-m_iFrame(0)
+m_iFrame(0),
+m_iFrameDelay(0)
 {
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
 	
 	SDL_Surface* pSurface = NULL;
-	if( ( pSurface = ClippedSurfFromFile(pszFileName,x,y,iWidth,iHeight) ) == NULL ) {
+	if( ( pSurface = ClippedSurfFromFile(pszFileName,x,y,iWidth,iHeight,r,g,b) ) == NULL ) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
 		return;
 	}
@@ -76,7 +80,8 @@ m_dAngle(0.0),
 m_bActive(true),
 m_iRotateSteps(0),
 m_fDepth(0.0f),
-m_iFrame(0)
+m_iFrame(0),
+m_iFrameDelay(0)
 {
 	if( !ParseFromXml(pszXmlFile) ) {
 		printf(" -! ERROR unable to parse XML file in MSprite().\n");
@@ -172,7 +177,7 @@ SDL_Surface* MSprite::SurfFromFile( const std::string& sFileName )
 	SDL_Surface* pResult = NULL;
 
 	
-	if( ( pTemp = SDL_LoadBMP(sFileName.c_str()) ) == NULL ) {
+	if( ( pTemp = IMG_Load(sFileName.c_str()) ) == NULL ) {
 		printf(" -! ERROR SDL_LoadBMP() returned a NULL object.\n");
 		return false;
 	}
@@ -198,7 +203,7 @@ SDL_Surface* MSprite::SurfFromFile( const std::string& sFileName )
 	return pResult;
 }
 
-SDL_Surface* MSprite::ClippedSurfFromFile( const std::string& sFileName, int x, int y, int iWidth, int iHeight )
+SDL_Surface* MSprite::ClippedSurfFromFile( const std::string& sFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b )
 {
 	if( !sFileName.c_str() ) {
 		printf(" -! ERROR invalid file name in MSprite::ClippedSurfFromFile().\n");
@@ -209,7 +214,7 @@ SDL_Surface* MSprite::ClippedSurfFromFile( const std::string& sFileName, int x, 
 	SDL_Surface* pResult = NULL;
 	SDL_Surface* pEmpty = NULL;
 
-	if( ( pTemp = SDL_LoadBMP(sFileName.c_str()) ) == NULL ) {
+	if( ( pTemp = IMG_Load(sFileName.c_str()) ) == NULL ) {
 		printf(" -! ERROR SDL_LoadBMP() returned a NULL object.\n");
 		return NULL;
 	}
@@ -223,7 +228,7 @@ SDL_Surface* MSprite::ClippedSurfFromFile( const std::string& sFileName, int x, 
 	SDL_FreeSurface(pTemp);
 
 	// Set the colour key to enable transparency.
-	int iColKey = SDL_MapRGB(pEmpty->format,0xFF,0,0xFF);
+	int iColKey = SDL_MapRGB(pEmpty->format,r,g,b);
 	SDL_SetColorKey(pEmpty,SDL_SRCCOLORKEY,iColKey);
 	pResult = SDL_DisplayFormatAlpha(pEmpty);
 	SDL_FreeSurface(pEmpty);
@@ -264,6 +269,9 @@ bool MSprite::ParseFromXml( const char* pszXmlFile )
 	m_fDepth = (float)atof(pRoot->Attribute("depth"));
 	m_iFrameDelay = atoi(pRoot->Attribute("frameDelay"));
 	std::string sFileName = pRoot->Attribute("fileName");
+	int r = atoi(pRoot->Attribute("keyR"));
+	int g = atoi(pRoot->Attribute("keyG"));
+	int b = atoi(pRoot->Attribute("keyB"));
 
 	// Recursively load every sprite frame from the XML file.
 	for( TiXmlNode *pNode = pRoot->FirstChild("SpriteFrame"); pNode; 
@@ -281,7 +289,7 @@ bool MSprite::ParseFromXml( const char* pszXmlFile )
 		int h = atoi(pSpriteFrame->Attribute("clipH"));
 
 		SDL_Surface* pSurface = NULL;
-		if( ( pSurface = ClippedSurfFromFile(sFileName,x,y,w,h) ) == NULL ) {
+		if( ( pSurface = ClippedSurfFromFile(sFileName,x,y,w,h,r,g,b) ) == NULL ) {
 			printf(" -! ERROR unable to load sprite file in MSprite::ParseFromXml().\n");
 			return false;
 		}
@@ -301,6 +309,16 @@ bool MSprite::GetActive( void )
 float MSprite::GetDepth( void )
 {
 	return m_fDepth;
+}
+
+int MSprite::GetWidth( void )
+{
+	return m_FramesCache[m_iFrame]->w;
+}
+
+int MSprite::GetHeight( void )
+{
+	return m_FramesCache[m_iFrame]->w;
 }
 
 void MSprite::Render( void* pSurface )

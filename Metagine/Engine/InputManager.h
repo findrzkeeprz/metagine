@@ -42,6 +42,7 @@ public:
     const char* GetVersion( void ) { return INPUTMANAGER_VERSION; }
 
 	bool Init( void );
+	void SetKeyRepeat( int iDelay, int iInterval );
 	void RegisterListener( IInputListener* pListener );
     void RemoveListener( IInputListener* pListener );
 

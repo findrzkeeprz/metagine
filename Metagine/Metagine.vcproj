@@ -60,7 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(SolutionDir)\$(ProjectName)\Libraries\SDL.lib $(SolutionDir)\$(ProjectName)\Libraries\SDLmain.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_ttf.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_gfx.lib $(SolutionDir)\$(ProjectName)\Libraries\Box2D.lib $(SolutionDir)\$(ProjectName)\Libraries\tinyxml.lib"
+				AdditionalDependencies="$(SolutionDir)\$(ProjectName)\Libraries\SDL.lib $(SolutionDir)\$(ProjectName)\Libraries\SDLmain.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_ttf.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_gfx.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_image.lib $(SolutionDir)\$(ProjectName)\Libraries\Box2D.lib $(SolutionDir)\$(ProjectName)\Libraries\tinyxml.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -387,6 +387,10 @@
 				Name="Header Files"
 				>
 				<File
+					RelativePath=".\Game\GameBoard.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Game\Ship.h"
 					>
 				</File>
@@ -394,6 +398,10 @@
 			<Filter
 				Name="Source Files"
 				>
+				<File
+					RelativePath=".\Game\GameBoard.cpp"
+					>
+				</File>
 				<File
 					RelativePath=".\Game\Ship.cpp"
 					>

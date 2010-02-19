@@ -31,9 +31,15 @@ MInputManager::~MInputManager( void )
 
 bool MInputManager::Init( void )
 {
-	SDL_EnableKeyRepeat(1000,SDL_DEFAULT_REPEAT_INTERVAL);
+	//SDL_EnableKeyRepeat(0,SDL_DEFAULT_REPEAT_INTERVAL);
+	//SDL_EnableKeyRepeat(1,1);
 
 	return true;
+}
+
+void MInputManager::SetKeyRepeat( int iDelay, int iInterval )
+{
+	SDL_EnableKeyRepeat(iDelay,iInterval);
 }
 
 void MInputManager::RegisterListener( IInputListener* pListener )

@@ -27,14 +27,17 @@ MRenderer::~MRenderer( void )
     printf(" -> MRenderer object destructed.\n");
 }
 
-bool MRenderer::Init( void )
+bool MRenderer::Init( int iWidth, int iHeight )
 {
 	printf(" -> Initialising SDL subsystem.\n");
 
+	m_iResolution[0] = iWidth;
+	m_iResolution[1] = iHeight;
+	
 	if( SDL_Init(SDL_INIT_EVERYTHING) == -1 ) {
 		printf(" -! ERROR initialising SDL.\n");
 		return false;
-	} else if( ( m_Screen = SDL_SetVideoMode(640,480,32,SDL_SWSURFACE) ) == NULL ) {
+	} else if( ( m_Screen = SDL_SetVideoMode(m_iResolution[0],m_iResolution[1],32,SDL_SWSURFACE) ) == NULL ) {
 		printf(" -! ERROR setting SDL video mode.\n");
 		return false;
 	} else if( TTF_Init() == -1 ) {
@@ -132,4 +135,14 @@ void MRenderer::Frame( void )
 bool MRenderer::SpriteSortFunc( IDrawable* pData1, IDrawable* pData2 )
 {
 	return pData1->GetDepth() > pData2->GetDepth();
+}
+
+int MRenderer::GetScreenWidth( void )
+{
+	return m_iResolution[0];
+}
+
+int MRenderer::GetScreenHeight( void )
+{
+	return m_iResolution[1];
 }

@@ -27,7 +27,7 @@ public:
 	/// Default constructor (takes no arguments).
 	MSprite( void );
 	MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, float fDepth );
-	MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, int x, int y, int iWidth, int iHeight, float fDepth );
+	MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, int x, int y, int iWidth, int iHeight, int r, int g, int b, float fDepth );
 	MSprite( const char* pszXmlFile );
 
 	/// Destructor method.
@@ -40,6 +40,8 @@ public:
 	int GetFrame( void );
 	int GetNumFrames( void );
 	void Animate( bool bLoop );
+	int GetWidth( void );
+	int GetHeight( void );
 
 	// Documented in IDrawable.h
 	bool GetActive( void );
@@ -49,7 +51,7 @@ public:
 private:
 
 	SDL_Surface* SurfFromFile( const std::string& sFileName );
-	SDL_Surface* ClippedSurfFromFile( const std::string& sFileName, int x, int y, int iWidth, int iHeight );
+	SDL_Surface* ClippedSurfFromFile( const std::string& sFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b );
 	bool ParseFromXml( const char* pszXmlFile );
 
 private:

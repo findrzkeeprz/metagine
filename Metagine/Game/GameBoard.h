@@ -13,31 +13,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _GLOBALINCLUDES_H_
-#define _GLOBALINCLUDES_H_
+#ifndef _GAMEBOARD_H_
+#define _GAMEBOARD_H_
 
-// Standards.
-#include <stdio.h>
-#include <vector>
-#include <string.h>
-#include <algorithm>
+#include "../Interfaces/ISprite.h"
+#include "Ship.h"
 
-// Third-party.
-#include "../Includes/SDL/SDL.h"
-#include "../Includes/SDL/SDL_ttf.h"
-#include "../Includes/SDL/SDL_rotozoom.h"
-#include "../Includes/SDL/SDL_image.h"
-#include "../Includes/Box2D/Box2D.h"
-#include "../Includes/TinyXml/tinyxml.h"
+class MGameBoard
+{
+public:
 
-// Concretes.
-#include "VarManager.h"
-#include "Var.h"
-#include "../Public/Singleton.h"
-#include "../Public/Timer.h"
+	MGameBoard( void );
+	~MGameBoard( void );
 
-// Interfaces.
-#include "../Interfaces/IEngine.h"
-#include "../Interfaces/IVar.h"
+	void Init( void );
 
-#endif // _GLOBALINCLUDES_H_
+private:
+
+	ISprite* m_BgSprite;
+	MShip* m_PlayerShip;
+};
+
+#endif // _GAMEBOARD_H_
