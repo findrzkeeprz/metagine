@@ -17,38 +17,29 @@
 
 MVar::MVar( void ) :
 m_sName(CVAR_NULL_STRING),
-m_iValue(0),
-m_fValue(0.0f),
-m_bValue(false),
 m_iType(CVAR_NULL)
 {
 }
 
 MVar::MVar( const char* pszName, int iValue ) :
 m_sName(pszName),
-m_iValue(iValue),
-m_fValue(0.0f),
-m_bValue(false),
 m_iType(CVAR_INT)
 {
+	m_Value.iValue = iValue;
 }
 
 MVar::MVar( const char* pszName, float fValue ) :
 m_sName(pszName),
-m_iValue(0),
-m_fValue(fValue),
-m_bValue(false),
 m_iType(CVAR_FLOAT)
 {
+	m_Value.fValue = fValue;
 }
 
 MVar::MVar( const char* pszName, bool bValue ) :
 m_sName(pszName),
-m_iValue(0),
-m_fValue(0.0f),
-m_bValue(bValue),
 m_iType(CVAR_BOOL)
 {
+	m_Value.bValue = bValue;
 }
 
 MVar::~MVar( void )
@@ -68,35 +59,35 @@ const int MVar::GetType( void )
 const int MVar::GetValueInt( void )
 {
     assert(m_iType == CVAR_INT);
-    
-    return m_iValue;
+	return m_Value.iValue;
 }
 
 const float MVar::GetValueFloat( void )
 {
     assert(m_iType == CVAR_FLOAT);
-    
-    return m_fValue;
+	return m_Value.fValue;
 }
 
 const bool MVar::GetValueBool( void )
 {
     assert(m_iType == CVAR_BOOL);
-    
-    return m_bValue;
+	return m_Value.bValue;
 }
 
 void MVar::SetValueInt( int iValue )
 {
-    m_iValue = iValue;
+    assert(m_iType == CVAR_INT);
+	m_Value.iValue = iValue;
 }
 
 void MVar::SetValueFloat( float fValue )
 {
-    m_fValue = fValue;
+    assert(m_iType == CVAR_FLOAT);
+	m_Value.fValue = fValue;
 }
 
 void MVar::SetValueBool( bool bValue )
 {
-    m_bValue = bValue;
+    assert(m_iType == CVAR_BOOL);
+	m_Value.bValue = bValue;
 }

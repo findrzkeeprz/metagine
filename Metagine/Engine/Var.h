@@ -21,6 +21,13 @@
 
 #define CVAR_NULL_STRING "(null)"
 
+union VarData
+{
+	int iValue;
+	float fValue;  
+	bool bValue;
+};
+
 class MVar : public IVar
 {
 public:
@@ -75,14 +82,8 @@ private:
     /// The type of variable, represented by an enum.
     int m_iType;
     
-    /// Integer value of the variable.
-    int m_iValue;
-    
-    /// Float value of the variable.
-    float m_fValue;
-    
-    // Boolean value of the variable.
-    bool m_bValue;
+    /// Value of the variable.
+	VarData m_Value;
 };
 
 #endif // _CVAR_H_
