@@ -153,6 +153,7 @@ void MEngine::Run( void )
 		
 		HandleInput();
 		UpdateEntities();
+		CollisionResolver::GetInstance()->Resolve(m_Entities);
 		Renderer::GetInstance()->Frame();
 
 		// Limit the frame rate.

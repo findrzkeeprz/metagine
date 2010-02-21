@@ -22,7 +22,8 @@
 #include "../Engine/Renderer.h"
 
 MShip::MShip( void ) :
-m_bActive(true)
+m_bActive(true),
+m_bColliding(false)
 {
 	// This will all need to go through the engine interface in future.
 	m_ShipSprite = new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f);
@@ -33,6 +34,8 @@ m_bActive(true)
 	m_fPosition[1] = 575.0f;
 	m_fVelocity[0] = 0.0f;
 	m_fVelocity[1] = 0.0f;
+	m_fAcceleration[0] = 0.0f;
+	m_fAcceleration[1] = 0.0f;
 	m_ShipSprite->SetPosition((int)m_fPosition[0],(int)m_fPosition[1]);
 	
 	InputManager::GetInstance()->RegisterListener(this);
@@ -45,29 +48,49 @@ MShip::~MShip( void )
 
 void MShip::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown )
 {
-	if( !bKeyDown )
+	if( !bKeyDown || m_bColliding)
 		return;
 
 	if( iKey == SDLK_LEFT ) {
-		m_fVelocity[0] -= 2.25f;
-		//--m_fPosition[0];
-		//m_ShipSprite->SetPosition(m_fPosition[0],m_fPosition[1]);
+		m_fAcceleration[0] -= 1.25f;
 	} else if( iKey == SDLK_RIGHT ) {
-		m_fVelocity[0] += 2.25f;
-		//++m_fPosition[0];
-		//m_ShipSprite->SetPosition(m_fPosition[0],m_fPosition[1]);
+		m_fAcceleration[0] += 1.25f;
+	} else if( iKey == SDLK_UP ) {
+		m_fAcceleration[1] -= 1.25f;
+	} else if( iKey == SDLK_DOWN ) {
+		m_fAcceleration[1] += 1.25f;
 	}
 }
 
 void MShip::UpdateLogic( int iDelta )
 {
 	//x += xVel * ( deltaTicks / 1000.f );
-	m_fVelocity[0] *= 0.995f;
-	m_fPosition[0] += m_fVelocity[0] * ( iDelta / 1000.0f );
-	m_fPosition[1] += m_fVelocity[1] * ( iDelta / 1000.0f );
+	if( !m_bColliding ) {
+		//m_fVelocity[0] *= 0.95f;
+		//m_fVelocity[1] *= 0.95f;
+		m_fVelocity[0] += ( m_fAcceleration[0] * ( iDelta / 1000.0f ) ) * 0.95f;
+		m_fVelocity[1] += ( m_fAcceleration[1] * ( iDelta / 1000.0f ) ) * 0.95f;
+		m_fPosition[0] += m_fVelocity[0] * ( iDelta / 1000.0f );
+		m_fPosition[1] += m_fVelocity[1] * ( iDelta / 1000.0f );
+		//m_fPosition[0] += -m_fVelocity[0] * ( iDelta / 1000.0f );
+		//m_fPosition[1] += -m_fVelocity[1] * ( iDelta / 1000.0f );
 	
 	//printf("iDelta: %i\n",iDelta);
-	m_ShipSprite->SetPosition((int)m_fPosition[0],(int)m_fPosition[1]);
+		m_ShipSprite->SetPosition((int)m_fPosition[0],(int)m_fPosition[1]);
+	} else {
+		m_fPosition[0] += -m_fVelocity[0] * ( iDelta*2 / 1000.0f );
+		m_fPosition[1] += -m_fVelocity[1] * ( iDelta*2 / 1000.0f );
+		m_fVelocity[0] = 0.0f;
+		m_fVelocity[1] = 0.0f;
+		m_ShipSprite->SetPosition((int)m_fPosition[0],(int)m_fPosition[1]);
+		m_bColliding = false;
+	}
+}
+
+void MShip::CollisionEvent( IEntity* pEntity )
+{
+	//printf("i can haz collisions!\n");
+	m_bColliding = true;
 }
 
 bool MShip::GetActive( void )

@@ -189,6 +189,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Public\Vector2.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Public\Vector3.h"
 					>
 				</File>
@@ -406,6 +410,10 @@
 					RelativePath=".\Game\Ship.h"
 					>
 				</File>
+				<File
+					RelativePath=".\Game\TestEnt.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Source Files"
@@ -416,6 +424,30 @@
 				</File>
 				<File
 					RelativePath=".\Game\Ship.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Game\TestEnt.cpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Third Party"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath=".\ThirdParty\SDL_collide.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath=".\ThirdParty\SDL_collide.cpp"
 					>
 				</File>
 			</Filter>

@@ -35,6 +35,7 @@ public:
 	
 	// Documented in ISprite.h
 	void SetPosition( int x, int y );
+	void GetPosition( int& x, int& y );
 	void SetRotation( double iAngle );
 	void SetFrame( int iFrame );
 	int GetFrame( void );
@@ -42,6 +43,7 @@ public:
 	void Animate( bool bLoop );
 	int GetWidth( void );
 	int GetHeight( void );
+	void* GetSurface( void );
 
 	// Documented in IDrawable.h
 	bool GetActive( void );

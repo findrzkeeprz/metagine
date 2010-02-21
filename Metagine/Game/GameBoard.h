@@ -18,6 +18,7 @@
 
 #include "../Interfaces/ISprite.h"
 #include "Ship.h"
+#include "TestEnt.h"
 
 class MGameBoard
 {
@@ -32,6 +33,7 @@ private:
 
 	ISprite* m_BgSprite;
 	MShip* m_PlayerShip;
+	MTestEnt* m_TestEnt;
 };
 
 #endif // _GAMEBOARD_H_

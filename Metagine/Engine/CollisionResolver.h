@@ -39,7 +39,15 @@ public:
 	//bool Init( void );
 	void Shutdown( void );
 
-	void Resolve( IEntity* pEntities );
+	void ProcessEntityPairs( void );
+	void DeterminePartition( IEntity* pEntity );
+	void Resolve( std::vector<IEntity*>& Entities );
+
+private:
+
+	//std::vector<IEntity*> m_Partitions[4];
+	std::vector<IEntity*> m_Partitions[4];
+	std::vector<std::pair<IEntity*,IEntity*>> m_EntityPairs;
 };
 
 typedef MSingleton<MCollisionResolver> CollisionResolver;

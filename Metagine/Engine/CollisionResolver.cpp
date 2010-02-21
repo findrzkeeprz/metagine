@@ -14,6 +14,8 @@
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "CollisionResolver.h"
+#include "Renderer.h"
+#include "../ThirdParty/SDL_collide.h"
 
 MCollisionResolver::MCollisionResolver( void )
 {
@@ -35,7 +37,68 @@ void MCollisionResolver::Shutdown( void )
 	printf(" -> MCollisionResolver::Shutdown() called.\n");
 }
 
-void MCollisionResolver::Resolve( IEntity* pEntities )
+void MCollisionResolver::DeterminePartition( IEntity* pEntity )
 {
+	int w = Renderer::GetInstance()->GetScreenWidth() / 2;
+	int h = Renderer::GetInstance()->GetScreenHeight() / 2;
+	ISprite* pSprite = pEntity->GetSprite();
+	int x, y = 0;
+	
+	pSprite->GetPosition(x,y);
+	if( x < w && y < h ) m_Partitions[0].push_back(pEntity);
+	else if( x > w && y < h ) m_Partitions[1].push_back(pEntity);
+	else if( x < w && y > h ) m_Partitions[2].push_back(pEntity);
+	else if( x > w && y > h ) m_Partitions[3].push_back(pEntity);
+}
 
+void MCollisionResolver::ProcessEntityPairs( void )
+{
+	std::vector<std::pair<IEntity*,IEntity*>>::iterator it;
+	for( it = m_EntityPairs.begin(); it < m_EntityPairs.end(); it++ ) {
+		SDL_Surface* pSurface1 = (SDL_Surface*)(*it).first->GetSprite()->GetSurface();
+		SDL_Surface* pSurface2 = (SDL_Surface*)(*it).second->GetSprite()->GetSurface();
+		ISprite* pSprite1 = (*it).first->GetSprite();
+		ISprite* pSprite2 = (*it).second->GetSprite();
+
+		int x, y, x2, y2 = 0;
+		pSprite1->GetPosition(x,y);
+		pSprite2->GetPosition(x2,y2);
+
+		// Test for collision and inform involved parties.
+		if( SDL_CollidePixel(pSurface1,x,y,pSurface2,x2,y2,4) ) {
+		//if( SDL_CollideBoundingBox(pSurface1,x,y,pSurface2,x2,y2) ) {
+			(*it).first->CollisionEvent((*it).second);
+			(*it).second->CollisionEvent((*it).first);
+		}
+	}
+
+	m_EntityPairs.clear();
+}
+
+void MCollisionResolver::Resolve( std::vector<IEntity*>& Entities )
+{
+	// 1. Divide screen into 4 divisions.
+	// 2. Perform collision detection.
+	// 3. Notify responsible entities (collision response).
+	
+	std::vector<IEntity*>::iterator it;
+	for( it = Entities.begin(); it < Entities.end(); it++ ) {
+		if( (*it)->GetActive() ) {
+			DeterminePartition((*it));
+		}
+	}
+
+	for( int i = 0; i < 4; i++ ) {
+		for( int j = 0; j < (int)m_Partitions[i].size(); j++ ) {
+			for( int k = j + 1; k < (int)m_Partitions[i].size(); k++ ) {
+				m_EntityPairs.push_back(std::make_pair(m_Partitions[i][j],m_Partitions[i][k]));
+			}
+		}
+	}
+
+	ProcessEntityPairs();
+	
+	for( int i = 0; i < 4; i++ ) {
+		m_Partitions[i].clear();
+	}
 }

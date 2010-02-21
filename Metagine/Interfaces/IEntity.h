@@ -16,6 +16,8 @@
 #ifndef _IENTITY_H_
 #define _IENTITY_H_
 
+#include "ISprite.h"
+
 class IEntity
 {
 public:
@@ -28,6 +30,9 @@ public:
 
     /// Virtual accessor to determine object validity.
     virtual bool GetActive( void ) = 0;
+
+	virtual ISprite* GetSprite( void ) = 0;
+	virtual void CollisionEvent( IEntity* pEntity ) = 0;
 };
 
 #endif // _IENTITY_H_

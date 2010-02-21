@@ -123,6 +123,12 @@ void MSprite::SetPosition( int x, int y )
 	m_Coords[1] = y;
 }
 
+void MSprite::GetPosition( int& x, int& y )
+{
+	x = m_Coords[0];
+	y = m_Coords[1];
+}
+
 void MSprite::SetRotation( double iAngle )
 {
 	/*double dFraction = 360.00 / m_iRotateSteps;
@@ -319,6 +325,11 @@ int MSprite::GetWidth( void )
 int MSprite::GetHeight( void )
 {
 	return m_FramesCache[m_iFrame]->w;
+}
+
+void* MSprite::GetSurface( void )
+{
+	return (void*)m_FramesCache[m_iFrame];
 }
 
 void MSprite::Render( void* pSurface )

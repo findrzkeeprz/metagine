@@ -34,4 +34,5 @@ void MGameBoard::Init( void )
 {
 	m_BgSprite = new MSprite("SpaceBG.png",0,true,1.0f);
 	m_PlayerShip = new MShip();
+	m_TestEnt = new MTestEnt();
 }
