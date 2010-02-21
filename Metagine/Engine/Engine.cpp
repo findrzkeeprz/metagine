@@ -24,6 +24,7 @@
 #include "OutlineFont.h"
 #include "Sprite.h"
 #include "Console.h"
+#include "CollisionResolver.h"
 #include "../Public/Exports.h"
 
 MEngine::MEngine( void )
@@ -59,6 +60,9 @@ bool MEngine::Init( void )
 		return false;
 	} else if( !RegisterInterface(Console::GetInstance()) ) {
 		printf(" -! ERROR registering MConsole object.\n");
+		return false;
+	} else if( !RegisterInterface(CollisionResolver::GetInstance()) ) {
+		printf(" -! ERROR registering MCollisionResolver object.\n");
 		return false;
 	}
 
