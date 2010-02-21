@@ -37,7 +37,7 @@ bool MRenderer::Init( int iWidth, int iHeight )
 	if( SDL_Init(SDL_INIT_EVERYTHING) == -1 ) {
 		printf(" -! ERROR initialising SDL.\n");
 		return false;
-	} else if( ( m_Screen = SDL_SetVideoMode(m_iResolution[0],m_iResolution[1],32,SDL_SWSURFACE) ) == NULL ) {
+	} else if( ( m_Screen = SDL_SetVideoMode(m_iResolution[0],m_iResolution[1],32,SDL_HWSURFACE|SDL_DOUBLEBUF) ) == NULL ) {
 		printf(" -! ERROR setting SDL video mode.\n");
 		return false;
 	} else if( TTF_Init() == -1 ) {
