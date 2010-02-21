@@ -16,6 +16,7 @@
 #ifndef _CVAR_H_
 #define _CVAR_H_
 
+#include "GlobalIncludes.h"
 #include "../Interfaces/IVar.h"
 
 #define CVAR_NULL_STRING "(null)"
@@ -69,7 +70,7 @@ public:
 private:
     
     /// Unique name of the variable.
-    char* m_pszName;
+	std::string m_sName;
     
     /// The type of variable, represented by an enum.
     int m_iType;

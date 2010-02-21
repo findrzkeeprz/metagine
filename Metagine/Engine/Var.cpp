@@ -13,61 +13,51 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <string.h>
-#include <assert.h>
-
 #include "Var.h"
 
-MVar::MVar( void )
+MVar::MVar( void ) :
+m_sName(CVAR_NULL_STRING),
+m_iValue(0),
+m_fValue(0.0f),
+m_bValue(false),
+m_iType(CVAR_NULL)
 {
-    m_pszName = new char[ strlen(CVAR_NULL_STRING) + 1 ];
-	strcpy(m_pszName,CVAR_NULL_STRING);
-    m_iValue = 0;
-    m_fValue = 0.0f;
-    m_bValue = false;
-    m_iType = CVAR_NULL;
 }
 
-MVar::MVar( const char* pszName, int iValue )
+MVar::MVar( const char* pszName, int iValue ) :
+m_sName(pszName),
+m_iValue(iValue),
+m_fValue(0.0f),
+m_bValue(false),
+m_iType(CVAR_INT)
 {
-    m_pszName = new char[ strlen(pszName) + 1 ];
-	strcpy(m_pszName,pszName);
-    m_iValue = iValue;
-    m_fValue = 0.0f;
-    m_bValue = false;
-    m_iType = CVAR_INT;
 }
 
-MVar::MVar( const char* pszName, float fValue )
+MVar::MVar( const char* pszName, float fValue ) :
+m_sName(pszName),
+m_iValue(0),
+m_fValue(fValue),
+m_bValue(false),
+m_iType(CVAR_FLOAT)
 {
-    m_pszName = new char[ strlen(pszName) + 1 ];
-    strcpy(m_pszName,pszName);
-    m_fValue = fValue;
-    m_iValue = 0;
-    m_bValue = false;
-    m_iType = CVAR_FLOAT;
 }
 
-MVar::MVar( const char* pszName, bool bValue )
+MVar::MVar( const char* pszName, bool bValue ) :
+m_sName(pszName),
+m_iValue(0),
+m_fValue(0.0f),
+m_bValue(bValue),
+m_iType(CVAR_BOOL)
 {
-    m_pszName = new char[ strlen(pszName) + 1 ];
-    strcpy(m_pszName,pszName);
-    m_bValue = bValue;
-    m_iValue = 0;
-    m_fValue = 0.0f;
-    m_iType = CVAR_BOOL;
 }
 
 MVar::~MVar( void )
 {
-    if( m_pszName ) {
-        delete [] m_pszName;
-    }
 }
 
 const char* MVar::GetName( void )
 {
-    return m_pszName;
+    return m_sName.c_str();
 }
 
 const int MVar::GetType( void )

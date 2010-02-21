@@ -21,6 +21,7 @@
 #include <vector>
 #include <string.h>
 #include <algorithm>
+#include <assert.h>
 
 // Third-party.
 #include "../Includes/SDL/SDL.h"

@@ -84,7 +84,7 @@ void MConsole::Echo( const char* pszText, ... )
 	char szTmp[512] = "";
 	va_list va_alist; 
 	va_start(va_alist,pszText); 
-	vsprintf(szTmp,pszText,va_alist); 
+	vsprintf_s(szTmp,pszText,va_alist); 
 	va_end(va_alist); 
 
 	m_BackBuffer.push_back(szTmp);
@@ -209,7 +209,7 @@ void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 		}
 	}
 
-	if( m_bActive && bKeyDown ) {
+	if( m_bActive->GetValueBool() && bKeyDown ) {
 		bool bShiftMod = (bKeys[SDLK_LSHIFT] || bKeys[SDLK_RSHIFT]) ? true : false;
 		switch( iKey ) {
 			case SDLK_a: { m_sCurrentBuffer.append((bShiftMod == true) ? "A" : "a"); } break;
