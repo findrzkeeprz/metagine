@@ -22,6 +22,7 @@
 #include <string.h>
 #include <algorithm>
 #include <assert.h>
+#include <windows.h>
 
 // Third-party.
 #include "../Includes/SDL/SDL.h"

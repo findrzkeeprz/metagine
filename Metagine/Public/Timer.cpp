@@ -16,7 +16,7 @@
 // Adapted from: http://www.lazyfoo.net/SDL_tutorials/lesson13/index.php
 
 #include "Timer.h"
-#include "../Includes/SDL/SDL.h"
+#include "../Engine/GlobalIncludes.h"
 
 MTimer::MTimer( void ) :
 m_iStartTicks(0),
@@ -34,7 +34,7 @@ void MTimer::Start( void )
 {
 	m_bActive = true;
 	m_bPaused = false;
-	m_iStartTicks = SDL_GetTicks();
+	m_iStartTicks = timeGetTime();
 }
 
 void MTimer::Stop( void )
@@ -50,7 +50,7 @@ void MTimer::Pause( void )
 		return;
 
 	m_bPaused = true;
-	m_iPausedTicks = SDL_GetTicks() - m_iStartTicks;
+	m_iPausedTicks = timeGetTime() - m_iStartTicks;
 }
 
 void MTimer::Resume( void )
@@ -60,7 +60,7 @@ void MTimer::Resume( void )
 		return;
 
 	m_bPaused = false;
-	m_iStartTicks = SDL_GetTicks() - m_iPausedTicks;
+	m_iStartTicks = timeGetTime() - m_iPausedTicks;
 	m_iPausedTicks = 0;
 }
 
@@ -68,7 +68,7 @@ int MTimer::GetTicks( void ) const
 {
 	if( !m_bActive ) return 0;
 	else if( m_bPaused ) return m_iPausedTicks;
-	else return SDL_GetTicks() - m_iStartTicks;
+	else return timeGetTime() - m_iStartTicks;
 }
 
 bool MTimer::GetPaused( void ) const
