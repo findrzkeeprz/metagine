@@ -150,12 +150,15 @@ void MEngine::Run( void )
 {
 	while( m_bActive ) {
 		m_FpsTimer.Start();
+		int iDelta = m_GameTimer.GetTicks();
 		
 		HandleInput();
-		UpdateEntities();
-		CollisionResolver::GetInstance()->Resolve(m_Entities);
+		UpdateEntities(iDelta);
+		CollisionResolver::GetInstance()->Resolve(m_Entities,iDelta);
+		m_GameTimer.Start();
+		
 		Renderer::GetInstance()->Frame();
-
+		
 		// Limit the frame rate.
 		if( m_bFpsCap->GetValueBool() ) {
 			if( m_FpsTimer.GetTicks() < ( 1000 / m_iFpsMax->GetValueInt()) ) {
@@ -177,15 +180,12 @@ IBaseInterface* MEngine::GetInterfaceByName( const std::string& sName )
     return NULL;
 }
 
-void MEngine::UpdateEntities( void )
+void MEngine::UpdateEntities( int iDelta )
 {
 	std::vector<IEntity*>::iterator it;
 	for( it = m_Entities.begin(); it < m_Entities.end(); it++ )
 		if( (*it)->GetActive() )
-			(*it)->UpdateLogic(m_GameTimer.GetTicks());	// Is this a problem?
-	
-	// Reset the timer.
-	m_GameTimer.Start();
+			(*it)->UpdateLogic(iDelta);
 }
 
 bool MEngine::RegisterEntity( IEntity* pEntity )

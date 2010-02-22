@@ -51,7 +51,7 @@ public:
     bool RegisterInterface( IBaseInterface* pInterface );
 	IBaseInterface* GetInterfaceByName( const std::string& sName );
 
-	void UpdateEntities( void );
+	void UpdateEntities( int iDelta );
 	bool RegisterEntity( IEntity* pEntity );
 	void RemoveEntity( IEntity* pEntity );
 
