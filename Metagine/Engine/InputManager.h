@@ -16,11 +16,9 @@
 #ifndef _INPUTMANAGER_H_
 #define _INPUTMANAGER_H_
 
-#include <vector>
-#include "../Interfaces/IBaseInterface.h"
-#include "../Interfaces/IInputManager.h"
-#include "../Interfaces/IInputListener.h"
-#include "../Public/Singleton.h"
+#include "../Public/Public.h"
+#include "../Public/BaseTypes.h"
+#include "../Public/Interfaces.h"
 
 #define INPUTMANAGER_NAME "MInputManager"
 #define INPUTMANAGER_VERSION "01"

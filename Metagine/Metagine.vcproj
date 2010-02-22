@@ -173,11 +173,23 @@
 				Name="Header Files"
 				>
 				<File
+					RelativePath=".\Public\BaseTypes.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Public\Exports.h"
 					>
 				</File>
 				<File
+					RelativePath=".\Public\Interfaces.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Public\Math.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Public\Public.h"
 					>
 				</File>
 				<File
@@ -303,10 +315,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Engine\GlobalIncludes.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Engine\InputManager.h"
 					>
 				</File>
@@ -324,6 +332,10 @@
 				</File>
 				<File
 					RelativePath=".\Engine\Sprite.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Engine\ThirdParty.h"
 					>
 				</File>
 				<File

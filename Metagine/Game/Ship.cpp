@@ -14,6 +14,7 @@
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Ship.h"
+#include "../Engine/VarManager.h"
 
 // Temp.
 #include "../Engine/Engine.h"

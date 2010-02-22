@@ -13,16 +13,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CENGINE_H_
-#define _CENGINE_H_
+#ifndef _MENGINE_H_
+#define _MENGINE_H_
 
-#include <vector>
-#include "../Includes/SDL/SDL.h"
-#include "../Interfaces/IEngine.h"
-#include "../Interfaces/IEntity.h"
-//#include "../Interfaces/IGame.h"
-#include "../Public/Singleton.h"
-#include "../Public/Timer.h"
+#include "ThirdParty.h"
+#include "../Public/Public.h"
+#include "../Public/BaseTypes.h"
+#include "../Public/Interfaces.h"
 #include "../Game/GameBoard.h"
 
 /// Main game engine interface.
@@ -86,4 +83,4 @@ private:
 
 typedef MSingleton<MEngine> Engine;
 
-#endif // _CENGINE_H_
+#endif // _MENGINE_H_

@@ -19,12 +19,15 @@
 #define CONSOLE_NAME "MConsole"
 #define CONSOLE_VERSION "01"
 
-#include "GlobalIncludes.h"
+#include "../Public/Public.h"
+#include "../Public/BaseTypes.h"
+#include "../Public/Interfaces.h"
+
 #include "OutlineFont.h"
-#include "../Public/Singleton.h"
-#include "../Interfaces/IConsole.h"
-#include "../Interfaces/IInputListener.h"
-#include "../Interfaces/IDrawable.h"
+//#include "../Public/Singleton.h"
+//#include "../Interfaces/IConsole.h"
+//#include "../Interfaces/IInputListener.h"
+//#include "../Interfaces/IDrawable.h"
 
 #include "Sprite.h"
 

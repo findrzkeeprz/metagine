@@ -13,12 +13,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <stdio.h>
 #include "../Includes/SDL/SDL_keysym.h"
 #include "Console.h"
 #include "InputManager.h"
 #include "Renderer.h"
 #include "VarManager.h"
+#include "Var.h"
 
 MConsole::MConsole( void ) :
 m_iScrollPoint(0),

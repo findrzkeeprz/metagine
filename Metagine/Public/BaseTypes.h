@@ -13,17 +13,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _ICOLLISIONRESOLVER_H_
-#define _ICOLLISIONRESOLVER_H_
+#ifndef _BASETYPES_H_
+#define _BASETYPES_H_
 
-#include "../Public/BaseTypes.h"
+#include "../Interfaces/IBaseInterface.h"
+#include "../Interfaces/IDrawable.h"
+#include "../Interfaces/IEntity.h"
+#include "../Interfaces/IInputListener.h"
+#include "../Interfaces/ISprite.h"
+#include "../Interfaces/IVar.h"
 
-/// Public interface for the ICollisionResolver class.
-class ICollisionResolver : public IBaseInterface
-{
-public:
-
-	virtual ~ICollisionResolver( void ) { };
-};
-
-#endif // _ICOLLISIONRESOLVER_H_
+#endif // _BASETYPES_H_

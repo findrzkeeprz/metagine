@@ -16,10 +16,9 @@
 #ifndef _FONT_H_
 #define _FONT_H_
 
-#include "GlobalIncludes.h"
-#include "../Includes/SDL/SDL.h"
-#include "../Includes/SDL/SDL_ttf.h"
-#include "../Interfaces/IDrawable.h"
+#include "ThirdParty.h"
+#include "../Public/Public.h"
+#include "../Public/BaseTypes.h"
 
 class MFont : public IDrawable
 {

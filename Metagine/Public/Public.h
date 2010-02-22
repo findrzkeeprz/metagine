@@ -13,8 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _GLOBALINCLUDES_H_
-#define _GLOBALINCLUDES_H_
+#ifndef _PUBLIC_H_
+#define _PUBLIC_H_
 
 // Standards.
 #include <stdio.h>
@@ -23,26 +23,12 @@
 #include <algorithm>
 #include <assert.h>
 #include <windows.h>
-
-// Boost.
 #include <boost/shared_ptr.hpp>
 
-// Third-party.
-#include "../Includes/SDL/SDL.h"
-#include "../Includes/SDL/SDL_ttf.h"
-#include "../Includes/SDL/SDL_rotozoom.h"
-#include "../Includes/SDL/SDL_image.h"
-#include "../Includes/Box2D/Box2D.h"
-#include "../Includes/TinyXml/tinyxml.h"
+#include "Singleton.h"
+#include "Timer.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Math.h"
 
-// Concretes.
-#include "VarManager.h"
-#include "Var.h"
-#include "../Public/Singleton.h"
-#include "../Public/Timer.h"
-
-// Interfaces.
-#include "../Interfaces/IEngine.h"
-#include "../Interfaces/IVar.h"
-
-#endif // _GLOBALINCLUDES_H_
+#endif // _PUBLIC_H_

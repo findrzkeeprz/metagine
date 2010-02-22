@@ -13,9 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <stdio.h>
-#include <string.h>
 #include "VarManager.h"
+#include "Var.h"
 
 MVarManager::MVarManager( void )
 {
@@ -37,7 +36,7 @@ MVarManager::~MVarManager( void )
 
 IVar* MVarManager::CreateVar( const char* pszName, int iValue )
 {
-    MVar* pResult = NULL;
+    IVar* pResult = NULL;
     
     if( !GetVarByName(pszName) ) {
         pResult = new MVar(pszName,iValue);
@@ -49,7 +48,7 @@ IVar* MVarManager::CreateVar( const char* pszName, int iValue )
 
 IVar* MVarManager::CreateVar( const char* pszName, float fValue )
 {
-    MVar* pResult = NULL;
+    IVar* pResult = NULL;
     
     if( !GetVarByName(pszName) ) {
         pResult = new MVar(pszName,fValue);
@@ -61,7 +60,7 @@ IVar* MVarManager::CreateVar( const char* pszName, float fValue )
 
 IVar* MVarManager::CreateVar( const char* pszName, bool bValue )
 {
-    MVar* pResult = NULL;
+    IVar* pResult = NULL;
     
     if( !GetVarByName(pszName) ) {
         pResult = new MVar(pszName,bValue);

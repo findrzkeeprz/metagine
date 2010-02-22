@@ -16,7 +16,7 @@
 #ifndef _IENGINE_H_
 #define _IENGINE_H_
 
-#include <string>
+#include "../Interfaces/IBaseInterface.h"
 #include "../Interfaces/IVarManager.h"
 
 /// Public interface for the MEngine class.

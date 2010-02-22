@@ -16,8 +16,13 @@
 #ifndef _IVARMANAGER_H_
 #define _IVARMANAGER_H_
 
-#include "../Interfaces/IBaseInterface.h"
-#include "../Interfaces/IVar.h"
+//#include "../Public/Public.h"
+//#include "../Interfaces/IBaseInterface.h"
+//#include "../Interfaces/IVar.h"
+
+//typedef boost::shared_ptr<IVar> IVarPtr;
+#include "../Public/Public.h"
+#include "../Public/BaseTypes.h"
 
 /// Public interface for the MVarManager class.
 class IVarManager : public IBaseInterface

@@ -16,8 +16,8 @@
 #ifndef _CVAR_H_
 #define _CVAR_H_
 
-#include "GlobalIncludes.h"
-#include "../Interfaces/IVar.h"
+#include "../Public/Public.h"
+#include "../Public/BaseTypes.h"
 
 #define CVAR_NULL_STRING "(null)"
 

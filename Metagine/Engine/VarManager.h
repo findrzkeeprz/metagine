@@ -19,10 +19,9 @@
 #define VARMANAGER_NAME "MVarManager"
 #define VARMANAGER_VERSION "01"
 
-#include <vector>
-#include "../Public/Singleton.h"
-#include "../Interfaces/IVarManager.h"
-#include "Var.h"
+#include "../Public/Public.h"
+#include "../Public/BaseTypes.h"
+#include "../Public/Interfaces.h"
 
 /// Game variable management class.
 /// This object is responsible for creating and managing game variables which

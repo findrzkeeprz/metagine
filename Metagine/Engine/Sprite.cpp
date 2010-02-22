@@ -13,6 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
+#include "ThirdParty.h"
 #include "Sprite.h"
 #include "Renderer.h"
 

@@ -19,12 +19,11 @@
 #define RENDERER_NAME "MRenderer"
 #define RENDERER_VERSION "01"
 
-#include "GlobalIncludes.h"
-#include "../Includes/SDL/SDL.h"
-#include "../Includes/SDL/SDL_ttf.h"
-#include "../Public/Singleton.h"
-#include "../Interfaces/IRenderer.h"
-#include "../Interfaces/IDrawable.h"
+#include "ThirdParty.h"
+#include "../Public/Public.h"
+#include "../Public/BaseTypes.h"
+#include "../Public/Interfaces.h"
+
 
 /// Manages game rendering functionality.
 /// This class is responsible for initialisation and cleanup of anything

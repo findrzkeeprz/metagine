@@ -13,17 +13,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _ICOLLISIONRESOLVER_H_
-#define _ICOLLISIONRESOLVER_H_
+#ifndef _THIRDPARTY_H_
+#define _THIRDPARTY_H_
 
-#include "../Public/BaseTypes.h"
+#include "../Includes/SDL/SDL.h"
+#include "../Includes/SDL/SDL_ttf.h"
+#include "../Includes/SDL/SDL_rotozoom.h"
+#include "../Includes/SDL/SDL_image.h"
+#include "../Includes/Box2D/Box2D.h"
+#include "../Includes/TinyXml/tinyxml.h"
 
-/// Public interface for the ICollisionResolver class.
-class ICollisionResolver : public IBaseInterface
-{
-public:
-
-	virtual ~ICollisionResolver( void ) { };
-};
-
-#endif // _ICOLLISIONRESOLVER_H_
+#endif // _THIRDPARTY_H_

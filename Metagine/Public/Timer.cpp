@@ -16,7 +16,7 @@
 // Adapted from: http://www.lazyfoo.net/SDL_tutorials/lesson13/index.php
 
 #include "Timer.h"
-#include "../Engine/GlobalIncludes.h"
+#include "Public.h"
 
 MTimer::MTimer( void ) :
 m_iStartTicks(0),

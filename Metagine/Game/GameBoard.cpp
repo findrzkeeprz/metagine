@@ -15,7 +15,7 @@
 
 #include "GameBoard.h"
 #include "../Engine/Sprite.h"
-#include "../Engine/GlobalIncludes.h"
+#include "../Public/Public.h"
 
 MGameBoard::MGameBoard( void )
 {

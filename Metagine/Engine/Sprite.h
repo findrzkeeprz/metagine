@@ -16,9 +16,9 @@
 #ifndef _SPRITE_H_
 #define _SPRITE_H_
 
-#include "GlobalIncludes.h"
-#include "../Includes/SDL/SDL.h"
-#include "../Interfaces/ISprite.h"
+#include "ThirdParty.h"
+#include "../Public/Public.h"
+#include "../Public/BaseTypes.h"
 
 class MSprite : public ISprite
 {

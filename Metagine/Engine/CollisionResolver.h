@@ -19,8 +19,9 @@
 #define COLLISIONRESOLVER_NAME "MCollisionResolver"
 #define COLLISIONRESOLVER_VERSION "01"
 
-#include "GlobalIncludes.h"
-#include "../Interfaces/ICollisionResolver.h"
+#include "../Public/Public.h"
+#include "../Public/BaseTypes.h"
+#include "../Public/Interfaces.h"
 
 /// Fix me.
 class MCollisionResolver : public ICollisionResolver
