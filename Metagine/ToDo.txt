@@ -13,5 +13,5 @@ Stuff to do:
 * Need ability to set sprite colour key from XML file.
 * Cache set amount of previous text renders.
 * FIX underscore in the console so I can name stuff properly.
-* Fixed-step game logic for entities.
 * Make variable manager responsible for deleting registered variables.
+* Update sprite + XML handling to support different anim sequences.

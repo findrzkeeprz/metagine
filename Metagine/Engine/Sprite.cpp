@@ -107,7 +107,7 @@ MSprite::~MSprite( void )
 	//}
 	int iFrames = 0;
 	std::vector<SDL_Surface*>::iterator it;
-	for( it = m_FramesCache.begin(); it < m_FramesCache.end(); it++ ) {
+	for( it = m_FramesCache.begin(); it < m_FramesCache.end(); ++it ) {
 		if( *it ) {
 			SDL_FreeSurface(*it);
 			iFrames++;

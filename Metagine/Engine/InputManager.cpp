@@ -56,7 +56,7 @@ void MInputManager::RegisterListener( IInputListener* pListener )
 void MInputManager::RemoveListener( IInputListener* pListener )
 {
 	/*std::vector<IInputListener*>::iterator it;
-	for( it = m_Listeners.begin(); it < m_Listeners.end(); it++ ) {
+	for( it = m_Listeners.begin(); it < m_Listeners.end(); ++it ) {
 		if( (*it) == pListener ) {
 			printf(" -> Removing object (0x%X) from input listeners.\n",pListener);
 			m_Listeners.erase(it);
@@ -77,7 +77,7 @@ void MInputManager::Update( int iKey, bool bKeyDown )
 	m_bKeysHeld[iKey] = bKeyDown ? true : false;
 	
 	std::vector<IInputListener*>::iterator it;
-	for( it = m_Listeners.begin(); it < m_Listeners.end(); it++ ) {
+	for( it = m_Listeners.begin(); it < m_Listeners.end(); ++it ) {
 		(*it)->UpdateInput(m_bKeysHeld,iKey,bKeyDown);
 	}
 }

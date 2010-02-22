@@ -19,6 +19,8 @@
 #include "../Interfaces/ISprite.h"
 #include "../Interfaces/IInputListener.h"
 #include "../Interfaces/IEntity.h"
+#include "../Interfaces/IVar.h"
+#include "../Public/Vector2.h"
 
 class MShip : public IInputListener, public IEntity
 {
@@ -36,16 +38,18 @@ public:
 	//float GetPositionX( void ) { return m_fPosition[0]; }
 	//float GetPositionY( void ) { return m_fPosition[0]; }
 	ISprite* GetSprite( void ) { return m_ShipSprite; }
-	void CollisionEvent( IEntity* pEntity );
+	void CollisionEvent( IEntity* pEntity, int iDelta );
 
 private:
 
 	ISprite* m_ShipSprite;
-	float m_fPosition[2];
-	float m_fVelocity[2];
-	float m_fAcceleration[2];
+	MVector2 m_vPosition;
+	MVector2 m_vVelocity;
+	MVector2 m_vAcceleration;
+	IVar* m_fFriction;
+	IVar* m_fImpulse;
+	IVar* m_fCutOff;
 	bool m_bActive;
-	bool m_bColliding;
 };
 
 #endif // _SHIP_H_

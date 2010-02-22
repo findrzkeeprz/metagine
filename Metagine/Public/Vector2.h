@@ -16,37 +16,146 @@
 #ifndef _VECTOR2_H_
 #define _VECTOR2_H_
 
+#include <math.h>
 
-/*class vec2
+class MVector2
 {
 public:
-	double 	elem[2];
 
-public:
-	vec2(){}
-	vec2(double x, double y){elem[0]=x; elem[1]=y;}
-	vec2(double x){elem[0]=elem[1]=x;}
+	MVector2( void ) 
+	{
+		x = 0.0f;
+		y = 0.0f;
+	}
+	
+	MVector2( float _x, float _y )
+	{
+		x = _x;
+		y = _y;
+	}
 
-	double operator()(int x) const {return elem[x];}
-	double &operator()(int x) {return elem[x];}
+	MVector2 &operator = (const MVector2& vec)
+	{
+		x = vec.x;
+		y = vec.y;
 
-	vec2 operator *(const double x) const {vec2 res(*this); res.elem[0]*=x; res.elem[1]*=x; return res;}
-	vec2 operator /(const double x) const {vec2 res(*this); res.elem[0]/=x; res.elem[1]/=x; return res;}
-	vec2 operator +(const vec2 &x) const {vec2 res(*this); res.elem[0]+=x.elem[0]; res.elem[1]+=x.elem[1]; return res;}
-	vec2 operator -(const vec2 &x) const {vec2 res(*this); res.elem[0]-=x.elem[0]; res.elem[1]-=x.elem[1]; return res;}
-	vec2 operator -() const {vec2 res(*this); res.elem[0] = - res.elem[0]; res.elem[1] = -res.elem[1]; return res;}
-	vec2 &operator *=(const double x) {elem[0]*=x; elem[1]*=x; return (*this);}
-	vec2 &operator /=(const double x) {elem[0]/=x; elem[1]/=x; return (*this);}
-	vec2 &operator +=(const vec2 &x) {elem[0]+=x.elem[0]; elem[1]+=x.elem[1]; return (*this);}
-	vec2 &operator -=(const vec2 &x) {elem[0]-=x.elem[0]; elem[1]-=x.elem[1]; return (*this);}
-	bool operator ==(const vec2 &x) const {return((elem[0] == x.elem[0])&&(elem[1] == x.elem[1]));}
+		return *this;
+	}
 
-	double Magnitude(void) const {return(sqrt((elem[0]*elem[0])+(elem[1]*elem[1])));}
-	double Magnitude2(void) const {return((elem[0]*elem[0])+(elem[1]*elem[1]));}
-	double Normalise(void) { double x = Magnitude(); elem[0]/=x; elem[1]/=x; return x;}
-	vec2 Normalised(void) const {vec2 res(*this); res.Normalise(); return res;}
+	// Equals.
+	bool operator == (const MVector2& vec) const
+	{
+		return x == vec.x && y == vec.y;
+	}
 
-	double Dot(const vec2 &x) const {return ( (elem[0]*x.elem[0]) + (elem[1]*x.elem[1]) );}
-};*/
+	// Does not equal.
+	bool operator != (const MVector2& vec) const
+	{
+		return x != vec.x && y != vec.y;
+	}
+
+	// Get the negative of the vector.
+	MVector2 operator - (void) const
+	{
+		return MVector2(-x,-y);
+	}
+
+	// Add a vector.
+	MVector2 operator + (const MVector2& vec) const
+	{
+		return MVector2(x + vec.x,y + vec.y);
+	}
+
+	// Subtract a vector.
+	MVector2 operator - (const MVector2& vec) const
+	{
+		return MVector2(x - vec.x,y - vec.y);
+	}
+
+	MVector2 operator * ( const float fScalar ) 
+	{
+		return MVector2(x * fScalar,y * fScalar);
+	}
+
+	MVector2 operator / ( const float fScalar )
+	{
+		float fOneOverScalar = 1.0f / fScalar;
+		return MVector2(x * fOneOverScalar,y * fOneOverScalar);
+	}
+
+	// Addition assignment.
+	MVector2 &operator += (MVector2& vec)
+	{
+		x += vec.x;
+		y += vec.y;
+
+		return *this;
+	}
+
+	// Subtraction assignment.
+	MVector2 &operator -= (const MVector2& vec)
+	{
+		x -= vec.x;
+		y -= vec.y;
+
+		return *this;
+	}
+
+	// Multiplication assignment.
+	MVector2 &operator *= (float fScalar)
+	{
+		x *= fScalar;
+		y *= fScalar;
+
+		return *this;
+	}
+
+	// Division assignment.
+	MVector2 &operator /= (float fScalar)
+	{
+		float fOneOverScalar = 1.0f / fScalar;
+
+		x *= fOneOverScalar;
+		y *= fOneOverScalar;
+
+		return *this;
+	}
+
+	// Normalize the vector.
+	void Normalise( void )
+	{
+		float fMagSq = (x * x) + (y * y);
+
+		if( fMagSq == 0.0f ) {
+			return;
+		}
+
+		float fOneOverMag = 1.0f / sqrt(fMagSq);
+		x *= fOneOverMag;
+		y *= fOneOverMag;
+	}
+
+	MVector2 Normalised( void )
+	{
+		MVector2 ret(*this);
+		ret.Normalise();
+		return ret;
+	}
+
+	float Magnitude( void ) const 
+	{
+		return sqrt((x * x) + (y * y));
+	}
+
+	// Set vector to zero.
+	void Zero( void )
+	{
+		x = 0.0f;
+		y = 0.0f;
+	}
+
+	float x;
+	float y;
+};
 
 #endif // _VECTOR2_H_

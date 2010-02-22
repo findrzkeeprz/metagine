@@ -113,7 +113,7 @@ void MEngine::Shutdown( void )
     
     // Delete allocated objects.
     std::vector<IBaseInterface*>::reverse_iterator it;
-	for( it = m_Interfaces.rbegin(); it < m_Interfaces.rend(); it++ )
+	for( it = m_Interfaces.rbegin(); it < m_Interfaces.rend(); ++it )
 		if( (*it) ) {
 			(*it)->Shutdown();
 			delete (*it);
@@ -183,7 +183,7 @@ IBaseInterface* MEngine::GetInterfaceByName( const std::string& sName )
 void MEngine::UpdateEntities( int iDelta )
 {
 	std::vector<IEntity*>::iterator it;
-	for( it = m_Entities.begin(); it < m_Entities.end(); it++ )
+	for( it = m_Entities.begin(); it < m_Entities.end(); ++it )
 		if( (*it)->GetActive() )
 			(*it)->UpdateLogic(iDelta);
 }

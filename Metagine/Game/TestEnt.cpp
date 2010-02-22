@@ -7,7 +7,8 @@ MTestEnt::MTestEnt( void ) :
 m_bActive(true)
 {
 	// This will all need to go through the engine interface in future.
-	m_TestSprite = new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f);
+	//m_TestSprite = new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f);
+	m_TestSprite = new MSprite("Explosion1.xml");
 
 	// Center the ship on the center of the screen initially.
 	//int iCenter = (Renderer::GetInstance()->GetScreenWidth() / 2) - ( m_TestSprite->GetWidth() / 2 );
@@ -31,9 +32,10 @@ void MTestEnt::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 
 void MTestEnt::UpdateLogic( int iDelta )
 {
+	m_TestSprite->Animate(true);
 }
 
-void MTestEnt::CollisionEvent( IEntity* pEntity )
+void MTestEnt::CollisionEvent( IEntity* pEntity, int iDelta )
 {
 	//printf("i can haz collisions!\n");
 }

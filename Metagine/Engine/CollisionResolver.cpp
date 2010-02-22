@@ -17,7 +17,8 @@
 #include "Renderer.h"
 #include "../ThirdParty/SDL_collide.h"
 
-MCollisionResolver::MCollisionResolver( void )
+MCollisionResolver::MCollisionResolver( void ) :
+m_iDelta(0)
 {
 	printf(" -> MCollisionResolver object created.\n");
 }
@@ -54,7 +55,7 @@ void MCollisionResolver::DeterminePartition( IEntity* pEntity )
 void MCollisionResolver::ProcessEntityPairs( void )
 {
 	std::vector<std::pair<IEntity*,IEntity*>>::iterator it;
-	for( it = m_EntityPairs.begin(); it < m_EntityPairs.end(); it++ ) {
+	for( it = m_EntityPairs.begin(); it < m_EntityPairs.end(); ++it ) {
 		SDL_Surface* pSurface1 = (SDL_Surface*)(*it).first->GetSprite()->GetSurface();
 		SDL_Surface* pSurface2 = (SDL_Surface*)(*it).second->GetSprite()->GetSurface();
 		ISprite* pSprite1 = (*it).first->GetSprite();
@@ -67,22 +68,24 @@ void MCollisionResolver::ProcessEntityPairs( void )
 		// Test for collision and inform involved parties.
 		if( SDL_CollidePixel(pSurface1,x,y,pSurface2,x2,y2,4) ) {
 		//if( SDL_CollideBoundingBox(pSurface1,x,y,pSurface2,x2,y2) ) {
-			(*it).first->CollisionEvent((*it).second);
-			(*it).second->CollisionEvent((*it).first);
+			(*it).first->CollisionEvent((*it).second,m_iDelta);
+			(*it).second->CollisionEvent((*it).first,m_iDelta);
 		}
 	}
 
 	m_EntityPairs.clear();
 }
 
-void MCollisionResolver::Resolve( std::vector<IEntity*>& Entities )
+void MCollisionResolver::Resolve( std::vector<IEntity*>& Entities, int iDelta )
 {
 	// 1. Divide screen into 4 divisions.
 	// 2. Perform collision detection.
 	// 3. Notify responsible entities (collision response).
 	
+	m_iDelta = iDelta;
+	
 	std::vector<IEntity*>::iterator it;
-	for( it = Entities.begin(); it < Entities.end(); it++ ) {
+	for( it = Entities.begin(); it < Entities.end(); ++it ) {
 		if( (*it)->GetActive() ) {
 			DeterminePartition((*it));
 		}

@@ -51,6 +51,8 @@ public:
 
 	virtual int GetWidth( void ) = 0;
 	virtual int GetHeight( void ) = 0;
+
+	virtual void Animate( bool bLoop ) = 0;
 };
 
 #endif // _ISPRITE_H_

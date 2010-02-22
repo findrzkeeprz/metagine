@@ -24,6 +24,9 @@
 #include <assert.h>
 #include <windows.h>
 
+// Boost.
+#include <boost/shared_ptr.hpp>
+
 // Third-party.
 #include "../Includes/SDL/SDL.h"
 #include "../Includes/SDL/SDL_ttf.h"

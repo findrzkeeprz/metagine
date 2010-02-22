@@ -53,7 +53,7 @@ bool MConsole::Init( void )
 
 	// Tmp.
 	//m_TestSprite = new MSprite("gogorisset1.bmp",0,false,6,6,39,45,0.5f);
-	m_TestSprite = new MSprite("Explosion1.xml");
+	m_TestSprite = new MSprite("NinjaSprite.xml");
 	// m_TestSprite = new MSprite("gogorisset1.bmp",true,true,6,6,39,10);
 	//m_TestSprite = new MSprite("mariosprite.bmp",false,false);
 	m_TestSprite->SetPosition(200,200);
@@ -133,7 +133,7 @@ void MConsole::Execute( const std::string& sCmd )
 			case MVar::CVAR_FLOAT:
 				{
 					if( bMultipleArgs ) pVar->SetValueFloat((float)atof(sArg1.c_str()));
-					else Echo("\"%s\" (int) = %2.f",sArg0.c_str(),pVar->GetValueFloat());
+					else Echo("\"%s\" (float) = %f",sArg0.c_str(),pVar->GetValueFloat());
 				} break;
 			
 			default: break;
@@ -210,7 +210,7 @@ void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 	}
 
 	if( m_bActive->GetValueBool() && bKeyDown ) {
-		bool bShiftMod = (bKeys[SDLK_LSHIFT] || bKeys[SDLK_RSHIFT]) ? true : false;
+		bool bShiftMod = ( bKeys[SDLK_LSHIFT] || bKeys[SDLK_RSHIFT] ) ? true : false;
 		switch( iKey ) {
 			case SDLK_a: { m_sCurrentBuffer.append((bShiftMod == true) ? "A" : "a"); } break;
 			case SDLK_b: { m_sCurrentBuffer.append((bShiftMod == true) ? "B" : "b"); } break;

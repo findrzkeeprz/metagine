@@ -26,7 +26,7 @@ MVarManager::~MVarManager( void )
 {
 	// Free all of the allocated variables.
     std::vector<IVar*>::iterator it;
-    for( it = m_Container.begin(); it < m_Container.end(); it++ ) {
+    for( it = m_Container.begin(); it < m_Container.end(); ++it ) {
     	if( (*it) ) {
             delete (*it);
         }
@@ -75,7 +75,7 @@ IVar* MVarManager::GetVarByName( const char* pszName )
 {
     // Compare each variable against the specified name.
 	std::vector<IVar*>::iterator it;
-	for( it = m_Container.begin(); it < m_Container.end(); it++ ) {
+	for( it = m_Container.begin(); it < m_Container.end(); ++it ) {
         if( !strcmp((*it)->GetName(),pszName) ) {
             return (*it);
         }

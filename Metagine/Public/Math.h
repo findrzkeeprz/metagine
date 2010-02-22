@@ -16,6 +16,7 @@
 #ifndef _MATH_H_
 #define _MATH_H_
 
+#include "Vector2.h"
 #include "Vector3.h"
 
 class MMath

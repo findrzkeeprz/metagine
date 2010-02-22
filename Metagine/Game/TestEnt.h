@@ -15,7 +15,7 @@ public:
 	void UpdateLogic( int iDelta );
 	bool GetActive( void );
 	ISprite* GetSprite( void ) { return m_TestSprite; }
-	void CollisionEvent( IEntity* pEntity );
+	void CollisionEvent( IEntity* pEntity, int iDelta );
 
 private:
 

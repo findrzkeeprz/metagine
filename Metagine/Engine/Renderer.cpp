@@ -65,7 +65,7 @@ void MRenderer::Shutdown( void )
 	std::vector<IDrawable*> DelQueue;
 	std::vector<IDrawable*>::iterator it = m_RenderQueue.begin();
 	
-	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); it++ ) {
+	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it ) {
 		if( (*it) ) {
 			printf(" -> Scheduling drawable object for deletion (0x%X).\n",(*it));
 			DelQueue.push_back((*it));
@@ -75,7 +75,7 @@ void MRenderer::Shutdown( void )
 	// We do this so that the actual render queue is not modified while iterating
 	// as it was causing some nasty NULL pointer bugs.
 	it = DelQueue.begin();
-	for( it = DelQueue.begin(); it < DelQueue.end(); it++ ) {
+	for( it = DelQueue.begin(); it < DelQueue.end(); ++it ) {
 		if( *it ) {
 			printf(" -> Deleting queued drawable object (0x%X).\n",(*it));
 			delete (*it);
@@ -125,7 +125,7 @@ void MRenderer::Frame( void )
 	
 	// Render all queued objects.
 	std::vector<IDrawable*>::iterator it;
-	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); it++ )
+	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it )
 		if( (*it)->GetActive() )
 			(*it)->Render((void*)m_Screen);
 

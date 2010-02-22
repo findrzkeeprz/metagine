@@ -41,13 +41,14 @@ public:
 
 	void ProcessEntityPairs( void );
 	void DeterminePartition( IEntity* pEntity );
-	void Resolve( std::vector<IEntity*>& Entities );
+	void Resolve( std::vector<IEntity*>& Entities, int iDelta );
 
 private:
 
 	//std::vector<IEntity*> m_Partitions[4];
 	std::vector<IEntity*> m_Partitions[4];
 	std::vector<std::pair<IEntity*,IEntity*>> m_EntityPairs;
+	int m_iDelta;
 };
 
 typedef MSingleton<MCollisionResolver> CollisionResolver;

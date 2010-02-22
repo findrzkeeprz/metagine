@@ -22,24 +22,25 @@
 #include "../Engine/Renderer.h"
 
 MShip::MShip( void ) :
-m_bActive(true),
-m_bColliding(false)
+m_bActive(true)
 {
 	// This will all need to go through the engine interface in future.
 	m_ShipSprite = new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f);
 	
 	// Center the ship on the center of the screen initially.
 	int iCenter = (Renderer::GetInstance()->GetScreenWidth() / 2) - ( m_ShipSprite->GetWidth() / 2 );
-	m_fPosition[0] = (float)iCenter;
-	m_fPosition[1] = 575.0f;
-	m_fVelocity[0] = 0.0f;
-	m_fVelocity[1] = 0.0f;
-	m_fAcceleration[0] = 0.0f;
-	m_fAcceleration[1] = 0.0f;
-	m_ShipSprite->SetPosition((int)m_fPosition[0],(int)m_fPosition[1]);
+	m_vPosition.x = (float)iCenter;
+	m_vPosition.y = 575.0f;
+	m_vVelocity.Zero();
+	m_vAcceleration.Zero();
+	m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
 	
 	InputManager::GetInstance()->RegisterListener(this);
 	Engine::GetInstance()->RegisterEntity(this);
+
+	m_fFriction = VarManager::GetInstance()->CreateVar("ffriction",25.0f);
+	m_fImpulse = VarManager::GetInstance()->CreateVar("fimpulse",2.75f);
+	m_fCutOff = VarManager::GetInstance()->CreateVar("fcutoff",0.15f);
 }
 
 MShip::~MShip( void )
@@ -48,49 +49,46 @@ MShip::~MShip( void )
 
 void MShip::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown )
 {
-	if( !bKeyDown || m_bColliding)
+	if( !bKeyDown )
 		return;
 
-	if( iKey == SDLK_LEFT ) {
-		m_fAcceleration[0] -= 1.25f;
-	} else if( iKey == SDLK_RIGHT ) {
-		m_fAcceleration[0] += 1.25f;
-	} else if( iKey == SDLK_UP ) {
-		m_fAcceleration[1] -= 1.25f;
-	} else if( iKey == SDLK_DOWN ) {
-		m_fAcceleration[1] += 1.25f;
-	}
+	if( bKeys[SDLK_LEFT] ) m_vVelocity.x -= m_fImpulse->GetValueFloat();
+	if( bKeys[SDLK_RIGHT] ) m_vVelocity.x += m_fImpulse->GetValueFloat();
+	if( bKeys[SDLK_UP] ) m_vVelocity.y -= m_fImpulse->GetValueFloat();
+	if( bKeys[SDLK_DOWN] ) m_vVelocity.y += m_fImpulse->GetValueFloat();
 }
 
 void MShip::UpdateLogic( int iDelta )
 {
-	//x += xVel * ( deltaTicks / 1000.f );
-	if( !m_bColliding ) {
-		//m_fVelocity[0] *= 0.95f;
-		//m_fVelocity[1] *= 0.95f;
-		m_fVelocity[0] += ( m_fAcceleration[0] * ( iDelta / 1000.0f ) ) * 0.95f;
-		m_fVelocity[1] += ( m_fAcceleration[1] * ( iDelta / 1000.0f ) ) * 0.95f;
-		m_fPosition[0] += m_fVelocity[0] * ( iDelta / 1000.0f );
-		m_fPosition[1] += m_fVelocity[1] * ( iDelta / 1000.0f );
-		//m_fPosition[0] += -m_fVelocity[0] * ( iDelta / 1000.0f );
-		//m_fPosition[1] += -m_fVelocity[1] * ( iDelta / 1000.0f );
+	if( m_vVelocity.Magnitude() <= 0.0f )
+		return;
 	
-	//printf("iDelta: %i\n",iDelta);
-		m_ShipSprite->SetPosition((int)m_fPosition[0],(int)m_fPosition[1]);
-	} else {
-		m_fPosition[0] += -m_fVelocity[0] * ( iDelta*2 / 1000.0f );
-		m_fPosition[1] += -m_fVelocity[1] * ( iDelta*2 / 1000.0f );
-		m_fVelocity[0] = 0.0f;
-		m_fVelocity[1] = 0.0f;
-		m_ShipSprite->SetPosition((int)m_fPosition[0],(int)m_fPosition[1]);
-		m_bColliding = false;
-	}
+	m_vAcceleration = -m_vVelocity.Normalised();
+
+	// Friction force = constant * mg.
+	// F=Ma, so acceleration = force/mass = constant*g
+	m_vAcceleration *= m_fFriction->GetValueFloat();
+
+	MVector2 vDeltaVelocity = ( ( m_vAcceleration * (float)iDelta ) / 1000.0f );
+
+	// Cap magnitude of change in velocity to remove integration errors
+	if( vDeltaVelocity.Magnitude() > m_vVelocity.Magnitude() )
+		m_vVelocity.Zero();
+	else m_vVelocity += vDeltaVelocity;
+
+	m_vPosition += ( ( m_vVelocity * (float)iDelta ) / 1000.0f );
+
+	if(m_vVelocity.Magnitude() < m_fCutOff->GetValueFloat()) 
+		m_vVelocity.Zero();
+		
+	m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
 }
 
-void MShip::CollisionEvent( IEntity* pEntity )
+void MShip::CollisionEvent( IEntity* pEntity, int iDelta )
 {
-	//printf("i can haz collisions!\n");
-	m_bColliding = true;
+	m_vPosition += ( ( -m_vVelocity * (float)iDelta ) / 1000.0f );
+	m_vVelocity.Zero();
+	m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
 }
 
 bool MShip::GetActive( void )
