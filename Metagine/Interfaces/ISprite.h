@@ -31,7 +31,7 @@ public:
 	/// The file should be of a correct image format, which will then
 	/// be converted to the correct screen format.
 	/// @param sName The relative file name of the external image.
-	//virtual void* LoadImageFile( const std::string& sFileName ) = 0;
+	//virtual void* LoadImageFile( const string& sFileName ) = 0;
 	
 	/// Sets the screen position of the sprite.
 	/// This will set the 2D position of the sprite on the game screen. Setting
@@ -56,6 +56,6 @@ public:
 	virtual void Animate( bool bLoop ) = 0;
 };
 
-typedef boost::shared_ptr<ISprite> ISpritePtr;
+typedef shared_ptr<ISprite> ISpritePtr;
 
 #endif // _ISPRITE_H_

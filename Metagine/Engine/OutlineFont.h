@@ -32,7 +32,7 @@ public:
 
 	void SetColourBG( int iRed, int iGreen, int iBlue );
 
-	void SetText( const std::string& sText );
+	void SetText( const string& sText );
 
 	// Render the drawable object.
 	void Render( void* pSurface );

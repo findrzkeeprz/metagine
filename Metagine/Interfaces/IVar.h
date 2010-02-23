@@ -50,6 +50,6 @@ public:
     virtual void SetValueBool( bool bValue ) = 0;
 };
 
-typedef boost::shared_ptr<IVar> IVarPtr;
+typedef shared_ptr<IVar> IVarPtr;
 
 #endif // _IVAR_H_

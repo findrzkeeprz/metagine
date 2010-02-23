@@ -41,7 +41,7 @@ public:
 private:
 
     /// Container to catalog all variables created through this class.
-    std::vector<IInputListenerPtr> m_Listeners;
+    vector<IInputListenerPtr> m_Listeners;
 	bool m_bKeysHeld[323];
 };
 

@@ -58,8 +58,8 @@ void MRenderer::Shutdown( void )
 {
 	printf(" -> MRenderer::Shutdown() called.\n");
 	
-	std::vector<IDrawablePtr> DelQueue;
-	std::vector<IDrawablePtr>::iterator it = m_RenderQueue.begin();
+	vector<IDrawablePtr> DelQueue;
+	vector<IDrawablePtr>::iterator it = m_RenderQueue.begin();
 	
 	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it ) {
 		if( (*it) ) DelQueue.push_back((*it));
@@ -97,14 +97,14 @@ void MRenderer::RegisterDrawable( IDrawablePtr pDrawable )
 
 	// Push back and then re-sort the container based on depth.
 	m_RenderQueue.push_back(IDrawablePtr(pDrawable));
-	std::sort(m_RenderQueue.begin(),m_RenderQueue.end(),MRenderer::SpriteSortFunc);
+	sort(m_RenderQueue.begin(),m_RenderQueue.end(),MRenderer::SpriteSortFunc);
 	
 	printf(" -> Registered object (0x%X) with rendering queue.\n",pDrawable);
 }
 
 void MRenderer::RemoveDrawable( IDrawablePtr pDrawable )
 {
-	std::vector<IDrawablePtr>::iterator it = m_RenderQueue.begin();
+	vector<IDrawablePtr>::iterator it = m_RenderQueue.begin();
 	while( it != m_RenderQueue.end() ) {
 		if( (*it) && ((*it) == pDrawable) ) {
 			printf(" -> Removing object (0x%X) from rendering queue.\n",pDrawable);
@@ -113,7 +113,7 @@ void MRenderer::RemoveDrawable( IDrawablePtr pDrawable )
 	}
 
 	// Resort based on depth.
-	std::sort(m_RenderQueue.begin(),m_RenderQueue.end(),MRenderer::SpriteSortFunc);
+	sort(m_RenderQueue.begin(),m_RenderQueue.end(),MRenderer::SpriteSortFunc);
 }
 
 void MRenderer::Frame( void )
@@ -121,7 +121,7 @@ void MRenderer::Frame( void )
 	SDL_FillRect(m_Screen,&m_Screen->clip_rect,SDL_MapRGB(m_Screen->format,0,0,0));
 	
 	// Render all queued objects.
-	std::vector<IDrawablePtr>::iterator it;
+	vector<IDrawablePtr>::iterator it;
 	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it )
 		if( (*it)->GetActive() )
 			(*it)->Render((void*)m_Screen);

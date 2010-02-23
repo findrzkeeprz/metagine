@@ -29,6 +29,6 @@ public:
 	virtual void UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown ) = 0;
 };
 
-typedef boost::shared_ptr<IInputListener> IInputListenerPtr;
+typedef shared_ptr<IInputListener> IInputListenerPtr;
 
 #endif // _IINPUTLISTENER_H_

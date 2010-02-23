@@ -35,7 +35,7 @@ public:
 	void SetColour( int iRed, int iGreen, int iBlue );
 	void SetAlpha( int iAlpha );
 
-	void SetText( std::string& sMsg );
+	void SetText( string& sMsg );
 
 	virtual void SetPosition( int x, int y );
 

@@ -90,7 +90,7 @@ bool MEngine::Init( void )
 	}
 
 	//IConsolePtr pConPtr(Console::GetInstance());
-	InputManager::GetInstance()->RegisterListener(boost::shared_dynamic_cast<IInputListener>(m_pConsole));
+	InputManager::GetInstance()->RegisterListener(shared_dynamic_cast<IInputListener>(m_pConsole));
 	Console::GetInstance()->Echo("Testing 1.");
 	Console::GetInstance()->Echo("Testing 2.");
 	Console::GetInstance()->Echo("Testing 3.");
@@ -131,7 +131,7 @@ void MEngine::Shutdown( void )
 	m_pCollisionResolver.reset();
 	
 	// Delete allocated objects.
-    /*std::vector<IBaseInterfacePtr>::reverse_iterator it;
+    /*vector<IBaseInterfacePtr>::reverse_iterator it;
 	for( it = m_Interfaces.rbegin(); it < m_Interfaces.rend(); ++it ) {
 		if( (*it) ) {
 			(*it)->Shutdown();
@@ -140,7 +140,7 @@ void MEngine::Shutdown( void )
 		}
 	}*/
 
-	std::vector<IEntityPtr>::iterator ent;
+	vector<IEntityPtr>::iterator ent;
 	for( ent = m_Entities.begin(); ent < m_Entities.end(); ++ent ) {
 		if( (*ent) ) {
 			printf(" -> Releasing entity object (0x%X).\n",(*ent).get());
@@ -184,7 +184,7 @@ void MEngine::Run( void )
 
 void MEngine::UpdateEntities( int iDelta )
 {
-	std::vector<IEntityPtr>::iterator it;
+	vector<IEntityPtr>::iterator it;
 	for( it = m_Entities.begin(); it < m_Entities.end(); ++it )
 		if( (*it)->GetActive() )
 			(*it)->UpdateLogic(iDelta);
@@ -205,7 +205,7 @@ bool MEngine::RegisterEntity( IEntityPtr pEntity )
 
 void MEngine::RemoveEntity( IEntityPtr pEntity )
 {
-	std::vector<IEntityPtr>::iterator it = m_Entities.begin();
+	vector<IEntityPtr>::iterator it = m_Entities.begin();
 	while( it != m_Entities.end() ) {
 		if( (*it) && (*it == pEntity) ) {
 			printf(" -> Removing entity (0x%X) from logic queue.\n",pEntity.get());

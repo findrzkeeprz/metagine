@@ -45,7 +45,7 @@ void MOutlineFont::SetColourBG( int iRed, int iGreen, int iBlue )
 	m_ColourBG.b = iBlue;
 }
 
-void MOutlineFont::SetText( const std::string& sText )
+void MOutlineFont::SetText( const string& sText )
 {
 	if( !sText.c_str() ) {
 		printf(" -! ERROR invalid message string in MOutlineFont::SetText().\n");

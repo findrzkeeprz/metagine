@@ -107,7 +107,7 @@ MSprite::~MSprite( void )
 	//	delete[] m_RotSurfaces;
 	//}
 	int iFrames = 0;
-	std::vector<SDL_Surface*>::iterator it;
+	vector<SDL_Surface*>::iterator it;
 	for( it = m_FramesCache.begin(); it < m_FramesCache.end(); ++it ) {
 		if( *it ) {
 			SDL_FreeSurface(*it);
@@ -173,7 +173,7 @@ void MSprite::Animate( bool bLoop )
 	}
 }
 
-SDL_Surface* MSprite::SurfFromFile( const std::string& sFileName )
+SDL_Surface* MSprite::SurfFromFile( const string& sFileName )
 {
 	if( !sFileName.c_str() ) {
 		printf(" -! ERROR invalid file name in MSprite::LoadImageFile().\n");
@@ -210,7 +210,7 @@ SDL_Surface* MSprite::SurfFromFile( const std::string& sFileName )
 	return pResult;
 }
 
-SDL_Surface* MSprite::ClippedSurfFromFile( const std::string& sFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b )
+SDL_Surface* MSprite::ClippedSurfFromFile( const string& sFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b )
 {
 	if( !sFileName.c_str() ) {
 		printf(" -! ERROR invalid file name in MSprite::ClippedSurfFromFile().\n");
@@ -275,7 +275,7 @@ bool MSprite::ParseFromXml( const char* pszXmlFile )
 	// and there is little sense in using frames from multiple files.
 	m_fDepth = (float)atof(pRoot->Attribute("depth"));
 	m_iFrameDelay = atoi(pRoot->Attribute("frameDelay"));
-	std::string sFileName = pRoot->Attribute("fileName");
+	string sFileName = pRoot->Attribute("fileName");
 	int r = atoi(pRoot->Attribute("keyR"));
 	int g = atoi(pRoot->Attribute("keyG"));
 	int b = atoi(pRoot->Attribute("keyB"));

@@ -33,6 +33,6 @@ public:
 	virtual void Shutdown( void ) { };
 };
 
-typedef boost::shared_ptr<IBaseInterface> IBaseInterfacePtr;
+typedef shared_ptr<IBaseInterface> IBaseInterfacePtr;
 
 #endif // _IBASEINTERFACE_H_

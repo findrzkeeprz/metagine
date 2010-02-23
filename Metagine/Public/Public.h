@@ -32,4 +32,7 @@
 #include "Vector3.h"
 #include "Math.h"
 
+using namespace boost;
+using namespace std;
+
 #endif // _PUBLIC_H_

@@ -27,6 +27,6 @@ public:
 	virtual ~IObjectFactory( void ) { };
 };
 
-typedef boost::shared_ptr<IObjectFactory> IObjectFactoryPtr;
+typedef shared_ptr<IObjectFactory> IObjectFactoryPtr;
 
 #endif // _IOBJECTFACTORY_H_

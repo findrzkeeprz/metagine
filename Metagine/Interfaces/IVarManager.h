@@ -49,6 +49,6 @@ public:
     virtual IVarPtr GetVarByName( const char* pszName ) = 0;
 };
 
-typedef boost::shared_ptr<IVarManager> IVarManagerPtr;
+typedef shared_ptr<IVarManager> IVarManagerPtr;
 
 #endif // _IVARMANAGER_H_

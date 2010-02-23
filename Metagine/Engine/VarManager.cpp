@@ -24,7 +24,7 @@ MVarManager::MVarManager( void )
 MVarManager::~MVarManager( void )
 {
 	// Free all of the allocated variables.
-    std::vector<IVarPtr>::iterator it;
+    vector<IVarPtr>::iterator it;
     for( it = m_Container.begin(); it < m_Container.end(); ++it ) {
     	if( (*it) ) {
             printf(" -> Releasing variable object (0x%X).\n",(*it).get());
@@ -74,7 +74,7 @@ IVarPtr MVarManager::CreateVar( const char* pszName, bool bValue )
 IVarPtr MVarManager::GetVarByName( const char* pszName )
 {
     // Compare each variable against the specified name.
-	std::vector<IVarPtr>::iterator it;
+	vector<IVarPtr>::iterator it;
 	for( it = m_Container.begin(); it < m_Container.end(); ++it ) {
         if( !strcmp((*it)->GetName(),pszName) ) {
             return (*it);

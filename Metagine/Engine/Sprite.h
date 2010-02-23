@@ -52,14 +52,14 @@ public:
 
 private:
 
-	SDL_Surface* SurfFromFile( const std::string& sFileName );
-	SDL_Surface* ClippedSurfFromFile( const std::string& sFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b );
+	SDL_Surface* SurfFromFile( const string& sFileName );
+	SDL_Surface* ClippedSurfFromFile( const string& sFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b );
 	bool ParseFromXml( const char* pszXmlFile );
 
 private:
 
 	SDL_Surface** m_RotSurfaces;
-	std::vector<SDL_Surface*> m_FramesCache;
+	vector<SDL_Surface*> m_FramesCache;
 	MTimer m_FrameTimer;
 	int m_iFrame;
 	int m_iFrameDelay;

@@ -77,7 +77,7 @@ private:
 
 	SDL_Surface* m_Screen;						///< Main SDL screen surface.
 	bool m_bFontLibLoaded;						///< Shows the status of the TTF library.
-	std::vector<IDrawablePtr> m_RenderQueue;	///< A queue of IDrawable objects to render every frame.
+	vector<IDrawablePtr> m_RenderQueue;	///< A queue of IDrawable objects to render every frame.
 	int m_iResolution[2];						///< Resolution of the engine screen.
 };
 

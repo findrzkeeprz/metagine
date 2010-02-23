@@ -21,7 +21,7 @@
 
 // Forward declaration (hack).
 class IEntity;
-typedef boost::shared_ptr<IEntity> IEntityPtr;
+typedef shared_ptr<IEntity> IEntityPtr;
 
 class IEntity
 {

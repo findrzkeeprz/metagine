@@ -27,6 +27,6 @@ public:
 	virtual ~IRenderer( void ) { };
 };
 
-typedef boost::shared_ptr<IRenderer> IRendererPtr;
+typedef shared_ptr<IRenderer> IRendererPtr;
 
 #endif // _IRENDERER_H_

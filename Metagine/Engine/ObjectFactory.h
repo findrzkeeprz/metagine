@@ -46,7 +46,7 @@ private:
 
 	//SDL_Surface* m_Screen;					///< Main SDL screen surface.
 	//bool m_bFontLibLoaded;					///< Shows the status of the TTF library.
-	//std::vector<IDrawable*> m_RenderQueue;	///< A queue of IDrawable objects to render every frame.
+	//vector<IDrawable*> m_RenderQueue;	///< A queue of IDrawable objects to render every frame.
 };
 
 typedef MSingleton<MObjectFactory> ObjFactory;

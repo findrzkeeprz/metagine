@@ -63,8 +63,8 @@ private:
 
 private:
 
-    std::vector<IBaseInterfacePtr> m_Interfaces;	///< Container of all registered game interfaces.
-	std::vector<IEntityPtr> m_Entities;				///< Collection of all game entities.
+    vector<IBaseInterfacePtr> m_Interfaces;	///< Container of all registered game interfaces.
+	vector<IEntityPtr> m_Entities;				///< Collection of all game entities.
 	bool m_bActive;							   		///< Identifies whether the engine is currently active.
 	
 	SDL_Event m_Event;								///< SDL event object.

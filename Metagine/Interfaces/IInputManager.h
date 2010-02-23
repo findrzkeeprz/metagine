@@ -34,6 +34,6 @@ public:
     virtual void Update( int iKey, bool bKeyDown ) = 0;
 };
 
-typedef boost::shared_ptr<IInputManager> IInputManagerPtr;
+typedef shared_ptr<IInputManager> IInputManagerPtr;
 
 #endif // _IINPUTMANAGER_H_

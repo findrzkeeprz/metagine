@@ -27,6 +27,6 @@ public:
 	virtual ~ICollisionResolver( void ) { };
 };
 
-typedef boost::shared_ptr<ICollisionResolver> ICollisionResolverPtr;
+typedef shared_ptr<ICollisionResolver> ICollisionResolverPtr;
 
 #endif // _ICOLLISIONRESOLVER_H_

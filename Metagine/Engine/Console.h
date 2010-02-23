@@ -53,7 +53,7 @@ public:
 private:
 
 	// Documented in IConsole.h
-	void Execute( const  std::string& sCmd );
+	void Execute( const  string& sCmd );
 
 private:
 
@@ -66,10 +66,10 @@ private:
 	bool m_bToggleAnimUp;						///< Toggle the scroll out animation.
 	bool m_bToggleAnimDown;						///< Toggle the scroll in animation.
 	bool m_bToggling;							///< Currently toggling animation - don't interrupt.
-	std::vector<std::string> m_BackBuffer;		///< Main console buffer storage.
-	std::vector<std::string> m_CmdHistory;		///< Previously executed command storage.
-	std::string m_sCurrentBuffer;				///< Current command input buffer.
-	boost::shared_ptr<MFont> m_Font;			///< Font to draw the console buffer.
+	vector<string> m_BackBuffer;		///< Main console buffer storage.
+	vector<string> m_CmdHistory;		///< Previously executed command storage.
+	string m_sCurrentBuffer;				///< Current command input buffer.
+	shared_ptr<MFont> m_Font;			///< Font to draw the console buffer.
 	int m_iScrollPoint;
 };
 

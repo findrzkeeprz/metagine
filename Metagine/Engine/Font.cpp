@@ -90,7 +90,7 @@ void MFont::SetAlpha( int iAlpha )
 	m_iAlpha = iAlpha;
 }
 
-void MFont::SetText( std::string& sMsg )
+void MFont::SetText( string& sMsg )
 {
 	if( !sMsg.c_str() ) {
 		printf(" -! ERROR invalid message string in MFont::SetText().\n");

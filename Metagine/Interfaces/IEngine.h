@@ -52,6 +52,6 @@ public:
 	virtual void Run( void ) = 0;
 };
 
-typedef boost::shared_ptr<IEngine> IEnginePtr;
+typedef shared_ptr<IEngine> IEnginePtr;
 
 #endif // _IENGINE_H_

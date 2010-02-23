@@ -44,8 +44,8 @@ bool MConsole::Init( void )
 	m_iPositionYoff = VarManager::GetInstance()->CreateVar("bconposyoff",-30);
 	m_iScrollFactor = VarManager::GetInstance()->CreateVar("bconscrollfactor",3);
 	
-	//m_Font = boost::shared_ptr<MOutlineFont>(new MOutlineFont("ariblk.ttf",15,255,255,255,1,0.0f));
-	m_Font = boost::shared_ptr<MFont>(new MFont("ariblk.ttf",15,255,255,255,0.0f));
+	//m_Font = shared_ptr<MOutlineFont>(new MOutlineFont("ariblk.ttf",15,255,255,255,1,0.0f));
+	m_Font = shared_ptr<MFont>(new MFont("ariblk.ttf",15,255,255,255,0.0f));
 	//m_Font.reset(new MFont("ariblk.ttf",15,255,255,255,0.0f));
 	//m_Font->.reset();
 	m_Font->SetColour(255,255,255);
@@ -83,19 +83,19 @@ void MConsole::Echo( const char* pszText, ... )
 	m_BackBuffer.push_back(szTmp);
 }
 
-void MConsole::Execute( const std::string& sCmd )
+void MConsole::Execute( const string& sCmd )
 {
-	std::string sArg0;
-	std::string sArg1;
+	string sArg0;
+	string sArg1;
 	size_t split;
 	bool bMultipleArgs = false;
 	
-	if( ( split = sCmd.find_first_of(" ") ) != std::string::npos ) {
+	if( ( split = sCmd.find_first_of(" ") ) != string::npos ) {
 		sArg0 = sCmd.substr(0,split);
 		sArg1 = sCmd.substr(split + 1);
 	
 		// Discard the remainder of the string.
-		if( ( split = sArg1.find_first_of(" ") ) != std::string::npos )
+		if( ( split = sArg1.find_first_of(" ") ) != string::npos )
 			sArg1.erase(split);
 	}
 	

@@ -35,13 +35,13 @@ public:
 
 	void ProcessEntityPairs( void );
 	void DeterminePartition( IEntityPtr pEntity );
-	void Resolve( std::vector<IEntityPtr>& Entities, int iDelta );
+	void Resolve( vector<IEntityPtr>& Entities, int iDelta );
 
 private:
 
-	//std::vector<IEntity*> m_Partitions[4];
-	std::vector<IEntityPtr> m_Partitions[4];
-	std::vector<std::pair<IEntityPtr,IEntityPtr>> m_EntityPairs;
+	//vector<IEntity*> m_Partitions[4];
+	vector<IEntityPtr> m_Partitions[4];
+	vector<pair<IEntityPtr,IEntityPtr>> m_EntityPairs;
 	int m_iDelta;
 };
 

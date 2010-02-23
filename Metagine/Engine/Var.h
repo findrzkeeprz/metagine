@@ -77,7 +77,7 @@ public:
 private:
     
     /// Unique name of the variable.
-	std::string m_sName;
+	string m_sName;
     
     /// The type of variable, represented by an enum.
     int m_iType;

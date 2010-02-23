@@ -28,6 +28,6 @@ public:
 	virtual ~IConsole( void ) { };
 };
 
-typedef boost::shared_ptr<IConsole> IConsolePtr;
+typedef shared_ptr<IConsole> IConsolePtr;
 
 #endif // _ICONSOLE_H_

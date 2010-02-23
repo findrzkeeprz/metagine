@@ -45,7 +45,7 @@ public:
     
 private:
 
-    std::vector<IVarPtr> m_Container; ///< Container to catalog all variables created through this object.
+    vector<IVarPtr> m_Container; ///< Container to catalog all variables created through this object.
 };
 
 typedef MSingleton<MVarManager> VarManager;

@@ -54,7 +54,7 @@ void MCollisionResolver::DeterminePartition( IEntityPtr pEntity )
 
 void MCollisionResolver::ProcessEntityPairs( void )
 {
-	std::vector<std::pair<IEntityPtr,IEntityPtr>>::iterator it;
+	vector<pair<IEntityPtr,IEntityPtr>>::iterator it;
 	for( it = m_EntityPairs.begin(); it < m_EntityPairs.end(); ++it ) {
 		SDL_Surface* pSurface1 = (SDL_Surface*)(*it).first->GetSprite()->GetSurface();
 		SDL_Surface* pSurface2 = (SDL_Surface*)(*it).second->GetSprite()->GetSurface();
@@ -76,7 +76,7 @@ void MCollisionResolver::ProcessEntityPairs( void )
 	m_EntityPairs.clear();
 }
 
-void MCollisionResolver::Resolve( std::vector<IEntityPtr>& Entities, int iDelta )
+void MCollisionResolver::Resolve( vector<IEntityPtr>& Entities, int iDelta )
 {
 	// 1. Divide screen into 4 divisions.
 	// 2. Perform collision detection.
@@ -84,7 +84,7 @@ void MCollisionResolver::Resolve( std::vector<IEntityPtr>& Entities, int iDelta 
 	
 	m_iDelta = iDelta;
 	
-	std::vector<IEntityPtr>::iterator it;
+	vector<IEntityPtr>::iterator it;
 	for( it = Entities.begin(); it < Entities.end(); ++it ) {
 		if( (*it)->GetActive() ) {
 			DeterminePartition((*it));
@@ -94,7 +94,7 @@ void MCollisionResolver::Resolve( std::vector<IEntityPtr>& Entities, int iDelta 
 	for( int i = 0; i < 4; i++ ) {
 		for( int j = 0; j < (int)m_Partitions[i].size(); j++ ) {
 			for( int k = j + 1; k < (int)m_Partitions[i].size(); k++ ) {
-				m_EntityPairs.push_back(std::make_pair(m_Partitions[i][j],m_Partitions[i][k]));
+				m_EntityPairs.push_back(make_pair(m_Partitions[i][j],m_Partitions[i][k]));
 			}
 		}
 	}
