@@ -49,19 +49,19 @@ bool MEngine::Init( void )
     printf(" -> MEngine::Init() called.\n");
     
 	// Register the main interfaces here.
-    if( !RegisterInterface(VarManager::GetInstance()) ) {
+    if( !RegisterInterface(IBaseInterfacePtr(VarManager::GetInstance())) ) {
         printf(" -! ERROR registering MVarManager object.\n");
         return false;
-	} else if( !RegisterInterface(Renderer::GetInstance()) ) {
+	} else if( !RegisterInterface(IBaseInterfacePtr(Renderer::GetInstance())) ) {
 		printf(" -! ERROR registering MRenderer object.\n");
 		return false;
-	} else if( !RegisterInterface(InputManager::GetInstance()) ) {
+	} else if( !RegisterInterface(IBaseInterfacePtr(InputManager::GetInstance())) ) {
 		printf(" -! ERROR registering MInputManager object.\n");
 		return false;
-	} else if( !RegisterInterface(Console::GetInstance()) ) {
+	} else if( !RegisterInterface(IBaseInterfacePtr(Console::GetInstance())) ) {
 		printf(" -! ERROR registering MConsole object.\n");
 		return false;
-	} else if( !RegisterInterface(CollisionResolver::GetInstance()) ) {
+	} else if( !RegisterInterface(IBaseInterfacePtr(CollisionResolver::GetInstance())) ) {
 		printf(" -! ERROR registering MCollisionResolver object.\n");
 		return false;
 	}
@@ -112,36 +112,20 @@ void MEngine::Shutdown( void )
     printf(" -> MEngine::Shutdown() called.\n");
     
     // Delete allocated objects.
-    std::vector<IBaseInterface*>::reverse_iterator it;
+    std::vector<IBaseInterfacePtr>::reverse_iterator it;
 	for( it = m_Interfaces.rbegin(); it < m_Interfaces.rend(); ++it )
 		if( (*it) ) {
 			(*it)->Shutdown();
-			delete (*it);
-			(*it) = NULL;
+			printf(" -> Releasing interface object (0x%X).\n",(*it).get());
+			it->reset();
 		}
 }
 
-bool MEngine::RegisterInterface( IBaseInterface* pInterface )
+bool MEngine::RegisterInterface( IBaseInterfacePtr pInterface )
 {
     assert(pInterface);
 
-    const char* pszName = pInterface->GetName();
-    const char* pszVersion = pInterface->GetVersion();
-
-    // Quick error check.    
-    if( !pszName ) {
-        printf(" -! ERROR empty/null interface name string.\n");
-        return false;
-    } else if( !pszVersion ) {
-        printf(" -! ERROR empty/null interface version string.\n");
-        return false;
-    } else if( GetInterfaceByName(pszName) ) {
-        printf(" -! ERROR registering interface, already exists in collection.\n");
-        return false;
-    }
-
-    // Register the interface with the container.
-    printf(" -> Registering interface '%s' version '%s'.\n",pszName,pszVersion);
+    printf(" -> Registering interface (0x%X).\n",pInterface.get());
     m_Interfaces.push_back(pInterface);
     return true;
 }
@@ -168,27 +152,15 @@ void MEngine::Run( void )
 	}
 }
 
-IBaseInterface* MEngine::GetInterfaceByName( const std::string& sName )
-{
-	// Iterate through the list.
-    for( int i = 0; i < (int)m_Interfaces.size(); i++ ) {
-        if( !strcmp(m_Interfaces[i]->GetName(),sName.c_str()) ) {
-            return m_Interfaces[i];
-        }
-    }
-
-    return NULL;
-}
-
 void MEngine::UpdateEntities( int iDelta )
 {
-	std::vector<IEntity*>::iterator it;
+	std::vector<IEntityPtr>::iterator it;
 	for( it = m_Entities.begin(); it < m_Entities.end(); ++it )
 		if( (*it)->GetActive() )
 			(*it)->UpdateLogic(iDelta);
 }
 
-bool MEngine::RegisterEntity( IEntity* pEntity )
+bool MEngine::RegisterEntity( IEntityPtr pEntity )
 {
 	if( !pEntity ) {
 		// Error msg here
@@ -196,17 +168,17 @@ bool MEngine::RegisterEntity( IEntity* pEntity )
 	}
 
 	m_Entities.push_back(pEntity);
-	printf(" -> Registered entity (0x%X) with logic queue.\n",pEntity);
+	printf(" -> Registered entity (0x%X) with logic queue.\n",pEntity.get());
 	
 	return true;
 }
 
-void MEngine::RemoveEntity( IEntity* pEntity )
+void MEngine::RemoveEntity( IEntityPtr pEntity )
 {
-	std::vector<IEntity*>::iterator it = m_Entities.begin();
+	std::vector<IEntityPtr>::iterator it = m_Entities.begin();
 	while( it != m_Entities.end() ) {
 		if( (*it) && (*it == pEntity) ) {
-			printf(" -> Removing entity (0x%X) from logic queue.\n",pEntity);
+			printf(" -> Removing entity (0x%X) from logic queue.\n",pEntity.get());
 			it = m_Entities.erase(it);
 		} else ++it;
 	}

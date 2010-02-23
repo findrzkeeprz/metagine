@@ -38,11 +38,11 @@ void MCollisionResolver::Shutdown( void )
 	printf(" -> MCollisionResolver::Shutdown() called.\n");
 }
 
-void MCollisionResolver::DeterminePartition( IEntity* pEntity )
+void MCollisionResolver::DeterminePartition( IEntityPtr pEntity )
 {
 	int w = Renderer::GetInstance()->GetScreenWidth() / 2;
 	int h = Renderer::GetInstance()->GetScreenHeight() / 2;
-	ISprite* pSprite = pEntity->GetSprite();
+	ISpritePtr pSprite = pEntity->GetSprite();
 	int x, y = 0;
 	
 	pSprite->GetPosition(x,y);
@@ -54,12 +54,12 @@ void MCollisionResolver::DeterminePartition( IEntity* pEntity )
 
 void MCollisionResolver::ProcessEntityPairs( void )
 {
-	std::vector<std::pair<IEntity*,IEntity*>>::iterator it;
+	std::vector<std::pair<IEntityPtr,IEntityPtr>>::iterator it;
 	for( it = m_EntityPairs.begin(); it < m_EntityPairs.end(); ++it ) {
 		SDL_Surface* pSurface1 = (SDL_Surface*)(*it).first->GetSprite()->GetSurface();
 		SDL_Surface* pSurface2 = (SDL_Surface*)(*it).second->GetSprite()->GetSurface();
-		ISprite* pSprite1 = (*it).first->GetSprite();
-		ISprite* pSprite2 = (*it).second->GetSprite();
+		ISpritePtr pSprite1 = (*it).first->GetSprite();
+		ISpritePtr pSprite2 = (*it).second->GetSprite();
 
 		int x, y, x2, y2 = 0;
 		pSprite1->GetPosition(x,y);
@@ -76,7 +76,7 @@ void MCollisionResolver::ProcessEntityPairs( void )
 	m_EntityPairs.clear();
 }
 
-void MCollisionResolver::Resolve( std::vector<IEntity*>& Entities, int iDelta )
+void MCollisionResolver::Resolve( std::vector<IEntityPtr>& Entities, int iDelta )
 {
 	// 1. Divide screen into 4 divisions.
 	// 2. Perform collision detection.
@@ -84,7 +84,7 @@ void MCollisionResolver::Resolve( std::vector<IEntity*>& Entities, int iDelta )
 	
 	m_iDelta = iDelta;
 	
-	std::vector<IEntity*>::iterator it;
+	std::vector<IEntityPtr>::iterator it;
 	for( it = Entities.begin(); it < Entities.end(); ++it ) {
 		if( (*it)->GetActive() ) {
 			DeterminePartition((*it));

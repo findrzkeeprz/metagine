@@ -58,18 +58,11 @@ void MRenderer::Shutdown( void )
 {
 	printf(" -> MRenderer::Shutdown() called.\n");
 	
-	// Do some housekeeping.
-	SDL_Quit();
-	TTF_Quit();
-
-	std::vector<IDrawable*> DelQueue;
-	std::vector<IDrawable*>::iterator it = m_RenderQueue.begin();
+	std::vector<IDrawablePtr> DelQueue;
+	std::vector<IDrawablePtr>::iterator it = m_RenderQueue.begin();
 	
 	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it ) {
-		if( (*it) ) {
-			printf(" -> Scheduling drawable object for deletion (0x%X).\n",(*it));
-			DelQueue.push_back((*it));
-		}
+		if( (*it) ) DelQueue.push_back((*it));
 	}
 
 	// We do this so that the actual render queue is not modified while iterating
@@ -77,13 +70,17 @@ void MRenderer::Shutdown( void )
 	it = DelQueue.begin();
 	for( it = DelQueue.begin(); it < DelQueue.end(); ++it ) {
 		if( *it ) {
-			printf(" -> Deleting queued drawable object (0x%X).\n",(*it));
-			delete (*it);
+			printf(" -> Releasing queued drawable object (0x%X).\n",(*it).get());
+			it->reset();
 		}
 	}
-	
+
 	m_RenderQueue.clear();
 	DelQueue.clear();
+
+	// Do some housekeeping.
+	SDL_Quit();
+	TTF_Quit();
 }
 
 bool MRenderer::FontLibLoaded( void )
@@ -91,7 +88,7 @@ bool MRenderer::FontLibLoaded( void )
 	return m_bFontLibLoaded;
 }
 
-void MRenderer::RegisterDrawable( IDrawable* pDrawable )
+void MRenderer::RegisterDrawable( IDrawablePtr pDrawable )
 {
 	if( !pDrawable ) {
 		// Error msg here
@@ -99,17 +96,17 @@ void MRenderer::RegisterDrawable( IDrawable* pDrawable )
 	}
 
 	// Push back and then re-sort the container based on depth.
-	m_RenderQueue.push_back(pDrawable);
+	m_RenderQueue.push_back(IDrawablePtr(pDrawable));
 	std::sort(m_RenderQueue.begin(),m_RenderQueue.end(),MRenderer::SpriteSortFunc);
 	
 	printf(" -> Registered object (0x%X) with rendering queue.\n",pDrawable);
 }
 
-void MRenderer::RemoveDrawable( IDrawable* pDrawable )
+void MRenderer::RemoveDrawable( IDrawablePtr pDrawable )
 {
-	std::vector<IDrawable*>::iterator it = m_RenderQueue.begin();
+	std::vector<IDrawablePtr>::iterator it = m_RenderQueue.begin();
 	while( it != m_RenderQueue.end() ) {
-		if( (*it) && (*it == pDrawable) ) {
+		if( (*it) && ((*it) == pDrawable) ) {
 			printf(" -> Removing object (0x%X) from rendering queue.\n",pDrawable);
 			it = m_RenderQueue.erase(it);
 		} else ++it;
@@ -124,7 +121,7 @@ void MRenderer::Frame( void )
 	SDL_FillRect(m_Screen,&m_Screen->clip_rect,SDL_MapRGB(m_Screen->format,0,0,0));
 	
 	// Render all queued objects.
-	std::vector<IDrawable*>::iterator it;
+	std::vector<IDrawablePtr>::iterator it;
 	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it )
 		if( (*it)->GetActive() )
 			(*it)->Render((void*)m_Screen);
@@ -132,7 +129,7 @@ void MRenderer::Frame( void )
 	SDL_Flip(m_Screen);
 }
 
-bool MRenderer::SpriteSortFunc( IDrawable* pData1, IDrawable* pData2 )
+bool MRenderer::SpriteSortFunc( IDrawablePtr pData1, IDrawablePtr pData2 )
 {
 	return pData1->GetDepth() > pData2->GetDepth();
 }

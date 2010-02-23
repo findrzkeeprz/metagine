@@ -16,9 +16,6 @@
 #ifndef _OBJECTFACTORY_H_
 #define _OBJECTFACTORY_H_
 
-#define OBJECTFACTORY_NAME "MObjectFactory"
-#define OBJECTFACTORY_VERSION "01"
-
 #include <vector>
 #include "../Public/Singleton.h"
 #include "../Interfaces/IObjectFactory.h"
@@ -41,10 +38,6 @@ public:
 	/// Perform required cleanup operations on graphical subsystems and free
 	/// any allocated resources.
 	~MObjectFactory( void );
-
-	// Documented in IBaseInterface.h
-	const char* GetName( void ) { return OBJECTFACTORY_NAME; }
-	const char* GetVersion( void ) { return OBJECTFACTORY_VERSION; }
 
 	// Documented in IObjectFactory.h
 	void Shutdown( void );

@@ -16,6 +16,8 @@
 #ifndef _IVAR_H_
 #define _IVAR_H_
 
+#include "../Public/Public.h"
+
 class IVar
 {
 public:
@@ -47,5 +49,7 @@ public:
     /// Virtual accessor to set variable's boolean value.
     virtual void SetValueBool( bool bValue ) = 0;
 };
+
+typedef boost::shared_ptr<IVar> IVarPtr;
 
 #endif // _IVAR_H_

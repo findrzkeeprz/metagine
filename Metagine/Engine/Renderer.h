@@ -16,14 +16,10 @@
 #ifndef _RENDERER_H_
 #define _RENDERER_H_
 
-#define RENDERER_NAME "MRenderer"
-#define RENDERER_VERSION "01"
-
 #include "ThirdParty.h"
 #include "../Public/Public.h"
 #include "../Public/BaseTypes.h"
 #include "../Public/Interfaces.h"
-
 
 /// Manages game rendering functionality.
 /// This class is responsible for initialisation and cleanup of anything
@@ -42,10 +38,6 @@ public:
 	/// any allocated resources.
 	~MRenderer( void );
 
-	// Documented in IBaseInterface.h
-	const char* GetName( void ) { return RENDERER_NAME; }
-	const char* GetVersion( void ) { return RENDERER_VERSION; }
-
 	// Documented in IRenderer.h
 	void Shutdown( void );
 
@@ -61,14 +53,14 @@ public:
 	/// This will register the specified IDrawable object for automatic calls
 	/// to IDrawable::Render() on every render frame.
 	/// @param pDrawable A pointer to the IDrawable object to be registered.
-	void RegisterDrawable( IDrawable* pDrawable );
+	void RegisterDrawable( IDrawablePtr pDrawable );
 
 	/// Remove a registered IDrawable object from the renderer.
 	/// Searches the list of registered IDrawable objects and removes it from
 	/// the list so that the object will not be rendered in future frames.
 	/// Note that this does not delete the allocated object.
 	/// @param pDrawable A pointer to the IDrawable object to be removed.
-	void RemoveDrawable( IDrawable* pDrawable );
+	void RemoveDrawable( IDrawablePtr pDrawable );
 
 	/// Renders the game view.
 	/// This is called repeatedly to render the game view. It also recursively
@@ -81,11 +73,11 @@ public:
 
 private:
 
-	static bool SpriteSortFunc( IDrawable* pData1, IDrawable* pData2 );
+	static bool SpriteSortFunc( IDrawablePtr pData1, IDrawablePtr pData2 );
 
-	SDL_Surface* m_Screen;					///< Main SDL screen surface.
-	bool m_bFontLibLoaded;					///< Shows the status of the TTF library.
-	std::vector<IDrawable*> m_RenderQueue;	///< A queue of IDrawable objects to render every frame.
+	SDL_Surface* m_Screen;						///< Main SDL screen surface.
+	bool m_bFontLibLoaded;						///< Shows the status of the TTF library.
+	std::vector<IDrawablePtr> m_RenderQueue;	///< A queue of IDrawable objects to render every frame.
 	int m_iResolution[2];						///< Resolution of the engine screen.
 };
 

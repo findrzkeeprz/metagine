@@ -31,9 +31,9 @@ public:
 
 private:
 
-	ISprite* m_BgSprite;
-	MShip* m_PlayerShip;
-	MTestEnt* m_TestEnt;
+	ISpritePtr m_BgSprite;
+	IEntityPtr m_PlayerShip;
+	IEntityPtr m_TestEnt;
 };
 
 #endif // _GAMEBOARD_H_

@@ -16,7 +16,8 @@
 #ifndef _ICOLLISIONRESOLVER_H_
 #define _ICOLLISIONRESOLVER_H_
 
-#include "../Public/BaseTypes.h"
+#include "../Public/Public.h"
+#include "../Interfaces/IBaseInterface.h"
 
 /// Public interface for the ICollisionResolver class.
 class ICollisionResolver : public IBaseInterface
@@ -25,5 +26,7 @@ public:
 
 	virtual ~ICollisionResolver( void ) { };
 };
+
+typedef boost::shared_ptr<ICollisionResolver> ICollisionResolverPtr;
 
 #endif // _ICOLLISIONRESOLVER_H_

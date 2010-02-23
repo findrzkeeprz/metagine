@@ -16,7 +16,8 @@
 #ifndef _ISPRITE_H_
 #define _ISPRITE_H_
 
-#include "IDrawable.h"
+#include "../Public/Public.h"
+#include "../Interfaces/IDrawable.h"
 
 class ISprite : public IDrawable
 {
@@ -54,5 +55,7 @@ public:
 
 	virtual void Animate( bool bLoop ) = 0;
 };
+
+typedef boost::shared_ptr<ISprite> ISpritePtr;
 
 #endif // _ISPRITE_H_

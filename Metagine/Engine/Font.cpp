@@ -59,12 +59,12 @@ m_iAlpha(255)
 	m_Coords[1] = 0;
 
 	// Push back to the renderer queue.
-	Renderer::GetInstance()->RegisterDrawable(this);
+	//Renderer::GetInstance()->RegisterDrawable(shared_from_this());
 }
 
 MFont::~MFont( void )
 {
-	Renderer::GetInstance()->RemoveDrawable(this);
+	//Renderer::GetInstance()->RemoveDrawable(shared_from_this());
     
 	if( m_Surface ) {
 		SDL_FreeSurface(m_Surface);
@@ -126,7 +126,7 @@ float MFont::GetDepth( void )
 void MFont::Render( void* pSurface )
 {
 	if( !m_Surface ) {
-		printf(" -! ERROR invalid surface in MOutline::Render().\n");
+		printf(" -! ERROR invalid surface in MFont::Render().\n");
 		return;
 	}
 	

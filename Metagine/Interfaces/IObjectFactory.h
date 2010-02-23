@@ -16,6 +16,7 @@
 #ifndef _IOBJECTFACTORY_H_
 #define _IOBJECTFACTORY_H_
 
+#include "../Public/Public.h"
 #include "../Interfaces/IBaseInterface.h"
 
 /// Public interface for the MObjectFactory class.
@@ -25,5 +26,7 @@ public:
 
 	virtual ~IObjectFactory( void ) { };
 };
+
+typedef boost::shared_ptr<IObjectFactory> IObjectFactoryPtr;
 
 #endif // _IOBJECTFACTORY_H_

@@ -20,9 +20,6 @@
 #include "../Public/BaseTypes.h"
 #include "../Public/Interfaces.h"
 
-#define INPUTMANAGER_NAME "MInputManager"
-#define INPUTMANAGER_VERSION "01"
-
 class MInputManager : public IInputManager
 {
 public:
@@ -32,13 +29,7 @@ public:
 
     /// Destructor method.
     ~MInputManager( void );
-
-    /// Return the class interface's public name.
-    const char* GetName( void ) { return INPUTMANAGER_NAME; }
-
-    /// Return the class interface's version string.
-    const char* GetVersion( void ) { return INPUTMANAGER_VERSION; }
-
+	
 	bool Init( void );
 	void SetKeyRepeat( int iDelay, int iInterval );
 	void RegisterListener( IInputListener* pListener );

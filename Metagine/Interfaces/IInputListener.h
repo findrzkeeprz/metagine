@@ -16,6 +16,8 @@
 #ifndef _IINPUTLISTENER_H_
 #define _IINPUTLISTENER_H_
 
+#include "../Public/Public.h"
+
 class IInputListener
 {
 public:
@@ -26,5 +28,7 @@ public:
     /// Virtual method to update the listener.
 	virtual void UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown ) = 0;
 };
+
+typedef boost::shared_ptr<IInputListener> IInputListenerPtr;
 
 #endif // _IINPUTLISTENER_H_

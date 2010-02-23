@@ -37,18 +37,18 @@ public:
 	bool GetActive( void );
 	//float GetPositionX( void ) { return m_fPosition[0]; }
 	//float GetPositionY( void ) { return m_fPosition[0]; }
-	ISprite* GetSprite( void ) { return m_ShipSprite; }
-	void CollisionEvent( IEntity* pEntity, int iDelta );
+	ISpritePtr GetSprite( void ) { return m_ShipSprite; }
+	void CollisionEvent( IEntityPtr pEntity, int iDelta );
 
 private:
 
-	ISprite* m_ShipSprite;
+	ISpritePtr m_ShipSprite;
 	MVector2 m_vPosition;
 	MVector2 m_vVelocity;
 	MVector2 m_vAcceleration;
-	IVar* m_fFriction;
-	IVar* m_fImpulse;
-	IVar* m_fCutOff;
+	IVarPtr m_fFriction;
+	IVarPtr m_fImpulse;
+	IVarPtr m_fCutOff;
 	bool m_bActive;
 };
 

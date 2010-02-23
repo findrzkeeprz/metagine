@@ -33,7 +33,7 @@ m_iStep(iStep)
 
 MOutlineFont::~MOutlineFont( void )
 {
-	//Renderer::GetInstance()->RemoveDrawable(this);
+	Renderer::GetInstance()->RemoveDrawable(shared_from_this());
 
 	printf(" -> MOutlineFont object destructed.\n");
 }

@@ -14,6 +14,8 @@
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "GameBoard.h"
+#include "../Engine/Renderer.h"
+#include "../Engine/Engine.h"
 #include "../Engine/Sprite.h"
 #include "../Public/Public.h"
 
@@ -24,15 +26,19 @@ MGameBoard::MGameBoard( void )
 
 MGameBoard::~MGameBoard( void )
 {
-	if( m_PlayerShip ) {
-		delete m_PlayerShip;
-		m_PlayerShip = NULL;
-	}
+	//if( m_PlayerShip ) {
+	//	delete m_PlayerShip;
+	//	m_PlayerShip = NULL;
+	//}
 }
 
 void MGameBoard::Init( void )
 {
-	m_BgSprite = new MSprite("SpaceBG.png",0,true,1.0f);
-	m_PlayerShip = new MShip();
-	m_TestEnt = new MTestEnt();
+	//m_BgSprite = new MSprite("SpaceBG.png",0,true,1.0f);
+	m_BgSprite = ISpritePtr(new MSprite("SpaceBG.png",0,true,1.0f));
+	Renderer::GetInstance()->RegisterDrawable(m_BgSprite);
+	m_PlayerShip = IEntityPtr(new MShip());
+	m_TestEnt = IEntityPtr(new MTestEnt());
+	Engine::GetInstance()->RegisterEntity(m_PlayerShip);
+	Engine::GetInstance()->RegisterEntity(m_TestEnt);
 }

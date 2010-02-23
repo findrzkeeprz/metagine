@@ -16,7 +16,12 @@
 #ifndef _IENTITY_H_
 #define _IENTITY_H_
 
-#include "ISprite.h"
+#include "../Public/Public.h"
+#include "../Interfaces/ISprite.h"
+
+// Forward declaration (hack).
+class IEntity;
+typedef boost::shared_ptr<IEntity> IEntityPtr;
 
 class IEntity
 {
@@ -31,8 +36,8 @@ public:
     /// Virtual accessor to determine object validity.
     virtual bool GetActive( void ) = 0;
 
-	virtual ISprite* GetSprite( void ) = 0;
-	virtual void CollisionEvent( IEntity* pEntity, int iDelta ) = 0;
+	virtual ISpritePtr GetSprite( void ) = 0;
+	virtual void CollisionEvent( IEntityPtr pEntity, int iDelta ) = 0;
 };
 
 #endif // _IENTITY_H_

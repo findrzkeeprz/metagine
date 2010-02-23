@@ -16,8 +16,8 @@
 #ifndef _ICONSOLE_H_
 #define _ICONSOLE_H_
 
+#include "../Public/Public.h"
 #include "../Interfaces/IBaseInterface.h"
-#include "../Interfaces/IInputListener.h"
 
 /// Public interface for the IConsole class.
 class IConsole : public IBaseInterface
@@ -26,5 +26,7 @@ public:
 
 	virtual ~IConsole( void ) { };
 };
+
+typedef boost::shared_ptr<IConsole> IConsolePtr;
 
 #endif // _ICONSOLE_H_

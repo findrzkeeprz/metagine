@@ -45,12 +45,11 @@ public:
     
     bool Init( void );
     void Shutdown( void );
-    bool RegisterInterface( IBaseInterface* pInterface );
-	IBaseInterface* GetInterfaceByName( const std::string& sName );
+    bool RegisterInterface( IBaseInterfacePtr pInterface );
 
 	void UpdateEntities( int iDelta );
-	bool RegisterEntity( IEntity* pEntity );
-	void RemoveEntity( IEntity* pEntity );
+	bool RegisterEntity( IEntityPtr );
+	void RemoveEntity( IEntityPtr );
 
 private:
 
@@ -64,16 +63,16 @@ private:
 
 private:
 
-    std::vector<IBaseInterface*> m_Interfaces; 	///< Container of all registered game interfaces.
-	std::vector<IEntity*> m_Entities;			///< Collection of all game entities.
-	bool m_bActive;							   	///< Identifies whether the engine is currently active.
+    std::vector<IBaseInterfacePtr> m_Interfaces;	///< Container of all registered game interfaces.
+	std::vector<IEntityPtr> m_Entities;				///< Collection of all game entities.
+	bool m_bActive;							   		///< Identifies whether the engine is currently active.
 	
-	SDL_Event m_Event;							///< SDL event object.
+	SDL_Event m_Event;								///< SDL event object.
 	MTimer m_FpsTimer;
 	MTimer m_GameTimer;
-	IVar* m_iFpsMax;							///< Maximum FPS limit.
-	IVar* m_bFpsCap;							///< Whether the FPS is regulated or not.	
-	IVar* m_iGameRefresh;
+	IVarPtr m_iFpsMax;								///< Maximum FPS limit.
+	IVarPtr m_bFpsCap;								///< Whether the FPS is regulated or not.	
+	IVarPtr m_iGameRefresh;
 
 	MGameBoard m_GameBoard;
 

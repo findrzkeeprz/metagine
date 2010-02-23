@@ -26,7 +26,9 @@ MShip::MShip( void ) :
 m_bActive(true)
 {
 	// This will all need to go through the engine interface in future.
-	m_ShipSprite = new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f);
+	//m_ShipSprite(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
+	m_ShipSprite = ISpritePtr(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
+	Renderer::GetInstance()->RegisterDrawable(m_ShipSprite);
 	
 	// Center the ship on the center of the screen initially.
 	int iCenter = (Renderer::GetInstance()->GetScreenWidth() / 2) - ( m_ShipSprite->GetWidth() / 2 );
@@ -37,7 +39,7 @@ m_bActive(true)
 	m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
 	
 	InputManager::GetInstance()->RegisterListener(this);
-	Engine::GetInstance()->RegisterEntity(this);
+	//Engine::GetInstance()->RegisterEntity(this);
 
 	m_fFriction = VarManager::GetInstance()->CreateVar("ffriction",25.0f);
 	m_fImpulse = VarManager::GetInstance()->CreateVar("fimpulse",2.75f);
@@ -85,7 +87,7 @@ void MShip::UpdateLogic( int iDelta )
 	m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
 }
 
-void MShip::CollisionEvent( IEntity* pEntity, int iDelta )
+void MShip::CollisionEvent( IEntityPtr pEntity, int iDelta )
 {
 	m_vPosition += ( ( -m_vVelocity * (float)iDelta ) / 1000.0f );
 	m_vVelocity.Zero();

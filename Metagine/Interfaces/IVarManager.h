@@ -16,13 +16,9 @@
 #ifndef _IVARMANAGER_H_
 #define _IVARMANAGER_H_
 
-//#include "../Public/Public.h"
-//#include "../Interfaces/IBaseInterface.h"
-//#include "../Interfaces/IVar.h"
-
-//typedef boost::shared_ptr<IVar> IVarPtr;
 #include "../Public/Public.h"
-#include "../Public/BaseTypes.h"
+#include "../Interfaces/IBaseInterface.h"
+#include "../Interfaces/IVar.h"
 
 /// Public interface for the MVarManager class.
 class IVarManager : public IBaseInterface
@@ -34,23 +30,25 @@ public:
     /// Creates a new integer-type MVar object.
 	/// This creates a new MVar object with integer type. The MVar object is
 	/// created and automatically registered with the variable manager.
-    virtual IVar* CreateVar( const char* pszName, int iValue ) = 0;
+    virtual IVarPtr CreateVar( const char* pszName, int iValue ) = 0;
     
     /// Creates a new float-type MVar object.
     /// This creates a new MVar object with integer type. The MVar object is
     /// created and automatically registered with the variable manager.
-    virtual IVar* CreateVar( const char* pszName, float fValue ) = 0;
+    virtual IVarPtr CreateVar( const char* pszName, float fValue ) = 0;
     
     /// Creates a new boolean-type MVar object.
     /// This creates a new MVar object with integer type. The MVar object is
     /// created and automatically registered with the variable manager.
-    virtual IVar* CreateVar( const char* pszName, bool bValue ) = 0;
+    virtual IVarPtr CreateVar( const char* pszName, bool bValue ) = 0;
     
     /// Gets a pointer to an MVar object by name.
     /// This searches the list of registered variables and returns a pointer to
     /// the object if it exists. Returns NULL if no variable is found. Spelling
     /// must be exact.
-    virtual IVar* GetVarByName( const char* pszName ) = 0;
+    virtual IVarPtr GetVarByName( const char* pszName ) = 0;
 };
+
+typedef boost::shared_ptr<IVarManager> IVarManagerPtr;
 
 #endif // _IVARMANAGER_H_

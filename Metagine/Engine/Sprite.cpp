@@ -50,7 +50,7 @@ m_iFrameDelay(0)
 
 	// Add to the frame list and rendering queue.
 	m_FramesCache.push_back(pSurface);
-	Renderer::GetInstance()->RegisterDrawable(this);
+	//Renderer::GetInstance()->RegisterDrawable(shared_from_this());
 }
 
 MSprite::MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, 
@@ -73,7 +73,7 @@ m_iFrameDelay(0)
 
 	// Add to the frame list and rendering queue.
 	m_FramesCache.push_back(pSurface);
-	Renderer::GetInstance()->RegisterDrawable(this);
+	//Renderer::GetInstance()->RegisterDrawable(shared_from_this());
 }
 
 MSprite::MSprite( const char* pszXmlFile ) :
@@ -89,14 +89,14 @@ m_iFrameDelay(0)
 		return;
 	}
 	
-	Renderer::GetInstance()->RegisterDrawable(this);
+	//Renderer::GetInstance()->RegisterDrawable(shared_from_this());
 
 	m_FrameTimer.Start();
 }
 
 MSprite::~MSprite( void )
 {
-	Renderer::GetInstance()->RemoveDrawable(this);
+	//Renderer::GetInstance()->RemoveDrawable(shared_from_this());
 	//SDL_FreeSurface(m_Surface);
 
 	// We skip [0] since it points to m_Surface.

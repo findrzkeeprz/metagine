@@ -14,12 +14,12 @@ public:
 	// Documented in IEntity.h
 	void UpdateLogic( int iDelta );
 	bool GetActive( void );
-	ISprite* GetSprite( void ) { return m_TestSprite; }
-	void CollisionEvent( IEntity* pEntity, int iDelta );
+	ISpritePtr GetSprite( void ) { return m_TestSprite; }
+	void CollisionEvent( IEntityPtr pEntity, int iDelta );
 
 private:
 
-	ISprite* m_TestSprite;
+	ISpritePtr m_TestSprite;
 	float m_fPosition[2];
 	float m_fVelocity[2];
 	bool m_bActive;

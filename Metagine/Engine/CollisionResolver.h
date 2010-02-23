@@ -16,9 +16,6 @@
 #ifndef _COLLISIONRESOLVER_H_
 #define _COLLISIONRESOLVER_H_
 
-#define COLLISIONRESOLVER_NAME "MCollisionResolver"
-#define COLLISIONRESOLVER_VERSION "01"
-
 #include "../Public/Public.h"
 #include "../Public/BaseTypes.h"
 #include "../Public/Interfaces.h"
@@ -32,23 +29,19 @@ public:
 	MCollisionResolver( void );
 	~MCollisionResolver( void );
 
-	// Documented in IBaseInterface.h
-	const char* GetName( void ) { return COLLISIONRESOLVER_NAME; }
-	const char* GetVersion( void ) { return COLLISIONRESOLVER_VERSION; }
-
 	// Documented in IConsole.h
 	//bool Init( void );
 	void Shutdown( void );
 
 	void ProcessEntityPairs( void );
-	void DeterminePartition( IEntity* pEntity );
-	void Resolve( std::vector<IEntity*>& Entities, int iDelta );
+	void DeterminePartition( IEntityPtr pEntity );
+	void Resolve( std::vector<IEntityPtr>& Entities, int iDelta );
 
 private:
 
 	//std::vector<IEntity*> m_Partitions[4];
-	std::vector<IEntity*> m_Partitions[4];
-	std::vector<std::pair<IEntity*,IEntity*>> m_EntityPairs;
+	std::vector<IEntityPtr> m_Partitions[4];
+	std::vector<std::pair<IEntityPtr,IEntityPtr>> m_EntityPairs;
 	int m_iDelta;
 };
 

@@ -13,11 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _CVARMANAGER_H_
-#define _CVARMANAGER_H_
-
-#define VARMANAGER_NAME "MVarManager"
-#define VARMANAGER_VERSION "01"
+#ifndef _VARMANAGER_H_
+#define _VARMANAGER_H_
 
 #include "../Public/Public.h"
 #include "../Public/BaseTypes.h"
@@ -39,22 +36,18 @@ public:
     /// Recursively deletes any existing MVar objects that are presently
     /// registered with the manager.
     ~MVarManager( void );
-
-    // Documented in IBaseInterface.h
-    const char* GetName( void ) { return VARMANAGER_NAME; }
-    const char* GetVersion( void ) { return VARMANAGER_VERSION; }
     
     // Documented in IVarManager.h
-    IVar* CreateVar( const char* pszName, int iValue );
-    IVar* CreateVar( const char* pszName, float fValue );
-    IVar* CreateVar( const char* pszName, bool bValue );
-    IVar* GetVarByName( const char* pszName );
+    IVarPtr CreateVar( const char* pszName, int iValue );
+    IVarPtr CreateVar( const char* pszName, float fValue );
+    IVarPtr CreateVar( const char* pszName, bool bValue );
+    IVarPtr GetVarByName( const char* pszName );
     
 private:
 
-    std::vector<IVar*> m_Container; ///< Container to catalog all variables created through this object.
+    std::vector<IVarPtr> m_Container; ///< Container to catalog all variables created through this object.
 };
 
 typedef MSingleton<MVarManager> VarManager;
 
-#endif // _CVARMANAGER_H_
+#endif // _VARMANAGER_H_

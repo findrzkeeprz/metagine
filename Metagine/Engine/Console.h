@@ -16,19 +16,11 @@
 #ifndef _CONSOLE_H_
 #define _CONSOLE_H_
 
-#define CONSOLE_NAME "MConsole"
-#define CONSOLE_VERSION "01"
-
 #include "../Public/Public.h"
 #include "../Public/BaseTypes.h"
 #include "../Public/Interfaces.h"
 
 #include "OutlineFont.h"
-//#include "../Public/Singleton.h"
-//#include "../Interfaces/IConsole.h"
-//#include "../Interfaces/IInputListener.h"
-//#include "../Interfaces/IDrawable.h"
-
 #include "Sprite.h"
 
 /// Fix me.
@@ -43,10 +35,6 @@ public:
 	/// Perform required cleanup operations on graphical subsystems and free
 	/// any allocated resources.
 	~MConsole( void );
-
-	// Documented in IBaseInterface.h
-	const char* GetName( void ) { return CONSOLE_NAME; }
-	const char* GetVersion( void ) { return CONSOLE_VERSION; }
 
 	// Documented in IConsole.h
 	bool Init( void );
@@ -69,21 +57,20 @@ private:
 
 private:
 
-	IVar* m_bActive;							///< Determines whether visible/receiving input.
-	IVar* m_iFontSpacing;						///< Font spacing between console lines.
-	IVar* m_iPositionX;							///< X coordinate of the console;
-	IVar* m_iPositionYon;						///< Y coordinate of the console (on-screen);
-	IVar* m_iPositionYoff;						///< Y coordinate of the console (off-screen);
-	IVar* m_iScrollFactor;						///< The rate at which the console scrolls in and out.
+	IVarPtr m_bActive;							///< Determines whether visible/receiving input.
+	IVarPtr m_iFontSpacing;						///< Font spacing between console lines.
+	IVarPtr m_iPositionX;						///< X coordinate of the console;
+	IVarPtr m_iPositionYon;						///< Y coordinate of the console (on-screen);
+	IVarPtr m_iPositionYoff;					///< Y coordinate of the console (off-screen);
+	IVarPtr m_iScrollFactor;					///< The rate at which the console scrolls in and out.
 	bool m_bToggleAnimUp;						///< Toggle the scroll out animation.
 	bool m_bToggleAnimDown;						///< Toggle the scroll in animation.
 	bool m_bToggling;							///< Currently toggling animation - don't interrupt.
 	std::vector<std::string> m_BackBuffer;		///< Main console buffer storage.
 	std::vector<std::string> m_CmdHistory;		///< Previously executed command storage.
 	std::string m_sCurrentBuffer;				///< Current command input buffer.
-	MOutlineFont* m_Font;						///< Font to draw the console buffer.
+	boost::shared_ptr<MFont> m_Font;			///< Font to draw the console buffer.
 	int m_iScrollPoint;
-	MSprite* m_TestSprite;
 };
 
 typedef MSingleton<MConsole> Console;

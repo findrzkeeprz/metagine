@@ -16,7 +16,9 @@
 #ifndef _IDRAWABLE_H_
 #define _IDRAWABLE_H_
 
-class IDrawable
+#include "../Public/Public.h"
+
+class IDrawable : public boost::enable_shared_from_this<IDrawable>
 {
 public:
 
@@ -31,5 +33,7 @@ public:
 
 	virtual float GetDepth( void ) = 0;
 };
+
+typedef boost::shared_ptr<IDrawable> IDrawablePtr;
 
 #endif // _IDRAWABLE_H_

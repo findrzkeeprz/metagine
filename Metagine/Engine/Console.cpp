@@ -44,19 +44,16 @@ bool MConsole::Init( void )
 	m_iPositionYoff = VarManager::GetInstance()->CreateVar("bconposyoff",-30);
 	m_iScrollFactor = VarManager::GetInstance()->CreateVar("bconscrollfactor",3);
 	
-	m_Font = new MOutlineFont("ariblk.ttf",15,255,255,255,1,0.0f);
+	//m_Font = boost::shared_ptr<MOutlineFont>(new MOutlineFont("ariblk.ttf",15,255,255,255,1,0.0f));
+	m_Font = boost::shared_ptr<MFont>(new MFont("ariblk.ttf",15,255,255,255,0.0f));
+	//m_Font.reset(new MFont("ariblk.ttf",15,255,255,255,0.0f));
+	//m_Font->.reset();
 	m_Font->SetColour(255,255,255);
-	m_Font->SetColourBG(0,120,0);
+	Renderer::GetInstance()->RegisterDrawable(m_Font);
+	//m_Font->SetColourBG(0,120,0);
 
 	InputManager::GetInstance()->RegisterListener(this);
-	Renderer::GetInstance()->RegisterDrawable(this);
-
-	// Tmp.
-	//m_TestSprite = new MSprite("gogorisset1.bmp",0,false,6,6,39,45,0.5f);
-	m_TestSprite = new MSprite("NinjaSprite.xml");
-	// m_TestSprite = new MSprite("gogorisset1.bmp",true,true,6,6,39,10);
-	//m_TestSprite = new MSprite("mariosprite.bmp",false,false);
-	m_TestSprite->SetPosition(200,200);
+	Renderer::GetInstance()->RegisterDrawable(shared_from_this());
 	
 	return true;
 }
@@ -65,13 +62,9 @@ void MConsole::Shutdown( void )
 {
 	printf(" -> MConsole::Shutdown() called.\n");
 
-	if( m_Font ) {
-		delete m_Font;
-		m_Font = NULL;
-	}
-
 	InputManager::GetInstance()->RemoveListener(this);
-	Renderer::GetInstance()->RemoveDrawable(this);
+	Renderer::GetInstance()->RemoveDrawable(m_Font);
+	Renderer::GetInstance()->RemoveDrawable(shared_from_this());
 }
 
 void MConsole::Echo( const char* pszText, ... )
@@ -109,7 +102,7 @@ void MConsole::Execute( const std::string& sCmd )
 	bMultipleArgs = sArg0.empty() ? false : true;
 	if( !bMultipleArgs ) sArg0 = sCmd;
 
-	IVar* pVar = VarManager::GetInstance()->GetVarByName(bMultipleArgs ? sArg0.c_str() : sCmd.c_str());
+	IVarPtr pVar = VarManager::GetInstance()->GetVarByName(bMultipleArgs ? sArg0.c_str() : sCmd.c_str());
 
 	if( pVar ) {
 		switch( pVar->GetType() ) {
@@ -154,8 +147,6 @@ float MConsole::GetDepth( void )
 
 void MConsole::Render( void* pSurface )
 {
-	m_TestSprite->Animate(true);
-	
 	if( m_bToggleAnimDown ) {
 		if( m_iScrollPoint < m_iPositionYon->GetValueInt() ) {
 			m_iScrollPoint += m_iScrollFactor->GetValueInt();
@@ -188,11 +179,6 @@ void MConsole::Render( void* pSurface )
 	m_Font->SetPosition(m_iPositionX->GetValueInt(),m_iScrollPoint + m_iFontSpacing->GetValueInt());
 	m_Font->SetText(m_sCurrentBuffer);
 	m_Font->Render(pSurface);
-
-	static int test = 0;
-	if( test < 359 ) test++;
-	else test = 0;
-	m_TestSprite->SetRotation(test);
 }
 
 void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown )

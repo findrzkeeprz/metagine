@@ -16,6 +16,7 @@
 #ifndef _IINPUTMANAGER_H_
 #define _IINPUTMANAGER_H_
 
+#include "../Public/Public.h"
 #include "../Interfaces/IBaseInterface.h"
 #include "../Interfaces/IInputListener.h"
 
@@ -26,10 +27,12 @@ public:
     /// Virtual destructor method.
     virtual ~IInputManager( void ) { };
 
-	void SetKeyRepeat( int iDelay, int iInterval );
-    void RegisterListener( IInputListener* pListener );
-    void RemoveListener( IInputListener* pListener );
-    void Update( int iKey, bool bKeyDown );
+	virtual void SetKeyRepeat( int iDelay, int iInterval ) = 0;
+    virtual void RegisterListener( IInputListener* pListener ) = 0;
+    virtual void RemoveListener( IInputListener* pListener ) = 0;
+    virtual void Update( int iKey, bool bKeyDown ) = 0;
 };
+
+typedef boost::shared_ptr<IInputManager> IInputManagerPtr;
 
 #endif // _IINPUTMANAGER_H_

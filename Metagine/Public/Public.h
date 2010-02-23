@@ -24,6 +24,7 @@
 #include <assert.h>
 #include <windows.h>
 #include <boost/shared_ptr.hpp>
+#include <boost/enable_shared_from_this.hpp>
 
 #include "Singleton.h"
 #include "Timer.h"

@@ -16,8 +16,8 @@
 #ifndef _IENGINE_H_
 #define _IENGINE_H_
 
+#include "../Public/Public.h"
 #include "../Interfaces/IBaseInterface.h"
-#include "../Interfaces/IVarManager.h"
 
 /// Public interface for the MEngine class.
 class IEngine
@@ -43,14 +43,7 @@ public:
     /// point onwards the correct shutdown and deletion of the specified
     /// interface will be handled internally and automatically by the engine.
     /// @param pInterface A pointer to the game interface object.
-    virtual bool RegisterInterface( IBaseInterface* pInterface ) = 0;
-
-    /// Returns a pointer to a registered game interface.
-    /// This allows external modules to use functionality provided by the main
-    /// engine with only access to a class interface definition. This function
-    /// should return a NULL pointer if the interface is not found.
-    /// @param pszName The agreed name of the registered game interface.
-	virtual IBaseInterface* GetInterfaceByName( const std::string& sName ) = 0;
+    virtual bool RegisterInterface( IBaseInterfacePtr pInterface ) = 0;
 
     /// Main game engine loop.
     /// Responsible for updating all main game components at regular frame
@@ -58,5 +51,7 @@ public:
     /// piece of code.
 	virtual void Run( void ) = 0;
 };
+
+typedef boost::shared_ptr<IEngine> IEnginePtr;
 
 #endif // _IENGINE_H_

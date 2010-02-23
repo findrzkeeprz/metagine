@@ -16,6 +16,7 @@
 #ifndef _IRENDERER_H_
 #define _IRENDERER_H_
 
+#include "../Public/Public.h"
 #include "../Interfaces/IBaseInterface.h"
 
 /// Public interface for the MRenderer class.
@@ -25,5 +26,7 @@ public:
 
 	virtual ~IRenderer( void ) { };
 };
+
+typedef boost::shared_ptr<IRenderer> IRendererPtr;
 
 #endif // _IRENDERER_H_

@@ -16,23 +16,14 @@
 #ifndef _IBASEINTERFACE_H_
 #define _IBASEINTERFACE_H_
 
+#include "../Public/Public.h"
+
 /// Public interface for main game components.
 class IBaseInterface
 {
 public:
     
     virtual ~IBaseInterface( void ) { };    
-
-    /// Gets the textual name of the interface.
-    /// This would normally should normally return the name of the interface
-    /// as it appears at the source-code level. Exceptions may apply.
-    virtual const char* GetName( void ) = 0;
-
-    /// Gets the version number of the interface.
-    /// This is important because some external modules may require a specific
-    /// version of a certain interface. By doing a simple version check we can
-    /// rule out any runtime incompatibility nasties.
-    virtual const char* GetVersion( void ) = 0;
 
 	/// Shutdown routine for participating interfaces.
     /// This gives interfaces that are registered with the MEngine class an
@@ -41,5 +32,7 @@ public:
     /// @see MEngine::Shutdown()
 	virtual void Shutdown( void ) { };
 };
+
+typedef boost::shared_ptr<IBaseInterface> IBaseInterfacePtr;
 
 #endif // _IBASEINTERFACE_H_

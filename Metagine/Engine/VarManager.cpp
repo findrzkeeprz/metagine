@@ -24,61 +24,62 @@ MVarManager::MVarManager( void )
 MVarManager::~MVarManager( void )
 {
 	// Free all of the allocated variables.
-    std::vector<IVar*>::iterator it;
+    std::vector<IVarPtr>::iterator it;
     for( it = m_Container.begin(); it < m_Container.end(); ++it ) {
     	if( (*it) ) {
-            delete (*it);
+            printf(" -> Releasing variable object (0x%X).\n",(*it).get());
+			(*it).reset();
         }
     }
 
     printf(" -> MVarManager object destructed.\n");
 }
 
-IVar* MVarManager::CreateVar( const char* pszName, int iValue )
+IVarPtr MVarManager::CreateVar( const char* pszName, int iValue )
 {
-    IVar* pResult = NULL;
+    IVarPtr pResult;
     
     if( !GetVarByName(pszName) ) {
-        pResult = new MVar(pszName,iValue);
+        pResult = IVarPtr(new MVar(pszName,iValue));
         m_Container.push_back(pResult);
     }
     
     return pResult;
 }
 
-IVar* MVarManager::CreateVar( const char* pszName, float fValue )
+IVarPtr MVarManager::CreateVar( const char* pszName, float fValue )
 {
-    IVar* pResult = NULL;
+    IVarPtr pResult;
     
     if( !GetVarByName(pszName) ) {
-        pResult = new MVar(pszName,fValue);
+        pResult = IVarPtr(new MVar(pszName,fValue));
         m_Container.push_back(pResult);
     }
     
     return pResult;
 }
 
-IVar* MVarManager::CreateVar( const char* pszName, bool bValue )
+IVarPtr MVarManager::CreateVar( const char* pszName, bool bValue )
 {
-    IVar* pResult = NULL;
+    IVarPtr pResult;
     
     if( !GetVarByName(pszName) ) {
-        pResult = new MVar(pszName,bValue);
+        pResult = IVarPtr(new MVar(pszName,bValue));
         m_Container.push_back(pResult);
     }
     
     return pResult;
 }
 
-IVar* MVarManager::GetVarByName( const char* pszName )
+IVarPtr MVarManager::GetVarByName( const char* pszName )
 {
     // Compare each variable against the specified name.
-	std::vector<IVar*>::iterator it;
+	std::vector<IVarPtr>::iterator it;
 	for( it = m_Container.begin(); it < m_Container.end(); ++it ) {
         if( !strcmp((*it)->GetName(),pszName) ) {
             return (*it);
         }
     }
     
-    return NULL;
+    return IVarPtr();
 }
