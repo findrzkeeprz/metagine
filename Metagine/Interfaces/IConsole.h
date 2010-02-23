@@ -19,13 +19,18 @@
 #include "../Public/Public.h"
 #include "../Interfaces/IBaseInterface.h"
 #include "../Interfaces/IInputListener.h"
+#include "../Interfaces/IDrawable.h"
 
 /// Public interface for the IConsole class.
-class IConsole : public IBaseInterface, public IInputListener
+class IConsole : public IBaseInterface, public IInputListener, public IDrawable
 {
 public:
 
 	virtual ~IConsole( void ) { };
+
+	virtual bool Init( void ) = 0;
+	virtual void Shutdown( void ) = 0;
+	virtual void Echo( const char* pszText, ... ) = 0;
 };
 
 typedef shared_ptr<IConsole> IConsolePtr;

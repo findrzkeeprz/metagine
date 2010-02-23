@@ -10,17 +10,17 @@ m_bActive(true)
 	//m_TestSprite = new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f);
 	//m_TestSprite = new MSprite("Explosion1.xml");
 	m_TestSprite = ISpritePtr(new MSprite("Explosion1.xml"));
-	Renderer::GetInstance()->RegisterDrawable(m_TestSprite);
+	Engine::GetInstance()->Renderer()->RegisterDrawable(m_TestSprite);
 
 	// Center the ship on the center of the screen initially.
-	//int iCenter = (Renderer::GetInstance()->GetScreenWidth() / 2) - ( m_TestSprite->GetWidth() / 2 );
+	//int iCenter = (Engine::GetInstance()->Renderer()->GetScreenWidth() / 2) - ( m_TestSprite->GetWidth() / 2 );
 	m_fPosition[0] = 50.0f;
 	m_fPosition[1] = 400.0f;
 	m_fVelocity[0] = 0.0f;
 	m_fVelocity[1] = 0.0f;
 	m_TestSprite->SetPosition((int)m_fPosition[0],(int)m_fPosition[1]);
 
-	//InputManager::GetInstance()->RegisterListener(this);
+	//Engine::GetInstance()->InputManager()->RegisterListener(this);
 	//Engine::GetInstance()->RegisterEntity(this);
 }
 

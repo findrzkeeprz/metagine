@@ -26,7 +26,7 @@
 /// related to rendering output. This is currently handled with the SDL library.
 /// The object also manages IDrawable objects that have been registered and
 /// will call each objects IDrawable::Render() function every frame.
-class MRenderer : public IRenderer
+class MRenderer : public IRenderer, public noncopyable
 {
 public:
 
@@ -81,6 +81,6 @@ private:
 	int m_iResolution[2];						///< Resolution of the engine screen.
 };
 
-typedef MSingleton<MRenderer> Renderer;
+//typedef MSingleton<MRenderer> Renderer;
 
 #endif // _RENDERER_H_

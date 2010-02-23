@@ -47,39 +47,22 @@ bool MEngine::Init( void )
 {
     printf(" -> MEngine::Init() called.\n");
     
-	m_pVarManager = IBaseInterfacePtr(VarManager::GetInstance());
-	m_pRenderer = IBaseInterfacePtr(Renderer::GetInstance());
-	m_pInputManager = IBaseInterfacePtr(InputManager::GetInstance());
-	m_pConsole = IBaseInterfacePtr(Console::GetInstance());
-	m_pCollisionResolver = IBaseInterfacePtr(CollisionResolver::GetInstance());
+	// Create the main engine subsystems.
+	m_pVarManager			= IVarManagerPtr(new MVarManager());
+	m_pRenderer				= IRendererPtr(new MRenderer());
+	m_pInputManager			= IInputManagerPtr(new MInputManager());
+	m_pConsole				= IConsolePtr(new MConsole());
+	m_pCollisionResolver	= ICollisionResolverPtr(new MCollisionResolver());
 	
-	// Register the main interfaces here.
-    /*if( !RegisterInterface(IBaseInterfacePtr(VarManager::GetInstance())) ) {
-        printf(" -! ERROR registering MVarManager object.\n");
-        return false;
-	} else if( !RegisterInterface(IBaseInterfacePtr(Renderer::GetInstance())) ) {
-		printf(" -! ERROR registering MRenderer object.\n");
+	// Initialize the subsystems.
+	if( !m_pRenderer->Init(500,650) ) {
+		printf(" -! ERROR unable to initialize renderer, aborting.\n");
 		return false;
-	} else if( !RegisterInterface(IBaseInterfacePtr(InputManager::GetInstance())) ) {
-		printf(" -! ERROR registering MInputManager object.\n");
+	} else if( !m_pInputManager->Init() ) {
+		printf(" -! ERROR unable to initialize input mananger, aborting.\n");
 		return false;
-	} else if( !RegisterInterface(m_pConsole) ) {
-		printf(" -! ERROR registering MConsole object.\n");
-		return false;
-	} else if( !RegisterInterface(IBaseInterfacePtr(CollisionResolver::GetInstance())) ) {
-		printf(" -! ERROR registering MCollisionResolver object.\n");
-		return false;
-	}*/
-
-	// Setup the subsystems.
-	if( !Renderer::GetInstance()->Init(500,650) ) {
-		printf(" -! ERROR in Renderer::GetInstance()->Init(), aborting.\n");
-		return false;
-	} else if( !InputManager::GetInstance()->Init() ) {
-		printf(" -! ERROR in InputManager::GetInstance()->Init(), aborting.\n");
-		return false;
-	} else if( !Console::GetInstance()->Init() ) {
-		printf(" -! ERROR in Console::GetInstance()->Init(), aborting.\n");
+	} else if( !m_pConsole->Init() ) {
+		printf(" -! ERROR unable to initialize console, aborting.\n");
 		return false;
 	}
 
@@ -90,12 +73,13 @@ bool MEngine::Init( void )
 	}
 
 	//IConsolePtr pConPtr(Console::GetInstance());
-	InputManager::GetInstance()->RegisterListener(shared_dynamic_cast<IInputListener>(m_pConsole));
-	Console::GetInstance()->Echo("Testing 1.");
-	Console::GetInstance()->Echo("Testing 2.");
-	Console::GetInstance()->Echo("Testing 3.");
-	Console::GetInstance()->Echo("Testing 4.");
-	Console::GetInstance()->Echo("Testing 5.");
+	//Engine::GetInstance()->InputManager()->RegisterListener(shared_dynamic_cast<IInputListener>(m_pConsole));
+	m_pInputManager->RegisterListener(m_pConsole);
+	m_pConsole->Echo("Testing 1.");
+	m_pConsole->Echo("Testing 2.");
+	m_pConsole->Echo("Testing 3.");
+	m_pConsole->Echo("Testing 4.");
+	m_pConsole->Echo("Testing 5.");
 
 	// Get the game interface pointer.
 	/*if( !( m_pGame = (IGame*)GetInterfaceByName("MGame") ) ) {
@@ -105,8 +89,8 @@ bool MEngine::Init( void )
 
 	m_GameBoard.Init();
 
-	m_iFpsMax = VarManager::GetInstance()->CreateVar("ifpsmax",60);
-	m_bFpsCap = VarManager::GetInstance()->CreateVar("bfpscap",true);
+	m_iFpsMax = m_pVarManager->CreateVar("ifpsmax",60);
+	m_bFpsCap = m_pVarManager->CreateVar("bfpscap",true);
 
 	m_GameTimer.Start();
 
@@ -119,27 +103,13 @@ void MEngine::Shutdown( void )
 	printf(" -> MEngine::Shutdown() called.\n");
 	
 	m_GameBoard.Kill();
-	/*m_pVarManager.reset();
-	m_pInputManager.reset();
-	m_pRenderer.reset();
-	m_pConsole.reset();
-	m_pCollisionResolver.reset();*/
+
 	m_pVarManager.reset();
 	m_pConsole.reset();
 	m_pInputManager.reset();
 	m_pRenderer.reset();
 	m_pCollisionResolver.reset();
 	
-	// Delete allocated objects.
-    /*vector<IBaseInterfacePtr>::reverse_iterator it;
-	for( it = m_Interfaces.rbegin(); it < m_Interfaces.rend(); ++it ) {
-		if( (*it) ) {
-			(*it)->Shutdown();
-			printf(" -> Releasing interface object (0x%X).\n",(*it).get());
-			it->reset();
-		}
-	}*/
-
 	vector<IEntityPtr>::iterator ent;
 	for( ent = m_Entities.begin(); ent < m_Entities.end(); ++ent ) {
 		if( (*ent) ) {
@@ -151,15 +121,6 @@ void MEngine::Shutdown( void )
 	m_Entities.clear();
 }
 
-bool MEngine::RegisterInterface( IBaseInterfacePtr pInterface )
-{
-    assert(pInterface);
-
-    printf(" -> Registering interface (0x%X).\n",pInterface.get());
-    m_Interfaces.push_back(pInterface);
-    return true;
-}
-
 void MEngine::Run( void )
 {
 	while( m_bActive ) {
@@ -168,10 +129,10 @@ void MEngine::Run( void )
 		
 		HandleInput();
 		UpdateEntities(iDelta);
-		CollisionResolver::GetInstance()->Resolve(m_Entities,iDelta);
+		m_pCollisionResolver->Resolve(m_Entities,iDelta);
 		m_GameTimer.Start();
 		
-		Renderer::GetInstance()->Frame();
+		Engine::GetInstance()->Renderer()->Frame();
 		
 		// Limit the frame rate.
 		if( m_bFpsCap->GetValueBool() ) {
@@ -221,9 +182,9 @@ void MEngine::HandleInput( void )
 		if( m_Event.type == SDL_QUIT ) { 
 			m_bActive = false;
 		} else if( m_Event.type == SDL_KEYDOWN ) {
-			InputManager::GetInstance()->Update(m_Event.key.keysym.sym,true);
+			Engine::GetInstance()->InputManager()->Update(m_Event.key.keysym.sym,true);
 		} else if( m_Event.type == SDL_KEYUP ) {
-			InputManager::GetInstance()->Update(m_Event.key.keysym.sym,false);
+			Engine::GetInstance()->InputManager()->Update(m_Event.key.keysym.sym,false);
 		}
 	}
 }

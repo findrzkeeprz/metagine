@@ -27,7 +27,7 @@
 /// If at engine shutdown, there are still allocated game objects
 /// which have not been deleted and should have been, it will also
 /// delete these to help prevent memory leakage.
-class MObjectFactory : public IObjectFactory
+class MObjectFactory : public IObjectFactory, public noncopyable
 {
 public:
 

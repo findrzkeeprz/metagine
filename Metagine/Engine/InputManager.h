@@ -20,7 +20,7 @@
 #include "../Public/BaseTypes.h"
 #include "../Public/Interfaces.h"
 
-class MInputManager : public IInputManager
+class MInputManager : public IInputManager, public noncopyable
 {
 public:
 
@@ -45,6 +45,6 @@ private:
 	bool m_bKeysHeld[323];
 };
 
-typedef MSingleton<MInputManager> InputManager;
+//typedef MSingleton<MInputManager> InputManager;
 
 #endif // _INPUTMANAGER_H_

@@ -28,22 +28,22 @@ m_bActive(true)
 	// This will all need to go through the engine interface in future.
 	//m_ShipSprite(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
 	m_ShipSprite = ISpritePtr(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
-	Renderer::GetInstance()->RegisterDrawable(m_ShipSprite);
+	Engine::GetInstance()->Renderer()->RegisterDrawable(m_ShipSprite);
 	
 	// Center the ship on the center of the screen initially.
-	int iCenter = (Renderer::GetInstance()->GetScreenWidth() / 2) - ( m_ShipSprite->GetWidth() / 2 );
+	int iCenter = (Engine::GetInstance()->Renderer()->GetScreenWidth() / 2) - ( m_ShipSprite->GetWidth() / 2 );
 	m_vPosition.x = (float)iCenter;
 	m_vPosition.y = 575.0f;
 	m_vVelocity.Zero();
 	m_vAcceleration.Zero();
 	m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
 	
-	//InputManager::GetInstance()->RegisterListener(this);
+	//Engine::GetInstance()->InputManager()->RegisterListener(this);
 	//Engine::GetInstance()->RegisterEntity(this);
 
-	m_fFriction = VarManager::GetInstance()->CreateVar("ffriction",25.0f);
-	m_fImpulse = VarManager::GetInstance()->CreateVar("fimpulse",2.75f);
-	m_fCutOff = VarManager::GetInstance()->CreateVar("fcutoff",0.15f);
+	m_fFriction = Engine::GetInstance()->VarManager()->CreateVar("ffriction",25.0f);
+	m_fImpulse = Engine::GetInstance()->VarManager()->CreateVar("fimpulse",2.75f);
+	m_fCutOff = Engine::GetInstance()->VarManager()->CreateVar("fcutoff",0.15f);
 }
 
 MShip::~MShip( void )

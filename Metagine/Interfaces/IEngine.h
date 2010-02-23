@@ -18,6 +18,11 @@
 
 #include "../Public/Public.h"
 #include "../Interfaces/IBaseInterface.h"
+#include "../Interfaces/IConsole.h"
+#include "../Interfaces/IVarManager.h"
+#include "../Interfaces/IRenderer.h"
+#include "../Interfaces/IInputManager.h"
+#include "../Interfaces/ICollisionResolver.h"
 
 /// Public interface for the MEngine class.
 class IEngine
@@ -38,18 +43,17 @@ public:
     /// were initially registered with the engine.
     virtual void Shutdown( void ) = 0;
 
-    /// Register a public game interface with the main game module.
-    /// Registers the specified game interface with the main engine. From this
-    /// point onwards the correct shutdown and deletion of the specified
-    /// interface will be handled internally and automatically by the engine.
-    /// @param pInterface A pointer to the game interface object.
-    virtual bool RegisterInterface( IBaseInterfacePtr pInterface ) = 0;
-
     /// Main game engine loop.
     /// Responsible for updating all main game components at regular frame
     /// intervals. The game will spend most of its execution time within this
     /// piece of code.
 	virtual void Run( void ) = 0;
+
+	virtual IConsolePtr Console( void ) = 0;
+	virtual IVarManagerPtr VarManager( void ) = 0;
+	virtual IRendererPtr Renderer( void ) = 0;
+	virtual IInputManagerPtr InputManager( void ) = 0;
+	virtual ICollisionResolverPtr CollisionResolver( void ) = 0;
 };
 
 typedef shared_ptr<IEngine> IEnginePtr;

@@ -15,6 +15,7 @@
 
 #include "../Includes/SDL/SDL_keysym.h"
 #include "Console.h"
+#include "Engine.h"
 #include "InputManager.h"
 #include "Renderer.h"
 #include "VarManager.h"
@@ -37,23 +38,22 @@ MConsole::~MConsole( void )
 
 bool MConsole::Init( void )
 {	
-	m_bActive = VarManager::GetInstance()->CreateVar("bconactive",true);
-	m_iFontSpacing = VarManager::GetInstance()->CreateVar("bconfontspacing",15);
-	m_iPositionX = VarManager::GetInstance()->CreateVar("bconposx",10);
-	m_iPositionYon = VarManager::GetInstance()->CreateVar("bconposyon",60);
-	m_iPositionYoff = VarManager::GetInstance()->CreateVar("bconposyoff",-30);
-	m_iScrollFactor = VarManager::GetInstance()->CreateVar("bconscrollfactor",3);
+	m_bActive = Engine::GetInstance()->VarManager()->CreateVar("bconactive",true);
+	m_iFontSpacing = Engine::GetInstance()->VarManager()->CreateVar("bconfontspacing",15);
+	m_iPositionX = Engine::GetInstance()->VarManager()->CreateVar("bconposx",10);
+	m_iPositionYon = Engine::GetInstance()->VarManager()->CreateVar("bconposyon",60);
+	m_iPositionYoff = Engine::GetInstance()->VarManager()->CreateVar("bconposyoff",-30);
+	m_iScrollFactor = Engine::GetInstance()->VarManager()->CreateVar("bconscrollfactor",3);
 	
-	//m_Font = shared_ptr<MOutlineFont>(new MOutlineFont("ariblk.ttf",15,255,255,255,1,0.0f));
 	m_Font = shared_ptr<MFont>(new MFont("ariblk.ttf",15,255,255,255,0.0f));
 	//m_Font.reset(new MFont("ariblk.ttf",15,255,255,255,0.0f));
 	//m_Font->.reset();
 	m_Font->SetColour(255,255,255);
-	Renderer::GetInstance()->RegisterDrawable(m_Font);
+	Engine::GetInstance()->Renderer()->RegisterDrawable(m_Font);
 	//m_Font->SetColourBG(0,120,0);
 
-	//InputManager::GetInstance()->RegisterListener(this);
-	Renderer::GetInstance()->RegisterDrawable(shared_from_this());
+	//Engine::GetInstance()->InputManager()->RegisterListener(this);
+	Engine::GetInstance()->Renderer()->RegisterDrawable(shared_from_this());
 	
 	return true;
 }
@@ -62,9 +62,9 @@ void MConsole::Shutdown( void )
 {
 	printf(" -> MConsole::Shutdown() called.\n");
 
-	//InputManager::GetInstance()->RemoveListener(this);
-	Renderer::GetInstance()->RemoveDrawable(m_Font);
-	Renderer::GetInstance()->RemoveDrawable(shared_from_this());
+	//Engine::GetInstance()->InputManager()->RemoveListener(this);
+	Engine::GetInstance()->Renderer()->RemoveDrawable(m_Font);
+	Engine::GetInstance()->Renderer()->RemoveDrawable(shared_from_this());
 }
 
 void MConsole::Echo( const char* pszText, ... )
@@ -102,7 +102,7 @@ void MConsole::Execute( const string& sCmd )
 	bMultipleArgs = sArg0.empty() ? false : true;
 	if( !bMultipleArgs ) sArg0 = sCmd;
 
-	IVarPtr pVar = VarManager::GetInstance()->GetVarByName(bMultipleArgs ? sArg0.c_str() : sCmd.c_str());
+	IVarPtr pVar = Engine::GetInstance()->VarManager()->GetVarByName(bMultipleArgs ? sArg0.c_str() : sCmd.c_str());
 
 	if( pVar ) {
 		switch( pVar->GetType() ) {
@@ -187,11 +187,11 @@ void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 	if( bKeys[SDLK_F5] && !m_bToggling ) {
 		if( m_bActive->GetValueBool() ) {
 			m_bToggleAnimUp = true;
-			InputManager::GetInstance()->SetKeyRepeat(1,1);
+			Engine::GetInstance()->InputManager()->SetKeyRepeat(1,1);
 		} else {
 			m_bActive->SetValueBool(true);
 			m_bToggleAnimDown = true;
-			InputManager::GetInstance()->SetKeyRepeat(500,SDL_DEFAULT_REPEAT_INTERVAL);
+			Engine::GetInstance()->InputManager()->SetKeyRepeat(500,SDL_DEFAULT_REPEAT_INTERVAL);
 		}
 	}
 

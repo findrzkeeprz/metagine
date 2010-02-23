@@ -28,7 +28,7 @@
 /// last piece of code that is executed at game runtime. This object is also
 /// responsible for interfacing game components through a simple interface
 /// tracking system.
-class MEngine : public IEngine
+class MEngine : public IEngine, public noncopyable
 {
 public:
 
@@ -45,11 +45,16 @@ public:
     
     bool Init( void );
     void Shutdown( void );
-    bool RegisterInterface( IBaseInterfacePtr pInterface );
 
 	void UpdateEntities( int iDelta );
 	bool RegisterEntity( IEntityPtr );
 	void RemoveEntity( IEntityPtr );
+
+	IConsolePtr				Console( void )				{ return m_pConsole; }
+	IVarManagerPtr			VarManager( void )			{ return m_pVarManager; }
+	IRendererPtr			Renderer( void )			{ return m_pRenderer; }
+	IInputManagerPtr		InputManager( void )		{ return m_pInputManager; }
+	ICollisionResolverPtr	CollisionResolver( void )	{ return m_pCollisionResolver; }
 
 private:
 
@@ -75,11 +80,17 @@ private:
 	IVarPtr m_iGameRefresh;
 	MGameBoard m_GameBoard;
 	
-	IBaseInterfacePtr m_pConsole;
-	IBaseInterfacePtr m_pVarManager;
-	IBaseInterfacePtr m_pRenderer;
-	IBaseInterfacePtr m_pInputManager;
-	IBaseInterfacePtr m_pCollisionResolver;
+	//IBaseInterfacePtr m_pConsole;
+	//IBaseInterfacePtr m_pVarManager;
+	//IBaseInterfacePtr m_pRenderer;
+	//IBaseInterfacePtr m_pInputManager;
+	//IBaseInterfacePtr m_pCollisionResolver;
+
+	IConsolePtr m_pConsole;
+	IVarManagerPtr m_pVarManager;
+	IRendererPtr m_pRenderer;
+	IInputManagerPtr m_pInputManager;
+	ICollisionResolverPtr m_pCollisionResolver;
 
 	//IEntity
 	// Game interface pointer.

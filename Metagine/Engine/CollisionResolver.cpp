@@ -15,6 +15,7 @@
 
 #include "CollisionResolver.h"
 #include "Renderer.h"
+#include "Engine.h"
 #include "../ThirdParty/SDL_collide.h"
 
 MCollisionResolver::MCollisionResolver( void ) :
@@ -40,8 +41,8 @@ void MCollisionResolver::Shutdown( void )
 
 void MCollisionResolver::DeterminePartition( IEntityPtr pEntity )
 {
-	int w = Renderer::GetInstance()->GetScreenWidth() / 2;
-	int h = Renderer::GetInstance()->GetScreenHeight() / 2;
+	int w = Engine::GetInstance()->Renderer()->GetScreenWidth() / 2;
+	int h = Engine::GetInstance()->Renderer()->GetScreenHeight() / 2;
 	ISpritePtr pSprite = pEntity->GetSprite();
 	int x, y = 0;
 	

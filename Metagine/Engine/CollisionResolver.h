@@ -21,7 +21,7 @@
 #include "../Public/Interfaces.h"
 
 /// Fix me.
-class MCollisionResolver : public ICollisionResolver
+class MCollisionResolver : public ICollisionResolver, public noncopyable
 {
 public:
 
@@ -45,6 +45,6 @@ private:
 	int m_iDelta;
 };
 
-typedef MSingleton<MCollisionResolver> CollisionResolver;
+//typedef MSingleton<MCollisionResolver> CollisionResolver;
 
 #endif // _COLLISIONRESOLVER_H_

@@ -14,6 +14,7 @@
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Font.h"
+#include "Engine.h"
 #include "Renderer.h"
 
 MFont::MFont( void ) :
@@ -42,7 +43,7 @@ m_iAlpha(255)
 	printf(" -> MFont object created (%s,%i,%i,%i,%i).\n",
 			pszName,iSize,iRed,iGreen,iBlue);
 
-	if( !Renderer::GetInstance()->FontLibLoaded() ) {
+	if( !Engine::GetInstance()->Renderer()->FontLibLoaded() ) {
 	    printf(" -! ERROR trying to load font object before initializing library!\n");
 	    return;
 	}
@@ -59,12 +60,12 @@ m_iAlpha(255)
 	m_Coords[1] = 0;
 
 	// Push back to the renderer queue.
-	//Renderer::GetInstance()->RegisterDrawable(shared_from_this());
+	//Engine::GetInstance()->Renderer()->RegisterDrawable(shared_from_this());
 }
 
 MFont::~MFont( void )
 {
-	//Renderer::GetInstance()->RemoveDrawable(shared_from_this());
+	//Engine::GetInstance()->Renderer()->RemoveDrawable(shared_from_this());
     
 	if( m_Surface ) {
 		SDL_FreeSurface(m_Surface);

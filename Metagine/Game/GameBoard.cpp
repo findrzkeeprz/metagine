@@ -37,12 +37,12 @@ void MGameBoard::Init( void )
 {
 	//m_BgSprite = new MSprite("SpaceBG.png",0,true,1.0f);
 	m_BgSprite = ISpritePtr(new MSprite("SpaceBG.png",0,true,1.0f));
-	Renderer::GetInstance()->RegisterDrawable(m_BgSprite);
+	Engine::GetInstance()->Renderer()->RegisterDrawable(m_BgSprite);
 	m_PlayerShip = IEntityPtr(new MShip());
 	m_TestEnt = IEntityPtr(new MTestEnt());
 	Engine::GetInstance()->RegisterEntity(m_PlayerShip);
 	Engine::GetInstance()->RegisterEntity(m_TestEnt);
-	InputManager::GetInstance()->RegisterListener(shared_dynamic_cast<IInputListener>(m_PlayerShip));
+	Engine::GetInstance()->InputManager()->RegisterListener(shared_dynamic_cast<IInputListener>(m_PlayerShip));
 }
 
 void MGameBoard::Kill( void )

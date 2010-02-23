@@ -14,6 +14,7 @@
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "OutlineFont.h"
+#include "Engine.h"
 #include "Renderer.h"
 
 MOutlineFont::MOutlineFont( void ) :
@@ -33,7 +34,7 @@ m_iStep(iStep)
 
 MOutlineFont::~MOutlineFont( void )
 {
-	Renderer::GetInstance()->RemoveDrawable(shared_from_this());
+	Engine::GetInstance()->Renderer()->RemoveDrawable(shared_from_this());
 
 	printf(" -> MOutlineFont object destructed.\n");
 }

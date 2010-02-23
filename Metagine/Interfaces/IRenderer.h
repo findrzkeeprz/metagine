@@ -18,6 +18,7 @@
 
 #include "../Public/Public.h"
 #include "../Interfaces/IBaseInterface.h"
+#include "../Interfaces/IDrawable.h"
 
 /// Public interface for the MRenderer class.
 class IRenderer : public IBaseInterface
@@ -25,6 +26,38 @@ class IRenderer : public IBaseInterface
 public:
 
 	virtual ~IRenderer( void ) { };
+
+	virtual void Shutdown( void ) = 0;
+
+	/// Initialize the renderer component.
+	/// Initialise the graphical subsystems and allocate any required resources
+	/// such as the SDL and TTF libraries.
+	virtual bool Init( int iWidth, int iHeight ) = 0;
+
+	/// Determines whether the TTF font library has been loaded.
+	virtual bool FontLibLoaded( void ) = 0;
+
+	/// Register an IDrawable object with the renderer.
+	/// This will register the specified IDrawable object for automatic calls
+	/// to IDrawable::Render() on every render frame.
+	/// @param pDrawable A pointer to the IDrawable object to be registered.
+	virtual void RegisterDrawable( IDrawablePtr pDrawable ) = 0;
+
+	/// Remove a registered IDrawable object from the renderer.
+	/// Searches the list of registered IDrawable objects and removes it from
+	/// the list so that the object will not be rendered in future frames.
+	/// Note that this does not delete the allocated object.
+	/// @param pDrawable A pointer to the IDrawable object to be removed.
+	virtual void RemoveDrawable( IDrawablePtr pDrawable ) = 0;
+
+	/// Renders the game view.
+	/// This is called repeatedly to render the game view. It also recursively
+	/// calls IDrawable::Render() on any active objects that the renderer is
+	/// currently tracking.
+	virtual void Frame( void ) = 0;
+
+	virtual int GetScreenWidth( void ) = 0;
+	virtual int GetScreenHeight( void ) = 0;
 };
 
 typedef shared_ptr<IRenderer> IRendererPtr;

@@ -25,6 +25,11 @@ class ICollisionResolver : public IBaseInterface
 public:
 
 	virtual ~ICollisionResolver( void ) { };
+
+	virtual void Shutdown( void ) = 0;
+	virtual void ProcessEntityPairs( void ) = 0;
+	virtual void DeterminePartition( IEntityPtr pEntity ) = 0;
+	virtual void Resolve( vector<IEntityPtr>& Entities, int iDelta ) = 0;
 };
 
 typedef shared_ptr<ICollisionResolver> ICollisionResolverPtr;

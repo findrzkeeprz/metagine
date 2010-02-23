@@ -24,7 +24,7 @@
 #include "Sprite.h"
 
 /// Fix me.
-class MConsole : public IConsole, public IDrawable
+class MConsole : public IConsole, public noncopyable
 {
 public:
 
@@ -73,6 +73,6 @@ private:
 	int m_iScrollPoint;
 };
 
-typedef MSingleton<MConsole> Console;
+//typedef MSingleton<MConsole> Console;
 
 #endif // _CONSOLE_H_

@@ -25,7 +25,7 @@
 /// are often referred to as 'cvars' in other game engines such as Quake. This
 /// is a factory type object and manages the creation, deletion and tracking
 /// of any variables that are created.
-class MVarManager : public IVarManager
+class MVarManager : public IVarManager, public noncopyable
 {
 public:
 
@@ -48,6 +48,6 @@ private:
     vector<IVarPtr> m_Container; ///< Container to catalog all variables created through this object.
 };
 
-typedef MSingleton<MVarManager> VarManager;
+//typedef MSingleton<MVarManager> VarManager;
 
 #endif // _VARMANAGER_H_
