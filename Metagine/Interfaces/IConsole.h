@@ -18,9 +18,10 @@
 
 #include "../Public/Public.h"
 #include "../Interfaces/IBaseInterface.h"
+#include "../Interfaces/IInputListener.h"
 
 /// Public interface for the IConsole class.
-class IConsole : public IBaseInterface
+class IConsole : public IBaseInterface, public IInputListener
 {
 public:
 

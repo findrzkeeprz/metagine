@@ -27,9 +27,10 @@ public:
     /// Virtual destructor method.
     virtual ~IInputManager( void ) { };
 
+	virtual void Shutdown( void ) = 0;
 	virtual void SetKeyRepeat( int iDelay, int iInterval ) = 0;
-    virtual void RegisterListener( IInputListener* pListener ) = 0;
-    virtual void RemoveListener( IInputListener* pListener ) = 0;
+    virtual void RegisterListener( IInputListenerPtr pListener ) = 0;
+    virtual void RemoveListener( IInputListenerPtr pListener ) = 0;
     virtual void Update( int iKey, bool bKeyDown ) = 0;
 };
 

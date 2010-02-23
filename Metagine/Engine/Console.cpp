@@ -52,7 +52,7 @@ bool MConsole::Init( void )
 	Renderer::GetInstance()->RegisterDrawable(m_Font);
 	//m_Font->SetColourBG(0,120,0);
 
-	InputManager::GetInstance()->RegisterListener(this);
+	//InputManager::GetInstance()->RegisterListener(this);
 	Renderer::GetInstance()->RegisterDrawable(shared_from_this());
 	
 	return true;
@@ -62,7 +62,7 @@ void MConsole::Shutdown( void )
 {
 	printf(" -> MConsole::Shutdown() called.\n");
 
-	InputManager::GetInstance()->RemoveListener(this);
+	//InputManager::GetInstance()->RemoveListener(this);
 	Renderer::GetInstance()->RemoveDrawable(m_Font);
 	Renderer::GetInstance()->RemoveDrawable(shared_from_this());
 }

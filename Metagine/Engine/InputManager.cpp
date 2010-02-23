@@ -37,12 +37,25 @@ bool MInputManager::Init( void )
 	return true;
 }
 
+void MInputManager::Shutdown( void )
+{
+	printf(" -> MInputManager::Shutdown() called.\n");
+    
+    // Delete allocated objects.
+    std::vector<IInputListenerPtr>::reverse_iterator it;
+	for( it = m_Listeners.rbegin(); it < m_Listeners.rend(); ++it )
+		if( (*it) ) {
+			printf(" -> Releasing input listener object (0x%X).\n",(*it).get());
+			it->reset();
+		}
+}
+
 void MInputManager::SetKeyRepeat( int iDelay, int iInterval )
 {
 	SDL_EnableKeyRepeat(iDelay,iInterval);
 }
 
-void MInputManager::RegisterListener( IInputListener* pListener )
+void MInputManager::RegisterListener( IInputListenerPtr pListener )
 {
 	if( !pListener ) {
 		// Error msg here
@@ -53,7 +66,7 @@ void MInputManager::RegisterListener( IInputListener* pListener )
 	printf(" -> Registered new input listener object (0x%X).\n",pListener);
 }
 
-void MInputManager::RemoveListener( IInputListener* pListener )
+void MInputManager::RemoveListener( IInputListenerPtr pListener )
 {
 	/*std::vector<IInputListener*>::iterator it;
 	for( it = m_Listeners.begin(); it < m_Listeners.end(); ++it ) {
@@ -63,7 +76,7 @@ void MInputManager::RemoveListener( IInputListener* pListener )
 		}
 	}*/
 
-	std::vector<IInputListener*>::iterator it = m_Listeners.begin();
+	std::vector<IInputListenerPtr>::iterator it = m_Listeners.begin();
 	while( it != m_Listeners.end() ) {
 		if( *it == pListener ) {
 			printf(" -> Removing object (0x%X) from input listeners.\n",pListener);
@@ -76,7 +89,7 @@ void MInputManager::Update( int iKey, bool bKeyDown )
 {
 	m_bKeysHeld[iKey] = bKeyDown ? true : false;
 	
-	std::vector<IInputListener*>::iterator it;
+	std::vector<IInputListenerPtr>::iterator it;
 	for( it = m_Listeners.begin(); it < m_Listeners.end(); ++it ) {
 		(*it)->UpdateInput(m_bKeysHeld,iKey,bKeyDown);
 	}

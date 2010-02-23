@@ -38,7 +38,7 @@ m_bActive(true)
 	m_vAcceleration.Zero();
 	m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
 	
-	InputManager::GetInstance()->RegisterListener(this);
+	//InputManager::GetInstance()->RegisterListener(this);
 	//Engine::GetInstance()->RegisterEntity(this);
 
 	m_fFriction = VarManager::GetInstance()->CreateVar("ffriction",25.0f);

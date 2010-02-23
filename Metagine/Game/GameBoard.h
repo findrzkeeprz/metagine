@@ -28,6 +28,7 @@ public:
 	~MGameBoard( void );
 
 	void Init( void );
+	void Kill( void );
 
 private:
 

@@ -31,16 +31,17 @@ public:
     ~MInputManager( void );
 	
 	bool Init( void );
+	void Shutdown( void );
 	void SetKeyRepeat( int iDelay, int iInterval );
-	void RegisterListener( IInputListener* pListener );
-    void RemoveListener( IInputListener* pListener );
+	void RegisterListener( IInputListenerPtr pListener );
+    void RemoveListener( IInputListenerPtr pListener );
 
     void Update( int iKey, bool bKeyDown );
 
 private:
 
     /// Container to catalog all variables created through this class.
-    std::vector<IInputListener*> m_Listeners;
+    std::vector<IInputListenerPtr> m_Listeners;
 	bool m_bKeysHeld[323];
 };
 

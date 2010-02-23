@@ -39,17 +39,22 @@ MEngine::MEngine( void )
 
 MEngine::~MEngine( void )
 {
-    printf(" -> MEngine object destructed.\n");
-    
     Shutdown();
+	printf(" -> MEngine object destructed.\n");
 }
 
 bool MEngine::Init( void )
 {
     printf(" -> MEngine::Init() called.\n");
     
+	m_pVarManager = IBaseInterfacePtr(VarManager::GetInstance());
+	m_pRenderer = IBaseInterfacePtr(Renderer::GetInstance());
+	m_pInputManager = IBaseInterfacePtr(InputManager::GetInstance());
+	m_pConsole = IBaseInterfacePtr(Console::GetInstance());
+	m_pCollisionResolver = IBaseInterfacePtr(CollisionResolver::GetInstance());
+	
 	// Register the main interfaces here.
-    if( !RegisterInterface(IBaseInterfacePtr(VarManager::GetInstance())) ) {
+    /*if( !RegisterInterface(IBaseInterfacePtr(VarManager::GetInstance())) ) {
         printf(" -! ERROR registering MVarManager object.\n");
         return false;
 	} else if( !RegisterInterface(IBaseInterfacePtr(Renderer::GetInstance())) ) {
@@ -58,13 +63,13 @@ bool MEngine::Init( void )
 	} else if( !RegisterInterface(IBaseInterfacePtr(InputManager::GetInstance())) ) {
 		printf(" -! ERROR registering MInputManager object.\n");
 		return false;
-	} else if( !RegisterInterface(IBaseInterfacePtr(Console::GetInstance())) ) {
+	} else if( !RegisterInterface(m_pConsole) ) {
 		printf(" -! ERROR registering MConsole object.\n");
 		return false;
 	} else if( !RegisterInterface(IBaseInterfacePtr(CollisionResolver::GetInstance())) ) {
 		printf(" -! ERROR registering MCollisionResolver object.\n");
 		return false;
-	}
+	}*/
 
 	// Setup the subsystems.
 	if( !Renderer::GetInstance()->Init(500,650) ) {
@@ -84,6 +89,8 @@ bool MEngine::Init( void )
 		return false;
 	}
 
+	//IConsolePtr pConPtr(Console::GetInstance());
+	InputManager::GetInstance()->RegisterListener(boost::shared_dynamic_cast<IInputListener>(m_pConsole));
 	Console::GetInstance()->Echo("Testing 1.");
 	Console::GetInstance()->Echo("Testing 2.");
 	Console::GetInstance()->Echo("Testing 3.");
@@ -109,16 +116,39 @@ bool MEngine::Init( void )
 
 void MEngine::Shutdown( void )
 {
-    printf(" -> MEngine::Shutdown() called.\n");
-    
-    // Delete allocated objects.
-    std::vector<IBaseInterfacePtr>::reverse_iterator it;
-	for( it = m_Interfaces.rbegin(); it < m_Interfaces.rend(); ++it )
+	printf(" -> MEngine::Shutdown() called.\n");
+	
+	m_GameBoard.Kill();
+	/*m_pVarManager.reset();
+	m_pInputManager.reset();
+	m_pRenderer.reset();
+	m_pConsole.reset();
+	m_pCollisionResolver.reset();*/
+	m_pVarManager.reset();
+	m_pConsole.reset();
+	m_pInputManager.reset();
+	m_pRenderer.reset();
+	m_pCollisionResolver.reset();
+	
+	// Delete allocated objects.
+    /*std::vector<IBaseInterfacePtr>::reverse_iterator it;
+	for( it = m_Interfaces.rbegin(); it < m_Interfaces.rend(); ++it ) {
 		if( (*it) ) {
 			(*it)->Shutdown();
 			printf(" -> Releasing interface object (0x%X).\n",(*it).get());
 			it->reset();
 		}
+	}*/
+
+	std::vector<IEntityPtr>::iterator ent;
+	for( ent = m_Entities.begin(); ent < m_Entities.end(); ++ent ) {
+		if( (*ent) ) {
+			printf(" -> Releasing entity object (0x%X).\n",(*ent).get());
+			ent->reset();
+		}
+	}
+
+	m_Entities.clear();
 }
 
 bool MEngine::RegisterInterface( IBaseInterfacePtr pInterface )

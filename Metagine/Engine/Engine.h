@@ -73,9 +73,15 @@ private:
 	IVarPtr m_iFpsMax;								///< Maximum FPS limit.
 	IVarPtr m_bFpsCap;								///< Whether the FPS is regulated or not.	
 	IVarPtr m_iGameRefresh;
-
 	MGameBoard m_GameBoard;
+	
+	IBaseInterfacePtr m_pConsole;
+	IBaseInterfacePtr m_pVarManager;
+	IBaseInterfacePtr m_pRenderer;
+	IBaseInterfacePtr m_pInputManager;
+	IBaseInterfacePtr m_pCollisionResolver;
 
+	//IEntity
 	// Game interface pointer.
 	//IGame* m_pGame;
 };

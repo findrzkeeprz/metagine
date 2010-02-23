@@ -17,6 +17,7 @@
 #include "../Engine/Renderer.h"
 #include "../Engine/Engine.h"
 #include "../Engine/Sprite.h"
+#include "../Engine/InputManager.h"
 #include "../Public/Public.h"
 
 MGameBoard::MGameBoard( void )
@@ -41,4 +42,12 @@ void MGameBoard::Init( void )
 	m_TestEnt = IEntityPtr(new MTestEnt());
 	Engine::GetInstance()->RegisterEntity(m_PlayerShip);
 	Engine::GetInstance()->RegisterEntity(m_TestEnt);
+	InputManager::GetInstance()->RegisterListener(boost::shared_dynamic_cast<IInputListener>(m_PlayerShip));
+}
+
+void MGameBoard::Kill( void )
+{
+	m_PlayerShip.reset();
+	m_TestEnt.reset();
+	m_BgSprite.reset();
 }

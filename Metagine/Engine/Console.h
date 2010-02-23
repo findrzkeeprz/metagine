@@ -24,7 +24,7 @@
 #include "Sprite.h"
 
 /// Fix me.
-class MConsole : public IConsole, public IInputListener, public IDrawable
+class MConsole : public IConsole, public IDrawable
 {
 public:
 
