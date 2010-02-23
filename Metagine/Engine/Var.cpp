@@ -44,6 +44,7 @@ m_iType(CVAR_BOOL)
 
 MVar::~MVar( void )
 {
+	printf(" -> MVar object destructed (%s).\n",m_sName.c_str());
 }
 
 const char* MVar::GetName( void )

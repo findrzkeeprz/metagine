@@ -89,8 +89,8 @@ bool MEngine::Init( void )
 
 	m_GameBoard.Init();
 
-	m_iFpsMax = m_pVarManager->CreateVar("ifpsmax",60);
-	m_bFpsCap = m_pVarManager->CreateVar("bfpscap",true);
+	m_iFpsMax = m_pVarManager->CreateVar("i_fpsmax",60);
+	m_bFpsCap = m_pVarManager->CreateVar("b_fpscap",true);
 
 	m_GameTimer.Start();
 

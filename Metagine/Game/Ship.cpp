@@ -41,9 +41,9 @@ m_bActive(true)
 	//Engine::GetInstance()->InputManager()->RegisterListener(this);
 	//Engine::GetInstance()->RegisterEntity(this);
 
-	m_fFriction = Engine::GetInstance()->VarManager()->CreateVar("ffriction",25.0f);
-	m_fImpulse = Engine::GetInstance()->VarManager()->CreateVar("fimpulse",2.75f);
-	m_fCutOff = Engine::GetInstance()->VarManager()->CreateVar("fcutoff",0.15f);
+	m_fFriction = Engine::GetInstance()->VarManager()->CreateVar("f_friction",25.0f);
+	m_fImpulse = Engine::GetInstance()->VarManager()->CreateVar("f_impulse",2.75f);
+	m_fCutOff = Engine::GetInstance()->VarManager()->CreateVar("f_cutoff",0.15f);
 }
 
 MShip::~MShip( void )

@@ -38,12 +38,12 @@ MConsole::~MConsole( void )
 
 bool MConsole::Init( void )
 {	
-	m_bActive = Engine::GetInstance()->VarManager()->CreateVar("bconactive",true);
-	m_iFontSpacing = Engine::GetInstance()->VarManager()->CreateVar("bconfontspacing",15);
-	m_iPositionX = Engine::GetInstance()->VarManager()->CreateVar("bconposx",10);
-	m_iPositionYon = Engine::GetInstance()->VarManager()->CreateVar("bconposyon",60);
-	m_iPositionYoff = Engine::GetInstance()->VarManager()->CreateVar("bconposyoff",-30);
-	m_iScrollFactor = Engine::GetInstance()->VarManager()->CreateVar("bconscrollfactor",3);
+	m_bActive = Engine::GetInstance()->VarManager()->CreateVar("b_con_active",true);
+	m_iFontSpacing = Engine::GetInstance()->VarManager()->CreateVar("b_con_fontspacing",15);
+	m_iPositionX = Engine::GetInstance()->VarManager()->CreateVar("b_con_posx",10);
+	m_iPositionYon = Engine::GetInstance()->VarManager()->CreateVar("b_con_posyon",60);
+	m_iPositionYoff = Engine::GetInstance()->VarManager()->CreateVar("b_con_posyoff",-30);
+	m_iScrollFactor = Engine::GetInstance()->VarManager()->CreateVar("b_con_scrollfactor",3);
 	
 	m_Font = shared_ptr<MFont>(new MFont("ariblk.ttf",15,255,255,255,0.0f));
 	//m_Font.reset(new MFont("ariblk.ttf",15,255,255,255,0.0f));
@@ -234,8 +234,8 @@ void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 			case SDLK_7: { m_sCurrentBuffer.append((bShiftMod == true) ? "&" : "7"); } break;
 			case SDLK_8: { m_sCurrentBuffer.append((bShiftMod == true) ? "*" : "8"); } break;
 			case SDLK_9: { m_sCurrentBuffer.append((bShiftMod == true) ? "(" : "9"); } break;
+			case SDLK_MINUS: { m_sCurrentBuffer.append((bShiftMod == true) ? "_" : "-"); } break;
 			case SDLK_PERIOD: { m_sCurrentBuffer.append("."); } break;
-			case SDLK_UNDERSCORE: { m_sCurrentBuffer.append("_"); } break;
 			case SDLK_SPACE: { m_sCurrentBuffer.append(" "); } break;
 			
 			// Some special cases.

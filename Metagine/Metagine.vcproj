@@ -387,6 +387,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Interfaces\IListenEntity.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Interfaces\IObjectFactory.h"
 					>
 				</File>

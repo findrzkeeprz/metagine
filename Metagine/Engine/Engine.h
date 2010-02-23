@@ -45,11 +45,9 @@ public:
     
     bool Init( void );
     void Shutdown( void );
-
 	void UpdateEntities( int iDelta );
 	bool RegisterEntity( IEntityPtr );
 	void RemoveEntity( IEntityPtr );
-
 	IConsolePtr				Console( void )				{ return m_pConsole; }
 	IVarManagerPtr			VarManager( void )			{ return m_pVarManager; }
 	IRendererPtr			Renderer( void )			{ return m_pRenderer; }

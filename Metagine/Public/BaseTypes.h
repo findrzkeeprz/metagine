@@ -20,6 +20,7 @@
 #include "../Interfaces/IDrawable.h"
 #include "../Interfaces/ISprite.h"
 #include "../Interfaces/IEntity.h"
+#include "../Interfaces/IListenEntity.h"
 #include "../Interfaces/IInputListener.h"
 #include "../Interfaces/IVar.h"
 

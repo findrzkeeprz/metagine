@@ -12,6 +12,5 @@ Stuff to do:
 * Game state management (menus, pause screen etc).
 * Need ability to set sprite colour key from XML file.
 * Cache set amount of previous text renders.
-* FIX underscore in the console so I can name stuff properly.
 * Make variable manager responsible for deleting registered variables.
 * Update sprite + XML handling to support different anim sequences.

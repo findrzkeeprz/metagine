@@ -19,10 +19,11 @@
 #include "../Interfaces/ISprite.h"
 #include "../Interfaces/IInputListener.h"
 #include "../Interfaces/IEntity.h"
+#include "../Interfaces/IListenEntity.h"
 #include "../Interfaces/IVar.h"
 #include "../Public/Vector2.h"
 
-class MShip : public IInputListener, public IEntity
+class MShip : public IListenEntity
 {
 public:
 
