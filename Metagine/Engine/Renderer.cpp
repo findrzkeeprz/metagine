@@ -118,7 +118,7 @@ void MRenderer::RemoveDrawable( IDrawablePtr pDrawable )
 
 void MRenderer::Frame( void )
 {
-	SDL_FillRect(m_Screen,&m_Screen->clip_rect,SDL_MapRGB(m_Screen->format,0,0,0));
+	//SDL_FillRect(m_Screen,&m_Screen->clip_rect,SDL_MapRGB(m_Screen->format,0,0,0));
 	
 	// Render all queued objects.
 	vector<IDrawablePtr>::iterator it;

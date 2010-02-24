@@ -106,13 +106,6 @@ void MEngine::Shutdown( void )
 	
 	m_GameBoard.Kill();
 
-	m_pVarManager.reset();
-	m_pConsole.reset();
-	m_pInputManager.reset();
-	m_pRenderer.reset();
-	m_pCollisionResolver.reset();
-	m_pSurfaceCache.reset();
-	
 	vector<IEntityPtr>::iterator ent;
 	for( ent = m_Entities.begin(); ent < m_Entities.end(); ++ent ) {
 		if( (*ent) ) {
@@ -120,6 +113,13 @@ void MEngine::Shutdown( void )
 			ent->reset();
 		}
 	}
+	
+	m_pVarManager.reset();
+	m_pConsole.reset();
+	m_pInputManager.reset();
+	m_pRenderer.reset();
+	m_pCollisionResolver.reset();
+	m_pSurfaceCache.reset();
 
 	m_Entities.clear();
 }
@@ -131,8 +131,15 @@ void MEngine::Run( void )
 		int iDelta = m_GameTimer.GetTicks();
 		
 		HandleInput();
+
+		if( !m_bActive ) {
+			printf(" -> MEngine::Run() player quit mid-game loop, aborting.\n");
+			return;
+		}
+
 		UpdateEntities(iDelta);
 		m_pCollisionResolver->Resolve(m_Entities,iDelta);
+
 		m_GameTimer.Start();
 		
 		Engine::GetInstance()->Renderer()->Frame();
@@ -186,6 +193,7 @@ void MEngine::HandleInput( void )
 		// Quit the application.
 		if( m_Event.type == SDL_QUIT ) { 
 			m_bActive = false;
+			Shutdown();
 		} else if( m_Event.type == SDL_KEYDOWN ) {
 			Engine::GetInstance()->InputManager()->Update(m_Event.key.keysym.sym,true);
 		} else if( m_Event.type == SDL_KEYUP ) {
