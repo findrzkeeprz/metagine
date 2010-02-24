@@ -51,6 +51,7 @@ private:
 	IVarPtr m_fImpulse;
 	IVarPtr m_fCutOff;
 	bool m_bActive;
+	bool m_bFireLock;
 };
 
 #endif // _SHIP_H_

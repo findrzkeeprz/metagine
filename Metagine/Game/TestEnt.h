@@ -5,7 +5,7 @@ class MTestEnt : public IEntity
 {
 public:
 
-	MTestEnt( void );
+	MTestEnt( float x, float y, float fSpeed );
 	~MTestEnt( void );
 
 	// Documented in IInputListener.h
@@ -20,7 +20,8 @@ public:
 private:
 
 	ISpritePtr m_TestSprite;
-	float m_fPosition[2];
-	float m_fVelocity[2];
+	MVector2 m_vPosition;
+	MVector2 m_vVelocity;
+	MVector2 m_vAcceleration;
 	bool m_bActive;
 };

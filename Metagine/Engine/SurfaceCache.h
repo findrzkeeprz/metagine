@@ -13,29 +13,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _PUBLIC_H_
-#define _PUBLIC_H_
+#ifndef _SURFACECACHE_H_
+#define _SURFACECACHE_H_
 
-// Standards.
-#include <stdio.h>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <map>
-#include <assert.h>
-#include <windows.h>
-#include <boost/shared_ptr.hpp>
-#include <boost/enable_shared_from_this.hpp>
-#include <boost/utility.hpp>
-#include <boost/format.hpp>
+#include "../Public/Public.h"
+#include "ThirdParty.h"
+#include "../Interfaces/ISurfaceCache.h"
 
-#include "Singleton.h"
-#include "Timer.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Math.h"
+/// Fix me.
+class MSurfaceCache : public ISurfaceCache
+{
+public:
 
-using namespace boost;
-using namespace std;
+	MSurfaceCache( void );
+	~MSurfaceCache( void );
 
-#endif // _PUBLIC_H_
+	void* SurfFromFile( string sFileName );
+	void* ClippedSurfFromFile( string sFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b );
+
+private:
+
+	map<string,SDL_Surface*> m_Surfaces;
+};
+
+typedef shared_ptr<MSurfaceCache> MSurfaceCachePtr;
+
+#endif // _SURFACECACHE_H_

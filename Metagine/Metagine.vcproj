@@ -281,6 +281,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Engine\SurfaceCache.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Engine\Var.cpp"
 					>
 				</File>
@@ -332,6 +336,10 @@
 				</File>
 				<File
 					RelativePath=".\Engine\Sprite.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Engine\SurfaceCache.h"
 					>
 				</File>
 				<File
@@ -400,6 +408,10 @@
 				</File>
 				<File
 					RelativePath=".\Interfaces\ISprite.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Interfaces\ISurfaceCache.h"
 					>
 				</File>
 				<File

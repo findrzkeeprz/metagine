@@ -3,29 +3,21 @@
 #include "../Engine/InputManager.h"
 #include "../Engine/Renderer.h"
 
-MTestEnt::MTestEnt( void ) :
+MTestEnt::MTestEnt( float x, float y, float fSpeed ) :
 m_bActive(true)
 {
-	// This will all need to go through the engine interface in future.
-	//m_TestSprite = new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f);
-	//m_TestSprite = new MSprite("Explosion1.xml");
 	m_TestSprite = ISpritePtr(new MSprite("Explosion1.xml"));
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_TestSprite);
-
-	// Center the ship on the center of the screen initially.
-	//int iCenter = (Engine::GetInstance()->Renderer()->GetScreenWidth() / 2) - ( m_TestSprite->GetWidth() / 2 );
-	m_fPosition[0] = 50.0f;
-	m_fPosition[1] = 400.0f;
-	m_fVelocity[0] = 0.0f;
-	m_fVelocity[1] = 0.0f;
-	m_TestSprite->SetPosition((int)m_fPosition[0],(int)m_fPosition[1]);
-
-	//Engine::GetInstance()->InputManager()->RegisterListener(this);
-	//Engine::GetInstance()->RegisterEntity(this);
+	m_vVelocity.y = -fSpeed;
+	m_vPosition.x = x;
+	m_vPosition.y = y;
+	m_TestSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
 }
 
 MTestEnt::~MTestEnt( void )
 {
+	printf(" -> I'm getting deleted!\n");
+	Engine::GetInstance()->Renderer()->RemoveDrawable(m_TestSprite);
 }
 
 void MTestEnt::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown )
@@ -35,6 +27,26 @@ void MTestEnt::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 void MTestEnt::UpdateLogic( int iDelta )
 {
 	m_TestSprite->Animate(true);
+	
+	if( m_vVelocity.Magnitude() <= 0.0f )
+		return;
+	
+	m_vAcceleration = -m_vVelocity.Normalised();
+	//m_vAcceleration *= m_fFriction->GetValueFloat();
+
+	MVector2 vDeltaVelocity = ( ( m_vAcceleration * (float)iDelta ) / 1000.0f );
+
+	// Cap magnitude of change in velocity to remove integration errors
+	if( vDeltaVelocity.Magnitude() > m_vVelocity.Magnitude() )
+		m_vVelocity.Zero();
+	else m_vVelocity += vDeltaVelocity;
+
+	m_vPosition += ( ( m_vVelocity * (float)iDelta ) / 1000.0f );
+
+	if(m_vVelocity.Magnitude() < 0.1f) 
+		m_vVelocity.Zero();
+		
+	m_TestSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
 }
 
 void MTestEnt::CollisionEvent( IEntityPtr pEntity, int iDelta )

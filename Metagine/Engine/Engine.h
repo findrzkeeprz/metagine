@@ -53,6 +53,7 @@ public:
 	IRendererPtr			Renderer( void )			{ return m_pRenderer; }
 	IInputManagerPtr		InputManager( void )		{ return m_pInputManager; }
 	ICollisionResolverPtr	CollisionResolver( void )	{ return m_pCollisionResolver; }
+	ISurfaceCachePtr		SurfaceCache( void )		{ return m_pSurfaceCache; }
 
 private:
 
@@ -89,6 +90,7 @@ private:
 	IRendererPtr m_pRenderer;
 	IInputManagerPtr m_pInputManager;
 	ICollisionResolverPtr m_pCollisionResolver;
+	ISurfaceCachePtr m_pSurfaceCache;
 
 	//IEntity
 	// Game interface pointer.

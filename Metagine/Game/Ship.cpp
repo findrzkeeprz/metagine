@@ -23,7 +23,8 @@
 #include "../Engine/Renderer.h"
 
 MShip::MShip( void ) :
-m_bActive(true)
+m_bActive(true),
+m_bFireLock(false)
 {
 	// This will all need to go through the engine interface in future.
 	//m_ShipSprite(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
@@ -52,13 +53,21 @@ MShip::~MShip( void )
 
 void MShip::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown )
 {
-	if( !bKeyDown )
-		return;
+	if( !bKeyDown ) {
+		if( iKey == SDLK_SPACE && m_bFireLock ) m_bFireLock = false;
+	} else {
+		if( bKeys[SDLK_LEFT] ) m_vVelocity.x -= m_fImpulse->GetValueFloat();
+		if( bKeys[SDLK_RIGHT] ) m_vVelocity.x += m_fImpulse->GetValueFloat();
+		if( bKeys[SDLK_UP] ) m_vVelocity.y -= m_fImpulse->GetValueFloat();
+		if( bKeys[SDLK_DOWN] ) m_vVelocity.y += m_fImpulse->GetValueFloat();
 
-	if( bKeys[SDLK_LEFT] ) m_vVelocity.x -= m_fImpulse->GetValueFloat();
-	if( bKeys[SDLK_RIGHT] ) m_vVelocity.x += m_fImpulse->GetValueFloat();
-	if( bKeys[SDLK_UP] ) m_vVelocity.y -= m_fImpulse->GetValueFloat();
-	if( bKeys[SDLK_DOWN] ) m_vVelocity.y += m_fImpulse->GetValueFloat();
+		if( iKey == SDLK_SPACE && !m_bFireLock ) {
+			//Engine::
+			IEntityPtr pBullet(new MTestEnt(m_vPosition.x - 5,m_vPosition.y - 5,500.0f));
+			Engine::GetInstance()->RegisterEntity(pBullet);
+			m_bFireLock = true;
+		}
+	}
 }
 
 void MShip::UpdateLogic( int iDelta )

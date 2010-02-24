@@ -23,6 +23,7 @@
 #include "../Interfaces/IRenderer.h"
 #include "../Interfaces/IInputManager.h"
 #include "../Interfaces/ICollisionResolver.h"
+#include "../Interfaces/ISurfaceCache.h"
 
 /// Public interface for the MEngine class.
 class IEngine
@@ -54,6 +55,7 @@ public:
 	virtual IRendererPtr Renderer( void ) = 0;
 	virtual IInputManagerPtr InputManager( void ) = 0;
 	virtual ICollisionResolverPtr CollisionResolver( void ) = 0;
+	virtual ISurfaceCachePtr SurfaceCache( void ) = 0;
 };
 
 typedef shared_ptr<IEngine> IEnginePtr;

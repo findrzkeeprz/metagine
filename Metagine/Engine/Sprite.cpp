@@ -16,6 +16,7 @@
 #include "ThirdParty.h"
 #include "Sprite.h"
 #include "Renderer.h"
+#include "Engine.h"
 
 MSprite::MSprite( void ) :
 m_dAngle(0.0),
@@ -43,7 +44,7 @@ m_iFrameDelay(0)
 	m_Coords[1] = 0;
 
 	SDL_Surface* pSurface = NULL;
-	if( ( pSurface = SurfFromFile(pszFileName) ) == NULL ) {
+	if( ( pSurface = (SDL_Surface*)Engine::GetInstance()->SurfaceCache()->SurfFromFile(pszFileName) ) == NULL ) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
 		return;
 	}
@@ -66,7 +67,7 @@ m_iFrameDelay(0)
 	m_Coords[1] = 0;
 	
 	SDL_Surface* pSurface = NULL;
-	if( ( pSurface = ClippedSurfFromFile(pszFileName,x,y,iWidth,iHeight,r,g,b) ) == NULL ) {
+	if( ( pSurface = (SDL_Surface*)Engine::GetInstance()->SurfaceCache()->ClippedSurfFromFile(pszFileName,x,y,iWidth,iHeight,r,g,b) ) == NULL ) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
 		return;
 	}
@@ -106,16 +107,16 @@ MSprite::~MSprite( void )
 	//	}
 	//	delete[] m_RotSurfaces;
 	//}
-	int iFrames = 0;
+	/*int iFrames = 0;
 	vector<SDL_Surface*>::iterator it;
 	for( it = m_FramesCache.begin(); it < m_FramesCache.end(); ++it ) {
 		if( *it ) {
 			SDL_FreeSurface(*it);
 			iFrames++;
 		}
-	}
+	}*/
 
-	printf(" -> MSprite object destructed (%i frames).\n",iFrames);
+	printf(" -> MSprite object destructed.\n");
 }
 
 void MSprite::SetPosition( int x, int y )
@@ -280,6 +281,8 @@ bool MSprite::ParseFromXml( const char* pszXmlFile )
 	int g = atoi(pRoot->Attribute("keyG"));
 	int b = atoi(pRoot->Attribute("keyB"));
 
+	int iCount = 0;
+
 	// Recursively load every sprite frame from the XML file.
 	for( TiXmlNode *pNode = pRoot->FirstChild("SpriteFrame"); pNode; 
 		pNode = pNode->NextSibling("SpriteFrame") )
@@ -295,13 +298,18 @@ bool MSprite::ParseFromXml( const char* pszXmlFile )
 		int w = atoi(pSpriteFrame->Attribute("clipW"));
 		int h = atoi(pSpriteFrame->Attribute("clipH"));
 
+		// Load into/retrieve from cache with "File+0" format.
+		string sFileFrame = sFileName;
+		sFileFrame.append((boost::format("+%1%") % iCount).str());
+
 		SDL_Surface* pSurface = NULL;
-		if( ( pSurface = ClippedSurfFromFile(sFileName,x,y,w,h,r,g,b) ) == NULL ) {
+		if( ( pSurface = (SDL_Surface*)Engine::GetInstance()->SurfaceCache()->ClippedSurfFromFile(sFileFrame,x,y,w,h,r,g,b) ) == NULL ) {
 			printf(" -! ERROR unable to load sprite file in MSprite::ParseFromXml().\n");
 			return false;
 		}
 
 		m_FramesCache.push_back(pSurface);
+		iCount++;
 	}
 
 	xmlDoc.Clear();

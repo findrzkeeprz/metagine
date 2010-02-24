@@ -24,5 +24,6 @@
 #include "../Interfaces/IObjectFactory.h"
 #include "../Interfaces/IRenderer.h"
 #include "../Interfaces/IVarManager.h"
+#include "../Interfaces/ISurfaceCache.h"
 
 #endif // _INTERFACES_H_

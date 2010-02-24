@@ -35,7 +35,7 @@ public:
 
 	void ProcessEntityPairs( void );
 	void DeterminePartition( IEntityPtr pEntity );
-	void Resolve( vector<IEntityPtr>& Entities, int iDelta );
+	void Resolve( vector<IEntityPtr> Entities, int iDelta );
 
 private:
 

@@ -25,6 +25,7 @@
 #include "Sprite.h"
 #include "Console.h"
 #include "CollisionResolver.h"
+#include "SurfaceCache.h"
 #include "../Public/Exports.h"
 
 MEngine::MEngine( void )
@@ -53,6 +54,7 @@ bool MEngine::Init( void )
 	m_pInputManager			= IInputManagerPtr(new MInputManager());
 	m_pConsole				= IConsolePtr(new MConsole());
 	m_pCollisionResolver	= ICollisionResolverPtr(new MCollisionResolver());
+	m_pSurfaceCache			= ISurfaceCachePtr(new MSurfaceCache());
 	
 	// Initialize the subsystems.
 	if( !m_pRenderer->Init(500,650) ) {
@@ -109,6 +111,7 @@ void MEngine::Shutdown( void )
 	m_pInputManager.reset();
 	m_pRenderer.reset();
 	m_pCollisionResolver.reset();
+	m_pSurfaceCache.reset();
 	
 	vector<IEntityPtr>::iterator ent;
 	for( ent = m_Entities.begin(); ent < m_Entities.end(); ++ent ) {
@@ -146,9 +149,10 @@ void MEngine::Run( void )
 void MEngine::UpdateEntities( int iDelta )
 {
 	vector<IEntityPtr>::iterator it;
-	for( it = m_Entities.begin(); it < m_Entities.end(); ++it )
+	for( it = m_Entities.begin(); it < m_Entities.end(); ++it ) {
 		if( (*it)->GetActive() )
 			(*it)->UpdateLogic(iDelta);
+	}
 }
 
 bool MEngine::RegisterEntity( IEntityPtr pEntity )
@@ -168,8 +172,9 @@ void MEngine::RemoveEntity( IEntityPtr pEntity )
 {
 	vector<IEntityPtr>::iterator it = m_Entities.begin();
 	while( it != m_Entities.end() ) {
-		if( (*it) && (*it == pEntity) ) {
-			printf(" -> Removing entity (0x%X) from logic queue.\n",pEntity.get());
+		if( (*it) && ((*it) == pEntity) ) {
+			printf(" -> Removing object (0x%X) from entity queue.\n",pEntity);
+			(*it).reset();
 			it = m_Entities.erase(it);
 		} else ++it;
 	}
