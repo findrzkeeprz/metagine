@@ -33,6 +33,8 @@ m_sCurrentBuffer("> ")
 
 MConsole::~MConsole( void )
 {
+	Shutdown();
+	
 	printf(" -> MConsole object destructed.\n");
 }
 
@@ -62,9 +64,16 @@ void MConsole::Shutdown( void )
 {
 	printf(" -> MConsole::Shutdown() called.\n");
 
-	//Engine::GetInstance()->InputManager()->RemoveListener(this);
-	Engine::GetInstance()->Renderer()->RemoveDrawable(m_Font);
-	Engine::GetInstance()->Renderer()->RemoveDrawable(shared_from_this());
+	m_Font.reset();
+	m_bActive.reset();
+	m_iFontSpacing.reset();
+	m_iPositionX.reset();
+	m_iPositionYon.reset();
+	m_iPositionYoff.reset();
+	m_iScrollFactor.reset();
+	
+	m_BackBuffer.clear();
+	m_CmdHistory.clear();
 }
 
 void MConsole::Echo( const char* pszText, ... )

@@ -24,7 +24,8 @@ m_bFontLibLoaded(false)
 
 MRenderer::~MRenderer( void )
 {
-    printf(" -> MRenderer object destructed.\n");
+	Shutdown();
+	printf(" -> MRenderer object destructed.\n");
 }
 
 bool MRenderer::Init( int iWidth, int iHeight )
@@ -58,27 +59,16 @@ void MRenderer::Shutdown( void )
 {
 	printf(" -> MRenderer::Shutdown() called.\n");
 	
-	vector<IDrawablePtr> DelQueue;
 	vector<IDrawablePtr>::iterator it = m_RenderQueue.begin();
-	
 	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it ) {
-		if( (*it) ) DelQueue.push_back((*it));
-	}
-
-	// We do this so that the actual render queue is not modified while iterating
-	// as it was causing some nasty NULL pointer bugs.
-	it = DelQueue.begin();
-	for( it = DelQueue.begin(); it < DelQueue.end(); ++it ) {
 		if( *it ) {
 			printf(" -> Releasing queued drawable object (0x%X).\n",(*it).get());
 			it->reset();
 		}
 	}
 
-	m_RenderQueue.clear();
-	DelQueue.clear();
-
 	// Do some housekeeping.
+	m_RenderQueue.clear();
 	SDL_Quit();
 	TTF_Quit();
 }

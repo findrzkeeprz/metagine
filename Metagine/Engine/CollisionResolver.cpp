@@ -26,6 +26,7 @@ m_iDelta(0)
 
 MCollisionResolver::~MCollisionResolver( void )
 {
+	Shutdown();
 	printf(" -> MCollisionResolver object destructed.\n");
 }
 
@@ -37,6 +38,11 @@ MCollisionResolver::~MCollisionResolver( void )
 void MCollisionResolver::Shutdown( void )
 {
 	printf(" -> MCollisionResolver::Shutdown() called.\n");
+
+	m_EntityPairs.clear();
+	for( int i = 0; i < 4; i++ ) {
+		m_Partitions[i].clear();
+	}
 }
 
 void MCollisionResolver::DeterminePartition( IEntityPtr pEntity )

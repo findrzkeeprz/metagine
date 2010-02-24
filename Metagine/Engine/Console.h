@@ -66,10 +66,10 @@ private:
 	bool m_bToggleAnimUp;						///< Toggle the scroll out animation.
 	bool m_bToggleAnimDown;						///< Toggle the scroll in animation.
 	bool m_bToggling;							///< Currently toggling animation - don't interrupt.
-	vector<string> m_BackBuffer;		///< Main console buffer storage.
-	vector<string> m_CmdHistory;		///< Previously executed command storage.
-	string m_sCurrentBuffer;				///< Current command input buffer.
-	shared_ptr<MFont> m_Font;			///< Font to draw the console buffer.
+	vector<string> m_BackBuffer;				///< Main console buffer storage.
+	vector<string> m_CmdHistory;				///< Previously executed command storage.
+	string m_sCurrentBuffer;					///< Current command input buffer.
+	shared_ptr<MFont> m_Font;					///< Font to draw the console buffer.
 	int m_iScrollPoint;
 };
 
