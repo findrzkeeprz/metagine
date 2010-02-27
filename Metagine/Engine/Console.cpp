@@ -48,14 +48,8 @@ bool MConsole::Init( void )
 	m_iScrollFactor = Engine::GetInstance()->VarManager()->CreateVar("b_con_scrollfactor",3);
 	
 	m_Font = shared_ptr<MFont>(new MFont("ariblk.ttf",15,255,255,255,0.0f));
-	//m_Font.reset(new MFont("ariblk.ttf",15,255,255,255,0.0f));
-	//m_Font->.reset();
 	m_Font->SetColour(255,255,255);
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_Font);
-	//m_Font->SetColourBG(0,120,0);
-
-	//Engine::GetInstance()->InputManager()->RegisterListener(this);
-	//Engine::GetInstance()->Renderer()->RegisterDrawable(shared_from_this());
 	
 	return true;
 }

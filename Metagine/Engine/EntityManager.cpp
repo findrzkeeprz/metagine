@@ -31,6 +31,17 @@ void MEntityManager::VInit( void )
 
 void MEntityManager::VKill( void )
 {
+	printf(" -> MEntityManager::VKill() called.\n");
+	
+	vector<IEntityPtr>::iterator entity = m_Entities.begin();
+	for( entity = m_Entities.begin(); entity < m_Entities.end(); ++entity ) {
+		if( *entity ) {
+			printf(" -> Releasing queued entity object (0x%X).\n",(*entity).get());
+			entity->reset();
+		}
+	}
+
+	m_Entities.clear();
 }
 
 void MEntityManager::VFrame( const int iDelta )

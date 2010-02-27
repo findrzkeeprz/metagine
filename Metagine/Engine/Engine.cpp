@@ -89,11 +89,12 @@ void MEngine::Shutdown( void )
 	m_GameBoard.Kill();
 	
 	m_pConsole.reset();
-	m_pInputManager.reset();
-	m_pRenderer.reset();
 	m_pSurfaceCache.reset();
 	m_pVarManager.reset();
 	m_pTaskManager.reset();
+	m_pInputManager.reset();
+	m_pEntityManager.reset();
+	m_pRenderer.reset();
 }
 
 void MEngine::Run( void )
