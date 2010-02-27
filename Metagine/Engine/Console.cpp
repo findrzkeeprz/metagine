@@ -47,7 +47,7 @@ bool MConsole::Init( void )
 	m_iPositionYoff = Engine::GetInstance()->VarManager()->CreateVar("b_con_posyoff",-30);
 	m_iScrollFactor = Engine::GetInstance()->VarManager()->CreateVar("b_con_scrollfactor",3);
 	
-	m_Font = shared_ptr<MFont>(new MFont("ariblk.ttf",15,255,255,255,0.0f));
+	m_Font = shared_ptr<MFont>(new MFont("MAINBB__.TTF",15,255,255,255,0.0f));
 	m_Font->SetColour(255,255,255);
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_Font);
 	
@@ -246,6 +246,8 @@ void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 				{ 
 					if( m_sCurrentBuffer.length() > 2) {
 						Execute(m_sCurrentBuffer.c_str()+2);
+						m_CmdHistory.push_back(m_sCurrentBuffer.c_str()+2);
+						m_iHistoryIndex = (int)m_CmdHistory.size() - 1;
 						m_sCurrentBuffer = "> ";
 					}
 				} break;
@@ -253,6 +255,38 @@ void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 				{ 
 					if( m_sCurrentBuffer.length() > 2 )
 						m_sCurrentBuffer.erase(m_sCurrentBuffer.end() - 1); 		
+				} break;
+			case SDLK_UP:
+				{
+					if( m_iHistoryIndex < 0) {
+						m_iHistoryIndex = (int)m_CmdHistory.size() - 1;
+						m_sCurrentBuffer = "> ";
+						break;
+					} else if( m_iHistoryIndex > (int)m_CmdHistory.size() - 1 ) {
+						m_iHistoryIndex = 0;
+						m_sCurrentBuffer = "> ";
+						break;
+					}
+					
+					m_sCurrentBuffer = "> ";
+					m_sCurrentBuffer.append(m_CmdHistory[m_iHistoryIndex]);
+					--m_iHistoryIndex;
+				} break;
+			case SDLK_DOWN:
+				{
+					if( m_iHistoryIndex > (int)m_CmdHistory.size() - 1 ) {
+						m_iHistoryIndex = 0;
+						m_sCurrentBuffer = "> ";
+						break;
+					} else if( m_iHistoryIndex < 0) {
+						m_iHistoryIndex = (int)m_CmdHistory.size() - 1;
+						m_sCurrentBuffer = "> ";
+						break;
+					}
+					
+					m_sCurrentBuffer = "> ";
+					m_sCurrentBuffer.append(m_CmdHistory[m_iHistoryIndex]);
+					++m_iHistoryIndex;
 				} break;
 
 			default: break;

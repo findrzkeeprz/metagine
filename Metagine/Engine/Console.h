@@ -71,6 +71,7 @@ private:
 	string m_sCurrentBuffer;					///< Current command input buffer.
 	shared_ptr<MFont> m_Font;					///< Font to draw the console buffer.
 	int m_iScrollPoint;
+	int m_iHistoryIndex;
 };
 
 //typedef MSingleton<MConsole> Console;
