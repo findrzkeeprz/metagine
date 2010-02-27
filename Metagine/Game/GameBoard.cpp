@@ -14,10 +14,10 @@
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "GameBoard.h"
-#include "../Engine/Renderer.h"
+#include "../Engine/RenderTask.h"
 #include "../Engine/Engine.h"
 #include "../Engine/Sprite.h"
-#include "../Engine/InputManager.h"
+#include "../Engine/InputTask.h"
 #include "../Public/Public.h"
 
 MGameBoard::MGameBoard( void )

@@ -13,21 +13,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "Renderer.h"
+#include "RenderTask.h"
 
-MRenderer::MRenderer( void ) :
+MRenderTask::MRenderTask( void ) :
 m_Screen(NULL),
 m_bFontLibLoaded(false)
 {
-    printf(" -> MRenderer object created.\n");
+    printf(" -> MRenderTask object created.\n");
 }
 
-MRenderer::~MRenderer( void )
+MRenderTask::~MRenderTask( void )
 {
-	printf(" -> MRenderer object destructed.\n");
+	printf(" -> MRenderTask object destructed.\n");
 }
 
-/*bool MRenderer::Init( int iWidth, int iHeight )
+/*bool MRenderTask::Init( int iWidth, int iHeight )
 {
 	printf(" -> Initialising SDL subsystem.\n");
 
@@ -54,7 +54,7 @@ MRenderer::~MRenderer( void )
 	return true;
 }*/
 
-void MRenderer::VInit( void )
+void MRenderTask::VInit( void )
 {
 	printf(" -> Initialising SDL subsystem.\n");
 
@@ -79,9 +79,9 @@ void MRenderer::VInit( void )
 	SDL_WM_SetCaption("Metagine",NULL); 
 }
 
-void MRenderer::VKill( void )
+void MRenderTask::VKill( void )
 {
-	printf(" -> MRenderer::VKill() called.\n");
+	printf(" -> MRenderTask::VKill() called.\n");
 	
 	vector<IDrawablePtr>::iterator it = m_RenderQueue.begin();
 	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it ) {
@@ -97,7 +97,7 @@ void MRenderer::VKill( void )
 	TTF_Quit();
 }
 
-void MRenderer::VFrame( const int iDelta )
+void MRenderTask::VFrame( const int iDelta )
 {
 	// Render all queued objects.
 	vector<IDrawablePtr>::iterator it;
@@ -109,12 +109,12 @@ void MRenderer::VFrame( const int iDelta )
 }
 
 
-bool MRenderer::FontLibLoaded( void )
+bool MRenderTask::FontLibLoaded( void )
 {
 	return m_bFontLibLoaded;
 }
 
-void MRenderer::RegisterDrawable( IDrawablePtr pDrawable )
+void MRenderTask::RegisterDrawable( IDrawablePtr pDrawable )
 {
 	if( !pDrawable ) {
 		// Error msg here
@@ -123,12 +123,12 @@ void MRenderer::RegisterDrawable( IDrawablePtr pDrawable )
 
 	// Push back and then re-sort the container based on depth.
 	m_RenderQueue.push_back(IDrawablePtr(pDrawable));
-	sort(m_RenderQueue.begin(),m_RenderQueue.end(),MRenderer::SpriteSortFunc);
+	sort(m_RenderQueue.begin(),m_RenderQueue.end(),MRenderTask::SpriteSortFunc);
 	
 	printf(" -> Registered object (0x%X) with rendering queue.\n",pDrawable);
 }
 
-void MRenderer::RemoveDrawable( IDrawablePtr pDrawable )
+void MRenderTask::RemoveDrawable( IDrawablePtr pDrawable )
 {
 	vector<IDrawablePtr>::iterator it = m_RenderQueue.begin();
 	while( it != m_RenderQueue.end() ) {
@@ -139,20 +139,20 @@ void MRenderer::RemoveDrawable( IDrawablePtr pDrawable )
 	}
 
 	// Resort based on depth.
-	sort(m_RenderQueue.begin(),m_RenderQueue.end(),MRenderer::SpriteSortFunc);
+	sort(m_RenderQueue.begin(),m_RenderQueue.end(),MRenderTask::SpriteSortFunc);
 }
 
-bool MRenderer::SpriteSortFunc( IDrawablePtr pData1, IDrawablePtr pData2 )
+bool MRenderTask::SpriteSortFunc( IDrawablePtr pData1, IDrawablePtr pData2 )
 {
 	return pData1->GetDepth() > pData2->GetDepth();
 }
 
-int MRenderer::GetScreenWidth( void )
+int MRenderTask::GetScreenWidth( void )
 {
 	return m_iResolution[0];
 }
 
-int MRenderer::GetScreenHeight( void )
+int MRenderTask::GetScreenHeight( void )
 {
 	return m_iResolution[1];
 }

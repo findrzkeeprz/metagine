@@ -13,23 +13,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _INPUTMANAGER_H_
-#define _INPUTMANAGER_H_
+#ifndef _INPUTTASK_H_
+#define _INPUTTASK_H_
 
 #include "../Public/Public.h"
 #include "../Public/BaseTypes.h"
 #include "../Public/Interfaces.h"
 #include "ThirdParty.h"
 
-class MInputManager : public IInputManager, public noncopyable
+class MInputTask : public IInputTask, public noncopyable
 {
 public:
 
     /// Default constructor (takes no arguments).
-	MInputManager( void );
+	MInputTask( void );
 
     /// Destructor method.
-    ~MInputManager( void );
+    ~MInputTask( void );
 	
 	void VInit( void );
 	void VKill( void );
@@ -52,6 +52,4 @@ private:
 	bool m_bKeysHeld[323];
 };
 
-//typedef MSingleton<MInputManager> InputManager;
-
-#endif // _INPUTMANAGER_H_
+#endif // _INPUTTASK_H_

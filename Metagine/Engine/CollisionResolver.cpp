@@ -14,7 +14,7 @@
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "CollisionResolver.h"
-#include "Renderer.h"
+#include "RenderTask.h"
 #include "Engine.h"
 #include "../ThirdParty/SDL_collide.h"
 

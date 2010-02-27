@@ -21,11 +21,11 @@
 #include "../Interfaces/IDrawable.h"
 
 /// Public interface for the MRenderer class.
-class IRenderer : public ITask
+class IRenderTask : public ITask
 {
 public:
 
-	virtual ~IRenderer( void ) { };
+	virtual ~IRenderTask( void ) { };
 
 	/// Determines whether the TTF font library has been loaded.
 	virtual bool FontLibLoaded( void ) = 0;
@@ -53,6 +53,6 @@ public:
 	virtual int GetScreenHeight( void ) = 0;
 };
 
-typedef shared_ptr<IRenderer> IRendererPtr;
+typedef shared_ptr<IRenderTask> IRendererPtr;
 
 #endif // _IRENDERER_H_

@@ -1,7 +1,7 @@
 #include "../Engine/Engine.h"
 #include "../Engine/Sprite.h"
-#include "../Engine/InputManager.h"
-#include "../Engine/Renderer.h"
+#include "../Engine/InputTask.h"
+#include "../Engine/RenderTask.h"
 
 MTestEnt::MTestEnt( float x, float y, float fSpeed ) :
 m_bActive(true)

@@ -13,24 +13,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IENTITYMANAGER_H_
-#define _IENTITYMANAGER_H_
+#ifndef _IENTITYTASK_H_
+#define _IENTITYTASK_H_
 
 #include "../Public/Public.h"
 #include "../Interfaces/ITask.h"
 #include "../Interfaces/IEntity.h"
 
-/// Public interface for the IEntityManager class.
-class IEntityManager : public ITask
+/// Public interface for the IEntityTask class.
+class IEntityTask : public ITask
 {
 public:
 
-	virtual ~IEntityManager( void ) { };
+	virtual ~IEntityTask( void ) { };
 
 	virtual void RegisterEntity( IEntityPtr pEntity ) = 0;
 	virtual void RemoveEntity( IEntityPtr pEntity ) = 0;
 };
 
-typedef shared_ptr<IEntityManager> IEntityManagerPtr;
+typedef shared_ptr<IEntityTask> IEntityManagerPtr;
 
-#endif // _IENTITYMANAGER_H_
+#endif // _IENTITYTASK_H_

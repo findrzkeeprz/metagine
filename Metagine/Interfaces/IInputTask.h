@@ -1,5 +1,5 @@
 // This file is part of Metagine.
-// 
+//
 // Metagine is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -13,36 +13,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _ENTITYMANAGER_H_
-#define _ENTITYMANAGER_H_
+#ifndef _IINPUTTASK_H_
+#define _IINPUTTASK_H_
 
 #include "../Public/Public.h"
-#include "../Public/BaseTypes.h"
-#include "../Public/Interfaces.h"
-#include "CollisionResolver.h"
+#include "../Interfaces/ITask.h"
+#include "../Interfaces/IInputListener.h"
 
-/// Fix me.
-class MEntityManager : public IEntityManager, public noncopyable
+class IInputTask : public ITask
 {
 public:
 
-	/// Default constructor.
-	MEntityManager( void );
-	~MEntityManager( void );
-
-	void VInit( void );
-	void VFrame( const int iDelta );
-	void VKill( void );
-
-	void RegisterEntity( IEntityPtr pEntity );
-	void RemoveEntity( IEntityPtr pEntity );
-
-private:
-
-	vector<IEntityPtr> m_Entities;
-	MCollisionResolver m_CollisionResolver;
+    /// Virtual destructor method.
+    virtual ~IInputTask( void ) { };
+	
+	virtual void SetKeyRepeat( int iDelay, int iInterval ) = 0;
+    virtual void RegisterListener( IInputListenerPtr pListener ) = 0;
+    virtual void RemoveListener( IInputListenerPtr pListener ) = 0;
 };
 
-//typedef MSingleton<MCollisionResolver> CollisionResolver;
+typedef shared_ptr<IInputTask> IInputManagerPtr;
 
-#endif // _COLLISIONRESOLVER_H_
+#endif // _IINPUTTASK_H_

@@ -15,7 +15,7 @@
 
 #include "ThirdParty.h"
 #include "Sprite.h"
-#include "Renderer.h"
+#include "RenderTask.h"
 #include "Engine.h"
 
 MSprite::MSprite( void ) :

@@ -22,7 +22,7 @@
 #include "../Public/Interfaces.h"
 
 #include "TaskManager.h"
-#include "EntityManager.h"
+#include "EntityTask.h"
 #include "../Game/GameBoard.h"
 
 /// Main game engine interface.

@@ -15,7 +15,7 @@
 
 #include "OutlineFont.h"
 #include "Engine.h"
-#include "Renderer.h"
+#include "RenderTask.h"
 
 MOutlineFont::MOutlineFont( void ) :
 MFont()

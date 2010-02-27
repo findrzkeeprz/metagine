@@ -239,6 +239,10 @@
 				UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 				>
 				<File
+					RelativePath=".\Engine\AudioTask.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Engine\CollisionResolver.cpp"
 					>
 				</File>
@@ -251,7 +255,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Engine\EntityManager.cpp"
+					RelativePath=".\Engine\EntityTask.cpp"
 					>
 				</File>
 				<File
@@ -263,7 +267,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Engine\InputManager.cpp"
+					RelativePath=".\Engine\InputTask.cpp"
 					>
 				</File>
 				<File
@@ -279,7 +283,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Engine\Renderer.cpp"
+					RelativePath=".\Engine\RenderTask.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Engine\SoundCache.cpp"
 					>
 				</File>
 				<File
@@ -309,6 +317,10 @@
 				UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 				>
 				<File
+					RelativePath=".\Engine\AudioTask.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Engine\CollisionResolver.h"
 					>
 				</File>
@@ -321,7 +333,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Engine\EntityManager.h"
+					RelativePath=".\Engine\EntityTask.h"
 					>
 				</File>
 				<File
@@ -333,7 +345,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Engine\InputManager.h"
+					RelativePath=".\Engine\InputTask.h"
 					>
 				</File>
 				<File
@@ -345,7 +357,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Engine\Renderer.h"
+					RelativePath=".\Engine\RenderTask.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Engine\SoundCache.h"
 					>
 				</File>
 				<File
@@ -377,6 +393,10 @@
 				Name="Interfaces"
 				>
 				<File
+					RelativePath=".\Interfaces\IAudioTask.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Interfaces\ICollisionResolver.h"
 					>
 				</File>
@@ -397,7 +417,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Interfaces\IEntityManager.h"
+					RelativePath=".\Interfaces\IEntityTask.h"
 					>
 				</File>
 				<File
@@ -409,7 +429,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Interfaces\IInputManager.h"
+					RelativePath=".\Interfaces\IInputTask.h"
 					>
 				</File>
 				<File
@@ -421,7 +441,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Interfaces\IRenderer.h"
+					RelativePath=".\Interfaces\IRenderTask.h"
 					>
 				</File>
 				<File

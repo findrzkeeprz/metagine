@@ -13,30 +13,30 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "InputManager.h"
+#include "InputTask.h"
 #include "Engine.h"
 
-MInputManager::MInputManager( void )
+MInputTask::MInputTask( void )
 {
-    printf(" -> MInputManager object created.\n");
+    printf(" -> MInputTask object created.\n");
 
 	memset(&m_bKeysHeld,0,sizeof(m_bKeysHeld));
 }
 
-MInputManager::~MInputManager( void )
+MInputTask::~MInputTask( void )
 {
-    printf(" -> MInputManager object destructed.\n");
+    printf(" -> MInputTask object destructed.\n");
 }
 
-void MInputManager::VInit( void )
+void MInputTask::VInit( void )
 {
 	//SDL_EnableKeyRepeat(0,SDL_DEFAULT_REPEAT_INTERVAL);
 	//SDL_EnableKeyRepeat(1,1);
 }
 
-void MInputManager::VKill( void )
+void MInputTask::VKill( void )
 {
-	printf(" -> MInputManager::Shutdown() called.\n");
+	printf(" -> MInputTask::Shutdown() called.\n");
     
     // Delete allocated objects.
     vector<IInputListenerPtr>::reverse_iterator it;
@@ -47,40 +47,16 @@ void MInputManager::VKill( void )
 		}
 }
 
-void MInputManager::VFrame( const int iDelta )
+void MInputTask::VFrame( const int iDelta )
 {
 	while( SDL_PollEvent(&m_Event) ) {
 		if( m_Event.type == SDL_QUIT ) Engine::GetInstance()->TaskManager()->EarlyAbort();
 		else if( m_Event.type == SDL_KEYDOWN ) KeyDownEvent(m_Event.key.keysym.sym);
 		else if( m_Event.type == SDL_KEYUP ) KeyUpEvent(m_Event.key.keysym.sym);
-
-		/*if( m_Event.type == SDL_KEYDOWN ||
-			m_Event.type == SDL_KEYUP ) {
-				m_bKeysHeld[m_Event.key.keysym.sym] = m_Event.type == SDL_KEYDOWN ? true : false;
-				vector<IInputListenerPtr>::iterator it;
-				for( it = m_Listeners.begin(); it < m_Listeners.end(); ++it ) {
-					(*it)->UpdateInput(m_bKeysHeld,m_Event.key.keysym.sym,true);
-				}
-		}*/
-		/*if( m_Event.type == SDL_QUIT ) { 
-			//m_bActive = false;
-			//Shutdown();
-		} else if( m_Event.type == SDL_KEYDOWN ) {
-			Engine::GetInstance()->InputManager()->Update(m_Event.key.keysym.sym,true);
-		} else if( m_Event.type == SDL_KEYUP ) {
-			Engine::GetInstance()->InputManager()->Update(m_Event.key.keysym.sym,false);
-		}*/
 	}
-	
-	/*m_bKeysHeld[iKey] = bKeyDown ? true : false;
-	
-	vector<IInputListenerPtr>::iterator it;
-	for( it = m_Listeners.begin(); it < m_Listeners.end(); ++it ) {
-		(*it)->UpdateInput(m_bKeysHeld,iKey,bKeyDown);
-	}*/
 }
 
-void MInputManager::KeyDownEvent( int iKey )
+void MInputTask::KeyDownEvent( int iKey )
 {
 	m_bKeysHeld[iKey] = true;
 	
@@ -89,7 +65,7 @@ void MInputManager::KeyDownEvent( int iKey )
 		(*it)->UpdateInput(m_bKeysHeld,iKey,true);		
 }
 
-void MInputManager::KeyUpEvent( int iKey )
+void MInputTask::KeyUpEvent( int iKey )
 {
 	m_bKeysHeld[iKey] = false;
 	
@@ -98,12 +74,12 @@ void MInputManager::KeyUpEvent( int iKey )
 		(*it)->UpdateInput(m_bKeysHeld,iKey,false);		
 }
 
-void MInputManager::SetKeyRepeat( int iDelay, int iInterval )
+void MInputTask::SetKeyRepeat( int iDelay, int iInterval )
 {
 	SDL_EnableKeyRepeat(iDelay,iInterval);
 }
 
-void MInputManager::RegisterListener( IInputListenerPtr pListener )
+void MInputTask::RegisterListener( IInputListenerPtr pListener )
 {
 	if( !pListener ) {
 		// Error msg here
@@ -114,7 +90,7 @@ void MInputManager::RegisterListener( IInputListenerPtr pListener )
 	printf(" -> Registered new input listener object (0x%X).\n",pListener);
 }
 
-void MInputManager::RemoveListener( IInputListenerPtr pListener )
+void MInputTask::RemoveListener( IInputListenerPtr pListener )
 {
 	vector<IInputListenerPtr>::iterator it = m_Listeners.begin();
 	while( it != m_Listeners.end() ) {

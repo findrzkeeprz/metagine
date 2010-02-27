@@ -20,11 +20,11 @@
 #include "../Interfaces/IConsole.h"
 #include "../Interfaces/IEngine.h"
 #include "../Interfaces/IFileSystem.h"
-#include "../Interfaces/IInputManager.h"
+#include "../Interfaces/IInputTask.h"
 #include "../Interfaces/IObjectFactory.h"
-#include "../Interfaces/IRenderer.h"
+#include "../Interfaces/IRenderTask.h"
 #include "../Interfaces/IVarManager.h"
 #include "../Interfaces/ISurfaceCache.h"
-#include "../Interfaces/IEntityManager.h"
+#include "../Interfaces/IEntityTask.h"
 
 #endif // _INTERFACES_H_

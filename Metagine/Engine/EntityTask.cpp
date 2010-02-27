@@ -13,25 +13,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "EntityManager.h"
+#include "EntityTask.h"
 
-MEntityManager::MEntityManager( void )
+MEntityTask::MEntityTask( void )
 {
-	printf(" -> MEntityManager object created.\n");
+	printf(" -> MEntityTask object created.\n");
 }
 
-MEntityManager::~MEntityManager( void )
+MEntityTask::~MEntityTask( void )
 {
-	printf(" -> MEntityManager object destructed.\n");
+	printf(" -> MEntityTask object destructed.\n");
 }
 
-void MEntityManager::VInit( void )
+void MEntityTask::VInit( void )
 {
 }
 
-void MEntityManager::VKill( void )
+void MEntityTask::VKill( void )
 {
-	printf(" -> MEntityManager::VKill() called.\n");
+	printf(" -> MEntityTask::VKill() called.\n");
 	
 	vector<IEntityPtr>::iterator entity = m_Entities.begin();
 	for( entity = m_Entities.begin(); entity < m_Entities.end(); ++entity ) {
@@ -44,7 +44,7 @@ void MEntityManager::VKill( void )
 	m_Entities.clear();
 }
 
-void MEntityManager::VFrame( const int iDelta )
+void MEntityTask::VFrame( const int iDelta )
 {
 	vector<IEntityPtr>::iterator it;
 	for( it = m_Entities.begin(); it < m_Entities.end(); ++it ) {
@@ -55,7 +55,7 @@ void MEntityManager::VFrame( const int iDelta )
 	m_CollisionResolver.Resolve(m_Entities,iDelta);
 }
 
-void MEntityManager::RegisterEntity( IEntityPtr pEntity )
+void MEntityTask::RegisterEntity( IEntityPtr pEntity )
 {
 	if( !pEntity ) {
 		// Error msg here
@@ -66,7 +66,7 @@ void MEntityManager::RegisterEntity( IEntityPtr pEntity )
 	printf(" -> Registered entity (0x%X) with logic queue.\n",pEntity.get());
 }
 
-void MEntityManager::RemoveEntity( IEntityPtr pEntity )
+void MEntityTask::RemoveEntity( IEntityPtr pEntity )
 {
 	vector<IEntityPtr>::iterator it = m_Entities.begin();
 	while( it != m_Entities.end() ) {

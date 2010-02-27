@@ -17,12 +17,12 @@
 #define _EXPORTS_H_
 
 #include "../Interfaces/IEngine.h"
-#include "../Interfaces/IRenderer.h"
+#include "../Interfaces/IRenderTask.h"
 #include "../Interfaces/IVarManager.h"
 
 typedef struct EngineExports_s
 {
-	IRenderer* pRenderer;
+	IRenderTask* pRenderer;
 	IVarManager* pVarManager;
 } EngineExports_t;
 

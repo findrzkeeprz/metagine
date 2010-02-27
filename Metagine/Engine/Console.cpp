@@ -16,8 +16,8 @@
 #include "../Includes/SDL/SDL_keysym.h"
 #include "Console.h"
 #include "Engine.h"
-#include "InputManager.h"
-#include "Renderer.h"
+#include "InputTask.h"
+#include "RenderTask.h"
 #include "VarManager.h"
 #include "Var.h"
 

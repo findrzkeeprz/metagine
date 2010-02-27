@@ -15,7 +15,7 @@
 
 #include "Font.h"
 #include "Engine.h"
-#include "Renderer.h"
+#include "RenderTask.h"
 
 MFont::MFont( void ) :
 m_Surface(NULL),

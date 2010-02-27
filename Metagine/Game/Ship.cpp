@@ -19,8 +19,8 @@
 // Temp.
 #include "../Engine/Engine.h"
 #include "../Engine/Sprite.h"
-#include "../Engine/InputManager.h"
-#include "../Engine/Renderer.h"
+#include "../Engine/InputTask.h"
+#include "../Engine/RenderTask.h"
 
 MShip::MShip( void ) :
 m_bActive(true),

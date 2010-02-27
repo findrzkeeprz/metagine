@@ -20,11 +20,11 @@
 #include "../Interfaces/ITask.h"
 #include "../Interfaces/IConsole.h"
 #include "../Interfaces/IVarManager.h"
-#include "../Interfaces/IRenderer.h"
-#include "../Interfaces/IInputManager.h"
+#include "../Interfaces/IRenderTask.h"
+#include "../Interfaces/IInputTask.h"
 #include "../Interfaces/ICollisionResolver.h"
 #include "../Interfaces/ISurfaceCache.h"
-#include "../Interfaces/IEntityManager.h"
+#include "../Interfaces/IEntityTask.h"
 
 /// Public interface for the MEngine class.
 class IEngine

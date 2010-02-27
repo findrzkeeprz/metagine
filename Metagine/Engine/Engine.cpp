@@ -18,8 +18,8 @@
 #include <string.h>
 #include "Engine.h"
 #include "VarManager.h"
-#include "Renderer.h"
-#include "InputManager.h"
+#include "RenderTask.h"
+#include "InputTask.h"
 #include "Font.h"
 #include "OutlineFont.h"
 #include "Sprite.h"
@@ -46,9 +46,9 @@ void MEngine::Init( void )
 	// Create the main engine tasks.
 	m_pVarManager = IVarManagerPtr(new MVarManager());
 	m_pTaskManager = MTaskManagerPtr(new MTaskManager());
-	m_pRenderer = IRendererPtr(new MRenderer());
-	m_pEntityManager = IEntityManagerPtr(new MEntityManager());
-	m_pInputManager = IInputManagerPtr(new MInputManager());
+	m_pRenderer = IRendererPtr(new MRenderTask());
+	m_pEntityManager = IEntityManagerPtr(new MEntityTask());
+	m_pInputManager = IInputManagerPtr(new MInputTask());
 
 	m_pTaskManager->Attach(m_pInputManager,m_pTaskManager->INPUT_TASK);
 	m_pTaskManager->Attach(m_pEntityManager,m_pTaskManager->LOGIC_TASK);

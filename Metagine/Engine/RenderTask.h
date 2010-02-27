@@ -13,8 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _RENDERER_H_
-#define _RENDERER_H_
+#ifndef _RENDERTASK_H_
+#define _RENDERTASK_H_
 
 #include "ThirdParty.h"
 #include "../Public/Public.h"
@@ -26,17 +26,17 @@
 /// related to rendering output. This is currently handled with the SDL library.
 /// The object also manages IDrawable objects that have been registered and
 /// will call each objects IDrawable::Render() function every frame.
-class MRenderer : public IRenderer, public noncopyable
+class MRenderTask : public IRenderTask, public noncopyable
 {
 public:
 
 	/// Default constructor.
-	MRenderer( void );
+	MRenderTask( void );
 
 	/// Destructor method.
 	/// Perform required cleanup operations on graphical subsystems and free
 	/// any allocated resources.
-	~MRenderer( void );
+	~MRenderTask( void );
 
 	/// Initialise the renderer component.
 	/// Initialise the graphical subsystems and allocate any required resources
@@ -83,6 +83,4 @@ private:
 	int m_iResolution[2];						///< Resolution of the engine screen.
 };
 
-//typedef MSingleton<MRenderer> Renderer;
-
-#endif // _RENDERER_H_
+#endif // _RENDERTASK_H_
