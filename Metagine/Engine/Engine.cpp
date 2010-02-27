@@ -60,6 +60,7 @@ void MEngine::Init( void )
 	m_pSurfaceCache = ISurfaceCachePtr(new MSurfaceCache());
 	
 	m_pConsole->Init();
+	m_pRenderer->RegisterDrawable(m_pConsole);
 
 	// Load the game module.
 	/*if( !LoadGameModule() ) {

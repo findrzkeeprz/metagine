@@ -18,7 +18,7 @@
 
 #include "../Public/Public.h"
 
-class IDrawable : public enable_shared_from_this<IDrawable>
+class IDrawable
 {
 public:
 

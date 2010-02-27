@@ -55,7 +55,7 @@ bool MConsole::Init( void )
 	//m_Font->SetColourBG(0,120,0);
 
 	//Engine::GetInstance()->InputManager()->RegisterListener(this);
-	Engine::GetInstance()->Renderer()->RegisterDrawable(shared_from_this());
+	//Engine::GetInstance()->Renderer()->RegisterDrawable(shared_from_this());
 	
 	return true;
 }
