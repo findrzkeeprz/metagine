@@ -27,7 +27,8 @@ public:
 	/// Default constructor (takes no arguments).
 	MSprite( void );
 	MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, float fDepth );
-	MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, int x, int y, int iWidth, int iHeight, int r, int g, int b, float fDepth );
+	MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, 
+		int x, int y, int iWidth, int iHeight, int r, int g, int b, float fDepth );
 	MSprite( const char* pszXmlFile );
 
 	/// Destructor method.
@@ -52,8 +53,6 @@ public:
 
 private:
 
-	SDL_Surface* SurfFromFile( const string& sFileName );
-	SDL_Surface* ClippedSurfFromFile( const string& sFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b );
 	bool ParseFromXml( const char* pszXmlFile );
 
 private:
