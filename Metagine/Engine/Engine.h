@@ -20,6 +20,9 @@
 #include "../Public/Public.h"
 #include "../Public/BaseTypes.h"
 #include "../Public/Interfaces.h"
+
+#include "TaskManager.h"
+#include "EntityManager.h"
 #include "../Game/GameBoard.h"
 
 /// Main game engine interface.
@@ -43,54 +46,34 @@ public:
     /// procedure involving all registered IBaseInterface classes.
     ~MEngine( void );
     
-    bool Init( void );
+    void Init( void );
     void Shutdown( void );
-	void UpdateEntities( int iDelta );
-	bool RegisterEntity( IEntityPtr );
-	void RemoveEntity( IEntityPtr );
-	IConsolePtr				Console( void )				{ return m_pConsole; }
-	IVarManagerPtr			VarManager( void )			{ return m_pVarManager; }
-	IRendererPtr			Renderer( void )			{ return m_pRenderer; }
-	IInputManagerPtr		InputManager( void )		{ return m_pInputManager; }
-	ICollisionResolverPtr	CollisionResolver( void )	{ return m_pCollisionResolver; }
-	ISurfaceCachePtr		SurfaceCache( void )		{ return m_pSurfaceCache; }
+	
+	IConsolePtr Console( void )	{ return m_pConsole; }
+	IVarManagerPtr VarManager( void ) { return m_pVarManager; }
+	IRendererPtr Renderer( void ) { return m_pRenderer; }
+	IInputManagerPtr InputManager( void ) { return m_pInputManager; }
+	ISurfaceCachePtr SurfaceCache( void ) { return m_pSurfaceCache; }
+	IEntityManagerPtr EntityManager( void ) { return m_pEntityManager; }
+	MTaskManagerPtr TaskManager( void ) { return m_pTaskManager; }
 
-private:
+public:
 
     void Run( void );
-
-    // Handle player input.
-    void HandleInput( void );
-
-    // Load the game module.
+	
+	// Load the game module.
 	bool LoadGameModule( void );
 
 private:
 
-    vector<IBaseInterfacePtr> m_Interfaces;	///< Container of all registered game interfaces.
-	vector<IEntityPtr> m_Entities;				///< Collection of all game entities.
-	bool m_bActive;							   		///< Identifies whether the engine is currently active.
-	
-	SDL_Event m_Event;								///< SDL event object.
-	MTimer m_FpsTimer;
-	MTimer m_GameTimer;
-	IVarPtr m_iFpsMax;								///< Maximum FPS limit.
-	IVarPtr m_bFpsCap;								///< Whether the FPS is regulated or not.	
-	IVarPtr m_iGameRefresh;
 	MGameBoard m_GameBoard;
-	
-	//IBaseInterfacePtr m_pConsole;
-	//IBaseInterfacePtr m_pVarManager;
-	//IBaseInterfacePtr m_pRenderer;
-	//IBaseInterfacePtr m_pInputManager;
-	//IBaseInterfacePtr m_pCollisionResolver;
-
 	IConsolePtr m_pConsole;
 	IVarManagerPtr m_pVarManager;
 	IRendererPtr m_pRenderer;
 	IInputManagerPtr m_pInputManager;
-	ICollisionResolverPtr m_pCollisionResolver;
+	IEntityManagerPtr m_pEntityManager;
 	ISurfaceCachePtr m_pSurfaceCache;
+	MTaskManagerPtr m_pTaskManager;
 
 	//IEntity
 	// Game interface pointer.

@@ -17,22 +17,15 @@
 #define _IRENDERER_H_
 
 #include "../Public/Public.h"
-#include "../Interfaces/IBaseInterface.h"
+#include "../Interfaces/ITask.h"
 #include "../Interfaces/IDrawable.h"
 
 /// Public interface for the MRenderer class.
-class IRenderer : public IBaseInterface
+class IRenderer : public ITask
 {
 public:
 
 	virtual ~IRenderer( void ) { };
-
-	virtual void Shutdown( void ) = 0;
-
-	/// Initialize the renderer component.
-	/// Initialise the graphical subsystems and allocate any required resources
-	/// such as the SDL and TTF libraries.
-	virtual bool Init( int iWidth, int iHeight ) = 0;
 
 	/// Determines whether the TTF font library has been loaded.
 	virtual bool FontLibLoaded( void ) = 0;
@@ -54,7 +47,7 @@ public:
 	/// This is called repeatedly to render the game view. It also recursively
 	/// calls IDrawable::Render() on any active objects that the renderer is
 	/// currently tracking.
-	virtual void Frame( void ) = 0;
+	//virtual void Frame( void ) = 0;
 
 	virtual int GetScreenWidth( void ) = 0;
 	virtual int GetScreenHeight( void ) = 0;

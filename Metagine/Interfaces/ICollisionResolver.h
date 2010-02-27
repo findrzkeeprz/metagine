@@ -17,16 +17,14 @@
 #define _ICOLLISIONRESOLVER_H_
 
 #include "../Public/Public.h"
-#include "../Interfaces/IBaseInterface.h"
 
 /// Public interface for the ICollisionResolver class.
-class ICollisionResolver : public IBaseInterface
+class ICollisionResolver
 {
 public:
 
 	virtual ~ICollisionResolver( void ) { };
 
-	virtual void Shutdown( void ) = 0;
 	virtual void ProcessEntityPairs( void ) = 0;
 	virtual void DeterminePartition( IEntityPtr pEntity ) = 0;
 	virtual void Resolve( vector<IEntityPtr> Entities, int iDelta ) = 0;

@@ -64,7 +64,7 @@ void MShip::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown
 		if( iKey == SDLK_SPACE && !m_bFireLock ) {
 			//Engine::
 			IEntityPtr pBullet(new MTestEnt(m_vPosition.x - 5,m_vPosition.y - 5,500.0f));
-			Engine::GetInstance()->RegisterEntity(pBullet);
+			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet);
 			m_bFireLock = true;
 		}
 	}
@@ -98,9 +98,9 @@ void MShip::UpdateLogic( int iDelta )
 
 void MShip::CollisionEvent( IEntityPtr pEntity, int iDelta )
 {
-	m_vPosition += ( ( -m_vVelocity * (float)iDelta ) / 1000.0f );
-	m_vVelocity.Zero();
-	m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
+	//m_vPosition += ( ( -m_vVelocity * (float)iDelta ) / 1000.0f );
+	//m_vVelocity.Zero();
+	//m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
 }
 
 bool MShip::GetActive( void )

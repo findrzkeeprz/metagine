@@ -13,26 +13,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IBASEINTERFACE_H_
-#define _IBASEINTERFACE_H_
+#ifndef _ITASK_H_
+#define _ITASK_H_
 
 #include "../Public/Public.h"
 
 /// Public interface for main game components.
-class IBaseInterface
+class ITask
 {
 public:
     
-    virtual ~IBaseInterface( void ) { };    
-
-	/// Shutdown routine for participating interfaces.
-    /// This gives interfaces that are registered with the MEngine class an
-    /// opportunity to perform cleanup operations before object deletion.
-    /// @see MEngine::~MEngine()
-    /// @see MEngine::Shutdown()
-	virtual void Shutdown( void ) { };
+    virtual ~ITask( void ) { };    
+	virtual void VInit( void ) = 0;
+	virtual void VFrame( const int iDelta ) = 0;
+	virtual void VKill( void ) = 0;
 };
 
-typedef shared_ptr<IBaseInterface> IBaseInterfacePtr;
+typedef shared_ptr<ITask> ITaskPtr;
 
-#endif // _IBASEINTERFACE_H_
+#endif // _ITASK_H_

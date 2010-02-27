@@ -19,6 +19,7 @@
 #include "../Public/Public.h"
 #include "../Public/BaseTypes.h"
 #include "../Public/Interfaces.h"
+#include "ThirdParty.h"
 
 class MInputManager : public IInputManager, public noncopyable
 {
@@ -30,18 +31,24 @@ public:
     /// Destructor method.
     ~MInputManager( void );
 	
-	bool Init( void );
-	void Shutdown( void );
+	void VInit( void );
+	void VKill( void );
+	void VFrame( const int iDelta );
+	
 	void SetKeyRepeat( int iDelay, int iInterval );
 	void RegisterListener( IInputListenerPtr pListener );
     void RemoveListener( IInputListenerPtr pListener );
 
-    void Update( int iKey, bool bKeyDown );
+private:
+
+	void KeyDownEvent( int iKey );
+	void KeyUpEvent( int iKey );
 
 private:
 
     /// Container to catalog all variables created through this class.
     vector<IInputListenerPtr> m_Listeners;
+	SDL_Event m_Event;
 	bool m_bKeysHeld[323];
 };
 

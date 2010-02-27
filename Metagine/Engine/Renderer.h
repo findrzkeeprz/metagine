@@ -38,13 +38,15 @@ public:
 	/// any allocated resources.
 	~MRenderer( void );
 
-	// Documented in IRenderer.h
-	void Shutdown( void );
-
-	/// Initialize the renderer component.
+	/// Initialise the renderer component.
 	/// Initialise the graphical subsystems and allocate any required resources
 	/// such as the SDL and TTF libraries.
-	bool Init( int iWidth, int iHeight );
+	//bool Init( int iWidth, int iHeight );
+	
+	
+	void VInit( void );
+	void VKill( void );
+	void VFrame( const int iDelta );
 
 	/// Determines whether the TTF font library has been loaded.
 	bool FontLibLoaded( void );
@@ -66,7 +68,7 @@ public:
 	/// This is called repeatedly to render the game view. It also recursively
 	/// calls IDrawable::Render() on any active objects that the renderer is
 	/// currently tracking.
-	void Frame( void );
+	//void Frame( void );
 
 	int GetScreenWidth( void );
 	int GetScreenHeight( void );
@@ -77,7 +79,7 @@ private:
 
 	SDL_Surface* m_Screen;						///< Main SDL screen surface.
 	bool m_bFontLibLoaded;						///< Shows the status of the TTF library.
-	vector<IDrawablePtr> m_RenderQueue;	///< A queue of IDrawable objects to render every frame.
+	vector<IDrawablePtr> m_RenderQueue;			///< A queue of IDrawable objects to render every frame.
 	int m_iResolution[2];						///< Resolution of the engine screen.
 };
 

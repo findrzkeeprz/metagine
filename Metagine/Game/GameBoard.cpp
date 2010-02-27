@@ -40,7 +40,7 @@ void MGameBoard::Init( void )
 	//m_TestEnt = IEntityPtr(new MTestEnt());
 	
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_BgSprite);
-	Engine::GetInstance()->RegisterEntity(m_PlayerShip);
+	Engine::GetInstance()->EntityManager()->RegisterEntity(m_PlayerShip);
 	//Engine::GetInstance()->RegisterEntity(m_TestEnt);
 	Engine::GetInstance()->InputManager()->RegisterListener(m_PlayerShip);
 }

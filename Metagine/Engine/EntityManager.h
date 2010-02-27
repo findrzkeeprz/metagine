@@ -13,20 +13,36 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IOBJECTFACTORY_H_
-#define _IOBJECTFACTORY_H_
+#ifndef _ENTITYMANAGER_H_
+#define _ENTITYMANAGER_H_
 
 #include "../Public/Public.h"
-#include "../Interfaces/ITask.h"
+#include "../Public/BaseTypes.h"
+#include "../Public/Interfaces.h"
+#include "CollisionResolver.h"
 
-/// Public interface for the MObjectFactory class.
-class IObjectFactory
+/// Fix me.
+class MEntityManager : public IEntityManager, public noncopyable
 {
 public:
 
-	virtual ~IObjectFactory( void ) { };
+	/// Default constructor.
+	MEntityManager( void );
+	~MEntityManager( void );
+
+	void VInit( void );
+	void VFrame( const int iDelta );
+	void VKill( void );
+
+	void RegisterEntity( IEntityPtr pEntity );
+	void RemoveEntity( IEntityPtr pEntity );
+
+private:
+
+	vector<IEntityPtr> m_Entities;
+	MCollisionResolver m_CollisionResolver;
 };
 
-typedef shared_ptr<IObjectFactory> IObjectFactoryPtr;
+//typedef MSingleton<MCollisionResolver> CollisionResolver;
 
-#endif // _IOBJECTFACTORY_H_
+#endif // _COLLISIONRESOLVER_H_

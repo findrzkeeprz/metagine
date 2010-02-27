@@ -13,20 +13,46 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IOBJECTFACTORY_H_
-#define _IOBJECTFACTORY_H_
+#ifndef _TASKMANAGER_H_
+#define _TASKMANAGER_H_
 
 #include "../Public/Public.h"
+#include "../Interfaces/IVarManager.h"
 #include "../Interfaces/ITask.h"
 
-/// Public interface for the MObjectFactory class.
-class IObjectFactory
+/// Fix me.
+class MTaskManager : public noncopyable
 {
 public:
 
-	virtual ~IObjectFactory( void ) { };
+	MTaskManager( void );
+	~MTaskManager( void );
+
+	void Attach( ITaskPtr pTask, int iType );
+	void InitTasks( void );
+	void UpdateTasks( void );
+	void KillTasks( void );
+	void EarlyAbort( void );
+	bool GetActive( void ) const;
+
+	enum TaskType 
+	{
+		INPUT_TASK,
+		LOGIC_TASK,
+		RENDER_TASK
+	};
+
+private:
+
+	bool m_bKilledTasks;
+	bool m_bEarlyAbort;
+	bool m_bActive;
+	vector<pair<ITaskPtr,int>> m_TaskList;
+	MTimer m_TaskTimer;
+	MTimer m_FrameTimer;
+	IVarPtr m_iFrameCap;
 };
 
-typedef shared_ptr<IObjectFactory> IObjectFactoryPtr;
+typedef shared_ptr<MTaskManager> MTaskManagerPtr;
 
-#endif // _IOBJECTFACTORY_H_
+#endif // _TASKMANAGER_H_

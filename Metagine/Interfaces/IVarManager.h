@@ -17,11 +17,11 @@
 #define _IVARMANAGER_H_
 
 #include "../Public/Public.h"
-#include "../Interfaces/IBaseInterface.h"
+#include "../Interfaces/ITask.h"
 #include "../Interfaces/IVar.h"
 
 /// Public interface for the MVarManager class.
-class IVarManager : public IBaseInterface
+class IVarManager
 {
 public:
 

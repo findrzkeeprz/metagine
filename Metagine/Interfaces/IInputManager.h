@@ -17,22 +17,19 @@
 #define _IINPUTMANAGER_H_
 
 #include "../Public/Public.h"
-#include "../Interfaces/IBaseInterface.h"
+#include "../Interfaces/ITask.h"
 #include "../Interfaces/IInputListener.h"
 
-class IInputManager : public IBaseInterface
+class IInputManager : public ITask
 {
 public:
 
     /// Virtual destructor method.
     virtual ~IInputManager( void ) { };
 	
-	virtual bool Init( void ) = 0;
-	virtual void Shutdown( void ) = 0;
 	virtual void SetKeyRepeat( int iDelay, int iInterval ) = 0;
     virtual void RegisterListener( IInputListenerPtr pListener ) = 0;
     virtual void RemoveListener( IInputListenerPtr pListener ) = 0;
-    virtual void Update( int iKey, bool bKeyDown ) = 0;
 };
 
 typedef shared_ptr<IInputManager> IInputManagerPtr;

@@ -16,12 +16,13 @@
 #ifndef _BASETYPES_H_
 #define _BASETYPES_H_
 
-#include "../Interfaces/IBaseInterface.h"
+#include "../Interfaces/ITask.h"
 #include "../Interfaces/IDrawable.h"
 #include "../Interfaces/ISprite.h"
 #include "../Interfaces/IEntity.h"
 #include "../Interfaces/IListenEntity.h"
 #include "../Interfaces/IInputListener.h"
 #include "../Interfaces/IVar.h"
+#include "../Interfaces/ITask.h"
 
 #endif // _BASETYPES_H_

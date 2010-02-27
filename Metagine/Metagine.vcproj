@@ -249,6 +249,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Engine\EntityManager.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Engine\FileSystem.cpp"
 					>
 				</File>
@@ -285,6 +289,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Engine\TaskManager.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Engine\Var.cpp"
 					>
 				</File>
@@ -308,6 +316,10 @@
 				</File>
 				<File
 					RelativePath=".\Engine\Engine.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Engine\EntityManager.h"
 					>
 				</File>
 				<File
@@ -343,6 +355,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Engine\TaskManager.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Engine\ThirdParty.h"
 					>
 				</File>
@@ -358,10 +374,6 @@
 			<Filter
 				Name="Interfaces"
 				>
-				<File
-					RelativePath=".\Interfaces\IBaseInterface.h"
-					>
-				</File>
 				<File
 					RelativePath=".\Interfaces\ICollisionResolver.h"
 					>
@@ -380,6 +392,10 @@
 				</File>
 				<File
 					RelativePath=".\Interfaces\IEntity.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Interfaces\IEntityManager.h"
 					>
 				</File>
 				<File
@@ -412,6 +428,10 @@
 				</File>
 				<File
 					RelativePath=".\Interfaces\ISurfaceCache.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Interfaces\ITask.h"
 					>
 				</File>
 				<File

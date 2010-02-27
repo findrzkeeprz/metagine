@@ -29,9 +29,9 @@ public:
 	MCollisionResolver( void );
 	~MCollisionResolver( void );
 
-	// Documented in IConsole.h
-	//bool Init( void );
-	void Shutdown( void );
+	void VInit( void );
+	void VFrame( const int iDelta );
+	void VKill( void );
 
 	void ProcessEntityPairs( void );
 	void DeterminePartition( IEntityPtr pEntity );

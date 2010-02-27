@@ -17,12 +17,12 @@
 #define _ICONSOLE_H_
 
 #include "../Public/Public.h"
-#include "../Interfaces/IBaseInterface.h"
+#include "../Interfaces/ITask.h"
 #include "../Interfaces/IInputListener.h"
 #include "../Interfaces/IDrawable.h"
 
 /// Public interface for the IConsole class.
-class IConsole : public IBaseInterface, public IInputListener, public IDrawable
+class IConsole : public IInputListener, public IDrawable
 {
 public:
 

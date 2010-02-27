@@ -26,23 +26,12 @@ m_iDelta(0)
 
 MCollisionResolver::~MCollisionResolver( void )
 {
-	Shutdown();
-	printf(" -> MCollisionResolver object destructed.\n");
-}
-
-/*bool MCollisionResolver::Init( void )
-{	
-	return true;
-}*/
-
-void MCollisionResolver::Shutdown( void )
-{
-	printf(" -> MCollisionResolver::Shutdown() called.\n");
-
 	m_EntityPairs.clear();
 	for( int i = 0; i < 4; i++ ) {
 		m_Partitions[i].clear();
 	}
+	
+	printf(" -> MCollisionResolver object destructed.\n");
 }
 
 void MCollisionResolver::DeterminePartition( IEntityPtr pEntity )
@@ -56,7 +45,7 @@ void MCollisionResolver::DeterminePartition( IEntityPtr pEntity )
 	
 	// Hacky...
 	if( x > w * 2 || y > h * 2 || x < 0 || y < 0 ) {
-		Engine::GetInstance()->RemoveEntity(pEntity);
+		Engine::GetInstance()->EntityManager()->RemoveEntity(pEntity);
 		return;
 	}
 	

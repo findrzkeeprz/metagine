@@ -24,7 +24,9 @@
 #include <map>
 #include <assert.h>
 #include <windows.h>
+#include <list>
 #include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/utility.hpp>
 #include <boost/format.hpp>

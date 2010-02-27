@@ -31,11 +31,6 @@
 MEngine::MEngine( void )
 {
     printf(" -> MEngine object created.\n");
-
-	//m_iFrameStart = 0;
-	//m_iFrameEnd = 0;
-	//m_iFrameDuration = 0;
-	//m_pGame = NULL;
 }
 
 MEngine::~MEngine( void )
@@ -44,38 +39,38 @@ MEngine::~MEngine( void )
 	printf(" -> MEngine object destructed.\n");
 }
 
-bool MEngine::Init( void )
+void MEngine::Init( void )
 {
     printf(" -> MEngine::Init() called.\n");
     
-	// Create the main engine subsystems.
-	m_pVarManager			= IVarManagerPtr(new MVarManager());
-	m_pRenderer				= IRendererPtr(new MRenderer());
-	m_pInputManager			= IInputManagerPtr(new MInputManager());
-	m_pConsole				= IConsolePtr(new MConsole());
-	m_pCollisionResolver	= ICollisionResolverPtr(new MCollisionResolver());
-	m_pSurfaceCache			= ISurfaceCachePtr(new MSurfaceCache());
+	// Create the main engine tasks.
+	m_pVarManager = IVarManagerPtr(new MVarManager());
+	m_pTaskManager = MTaskManagerPtr(new MTaskManager());
+	m_pRenderer = IRendererPtr(new MRenderer());
+	m_pEntityManager = IEntityManagerPtr(new MEntityManager());
+	m_pInputManager = IInputManagerPtr(new MInputManager());
+
+	m_pTaskManager->Attach(m_pInputManager,m_pTaskManager->INPUT_TASK);
+	m_pTaskManager->Attach(m_pEntityManager,m_pTaskManager->LOGIC_TASK);
+	m_pTaskManager->Attach(m_pRenderer,m_pTaskManager->RENDER_TASK);
+	m_pTaskManager->InitTasks();
 	
-	// Initialize the subsystems.
-	if( !m_pRenderer->Init(500,650) ) {
-		printf(" -! ERROR unable to initialize renderer, aborting.\n");
-		return false;
-	} else if( !m_pInputManager->Init() ) {
-		printf(" -! ERROR unable to initialize input mananger, aborting.\n");
-		return false;
-	} else if( !m_pConsole->Init() ) {
-		printf(" -! ERROR unable to initialize console, aborting.\n");
-		return false;
-	}
+	// Create the remaining engine components (dependent on above systems).
+	m_pConsole = IConsolePtr(new MConsole());
+	m_pSurfaceCache = ISurfaceCachePtr(new MSurfaceCache());
+	
+	m_pConsole->Init();
 
 	// Load the game module.
-	if( !LoadGameModule() ) {
+	/*if( !LoadGameModule() ) {
 		printf(" -! ERROR unable to load game module, aborting.\n");
 		return false;
 	}
+	if( !( m_pGame = (IGame*)GetInterfaceByName("MGame") ) ) {
+		printf(" -! ERROR unable to get game interface, aborting.\n");
+		return false;
+	}*/
 
-	//IConsolePtr pConPtr(Console::GetInstance());
-	//Engine::GetInstance()->InputManager()->RegisterListener(shared_dynamic_cast<IInputListener>(m_pConsole));
 	m_pInputManager->RegisterListener(m_pConsole);
 	m_pConsole->Echo("Testing 1.");
 	m_pConsole->Echo("Testing 2.");
@@ -83,21 +78,7 @@ bool MEngine::Init( void )
 	m_pConsole->Echo("Testing 4.");
 	m_pConsole->Echo("Testing 5.");
 
-	// Get the game interface pointer.
-	/*if( !( m_pGame = (IGame*)GetInterfaceByName("MGame") ) ) {
-		printf(" -! ERROR unable to get game interface, aborting.\n");
-		return false;
-	}*/
-
 	m_GameBoard.Init();
-
-	m_iFpsMax = m_pVarManager->CreateVar("i_fpsmax",60);
-	m_bFpsCap = m_pVarManager->CreateVar("b_fpscap",true);
-
-	m_GameTimer.Start();
-
-	m_bActive = true;
-    return true;
 }
 
 void MEngine::Shutdown( void )
@@ -105,101 +86,19 @@ void MEngine::Shutdown( void )
 	printf(" -> MEngine::Shutdown() called.\n");
 	
 	m_GameBoard.Kill();
-
-	vector<IEntityPtr>::iterator ent;
-	for( ent = m_Entities.begin(); ent < m_Entities.end(); ++ent ) {
-		if( (*ent) ) {
-			printf(" -> Releasing entity object (0x%X).\n",(*ent).get());
-			ent->reset();
-		}
-	}
 	
-	m_pVarManager.reset();
 	m_pConsole.reset();
 	m_pInputManager.reset();
 	m_pRenderer.reset();
-	m_pCollisionResolver.reset();
 	m_pSurfaceCache.reset();
-
-	m_Entities.clear();
+	m_pVarManager.reset();
+	m_pTaskManager.reset();
 }
 
 void MEngine::Run( void )
 {
-	while( m_bActive ) {
-		m_FpsTimer.Start();
-		int iDelta = m_GameTimer.GetTicks();
-		
-		HandleInput();
-
-		if( !m_bActive ) {
-			printf(" -> MEngine::Run() player quit mid-game loop, aborting.\n");
-			return;
-		}
-
-		UpdateEntities(iDelta);
-		m_pCollisionResolver->Resolve(m_Entities,iDelta);
-
-		m_GameTimer.Start();
-		
-		Engine::GetInstance()->Renderer()->Frame();
-		
-		// Limit the frame rate.
-		if( m_bFpsCap->GetValueBool() ) {
-			if( m_FpsTimer.GetTicks() < ( 1000 / m_iFpsMax->GetValueInt()) ) {
-				SDL_Delay( ( 1000 / m_iFpsMax->GetValueInt() ) - m_FpsTimer.GetTicks());
-			}
-		}
-	}
-}
-
-void MEngine::UpdateEntities( int iDelta )
-{
-	vector<IEntityPtr>::iterator it;
-	for( it = m_Entities.begin(); it < m_Entities.end(); ++it ) {
-		if( (*it)->GetActive() )
-			(*it)->UpdateLogic(iDelta);
-	}
-}
-
-bool MEngine::RegisterEntity( IEntityPtr pEntity )
-{
-	if( !pEntity ) {
-		// Error msg here
-		return false;
-	}
-
-	m_Entities.push_back(pEntity);
-	printf(" -> Registered entity (0x%X) with logic queue.\n",pEntity.get());
-	
-	return true;
-}
-
-void MEngine::RemoveEntity( IEntityPtr pEntity )
-{
-	vector<IEntityPtr>::iterator it = m_Entities.begin();
-	while( it != m_Entities.end() ) {
-		if( (*it) && ((*it) == pEntity) ) {
-			printf(" -> Removing object (0x%X) from entity queue.\n",pEntity);
-			(*it).reset();
-			it = m_Entities.erase(it);
-		} else ++it;
-	}
-}
-
-void MEngine::HandleInput( void )
-{
-	while( SDL_PollEvent(&m_Event) ) {
-		// Quit the application.
-		if( m_Event.type == SDL_QUIT ) { 
-			m_bActive = false;
-			Shutdown();
-		} else if( m_Event.type == SDL_KEYDOWN ) {
-			Engine::GetInstance()->InputManager()->Update(m_Event.key.keysym.sym,true);
-		} else if( m_Event.type == SDL_KEYUP ) {
-			Engine::GetInstance()->InputManager()->Update(m_Event.key.keysym.sym,false);
-		}
-	}
+	while( m_pTaskManager->GetActive() )
+		m_pTaskManager->UpdateTasks();
 }
 
 bool MEngine::LoadGameModule( void )

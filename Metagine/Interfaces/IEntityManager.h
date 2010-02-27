@@ -13,20 +13,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _IOBJECTFACTORY_H_
-#define _IOBJECTFACTORY_H_
+#ifndef _IENTITYMANAGER_H_
+#define _IENTITYMANAGER_H_
 
 #include "../Public/Public.h"
 #include "../Interfaces/ITask.h"
+#include "../Interfaces/IEntity.h"
 
-/// Public interface for the MObjectFactory class.
-class IObjectFactory
+/// Public interface for the IEntityManager class.
+class IEntityManager : public ITask
 {
 public:
 
-	virtual ~IObjectFactory( void ) { };
+	virtual ~IEntityManager( void ) { };
+
+	virtual void RegisterEntity( IEntityPtr pEntity ) = 0;
+	virtual void RemoveEntity( IEntityPtr pEntity ) = 0;
 };
 
-typedef shared_ptr<IObjectFactory> IObjectFactoryPtr;
+typedef shared_ptr<IEntityManager> IEntityManagerPtr;
 
-#endif // _IOBJECTFACTORY_H_
+#endif // _IENTITYMANAGER_H_

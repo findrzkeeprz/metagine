@@ -24,11 +24,10 @@ m_bFontLibLoaded(false)
 
 MRenderer::~MRenderer( void )
 {
-	Shutdown();
 	printf(" -> MRenderer object destructed.\n");
 }
 
-bool MRenderer::Init( int iWidth, int iHeight )
+/*bool MRenderer::Init( int iWidth, int iHeight )
 {
 	printf(" -> Initialising SDL subsystem.\n");
 
@@ -53,11 +52,36 @@ bool MRenderer::Init( int iWidth, int iHeight )
 	SDL_WM_SetCaption("Metagine",NULL); 
 	
 	return true;
+}*/
+
+void MRenderer::VInit( void )
+{
+	printf(" -> Initialising SDL subsystem.\n");
+
+	m_iResolution[0] = 500;
+	m_iResolution[1] = 650;
+	
+	if( SDL_Init(SDL_INIT_EVERYTHING) == -1 ) {
+		printf(" -! ERROR initialising SDL.\n");
+		return;
+	} else if( ( m_Screen = SDL_SetVideoMode(m_iResolution[0],m_iResolution[1],32,SDL_HWSURFACE|SDL_DOUBLEBUF) ) == NULL ) {
+		printf(" -! ERROR setting SDL video mode.\n");
+		return;
+	} else if( TTF_Init() == -1 ) {
+		printf(" -! ERROR initialising SDL_TTF subsystem.\n");
+		m_bFontLibLoaded = false;
+		return;
+	} else {
+		m_bFontLibLoaded = true;
+	}
+
+	// Set the window caption.
+	SDL_WM_SetCaption("Metagine",NULL); 
 }
 
-void MRenderer::Shutdown( void )
+void MRenderer::VKill( void )
 {
-	printf(" -> MRenderer::Shutdown() called.\n");
+	printf(" -> MRenderer::VKill() called.\n");
 	
 	vector<IDrawablePtr>::iterator it = m_RenderQueue.begin();
 	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it ) {
@@ -72,6 +96,18 @@ void MRenderer::Shutdown( void )
 	SDL_Quit();
 	TTF_Quit();
 }
+
+void MRenderer::VFrame( const int iDelta )
+{
+	// Render all queued objects.
+	vector<IDrawablePtr>::iterator it;
+	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it )
+		if( (*it)->GetActive() )
+			(*it)->Render((void*)m_Screen);
+
+	SDL_Flip(m_Screen);
+}
+
 
 bool MRenderer::FontLibLoaded( void )
 {
@@ -104,19 +140,6 @@ void MRenderer::RemoveDrawable( IDrawablePtr pDrawable )
 
 	// Resort based on depth.
 	sort(m_RenderQueue.begin(),m_RenderQueue.end(),MRenderer::SpriteSortFunc);
-}
-
-void MRenderer::Frame( void )
-{
-	//SDL_FillRect(m_Screen,&m_Screen->clip_rect,SDL_MapRGB(m_Screen->format,0,0,0));
-	
-	// Render all queued objects.
-	vector<IDrawablePtr>::iterator it;
-	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it )
-		if( (*it)->GetActive() )
-			(*it)->Render((void*)m_Screen);
-
-	SDL_Flip(m_Screen);
 }
 
 bool MRenderer::SpriteSortFunc( IDrawablePtr pData1, IDrawablePtr pData2 )

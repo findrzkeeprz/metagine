@@ -17,13 +17,14 @@
 #define _IENGINE_H_
 
 #include "../Public/Public.h"
-#include "../Interfaces/IBaseInterface.h"
+#include "../Interfaces/ITask.h"
 #include "../Interfaces/IConsole.h"
 #include "../Interfaces/IVarManager.h"
 #include "../Interfaces/IRenderer.h"
 #include "../Interfaces/IInputManager.h"
 #include "../Interfaces/ICollisionResolver.h"
 #include "../Interfaces/ISurfaceCache.h"
+#include "../Interfaces/IEntityManager.h"
 
 /// Public interface for the MEngine class.
 class IEngine
@@ -31,31 +32,12 @@ class IEngine
 public:
     
     virtual ~IEngine( void ) { };
-    
-    /// Initialises main engine functionality.
-    /// Responsible for the correct initialisation of other game components.
-    /// Also responsible for the correct instancing of any Singleton objects
-    /// to ensure correct order of object creation.
-    virtual bool Init( void ) = 0;
-    
-    /// Shutdown main engine functionality.
-    /// Performs a cleanup on game objects and recursively calls the shutdown
-    /// routine of any registered game interfaces in the same order that they
-    /// were initially registered with the engine.
-    virtual void Shutdown( void ) = 0;
-
-    /// Main game engine loop.
-    /// Responsible for updating all main game components at regular frame
-    /// intervals. The game will spend most of its execution time within this
-    /// piece of code.
-	virtual void Run( void ) = 0;
-
 	virtual IConsolePtr Console( void ) = 0;
 	virtual IVarManagerPtr VarManager( void ) = 0;
 	virtual IRendererPtr Renderer( void ) = 0;
 	virtual IInputManagerPtr InputManager( void ) = 0;
-	virtual ICollisionResolverPtr CollisionResolver( void ) = 0;
 	virtual ISurfaceCachePtr SurfaceCache( void ) = 0;
+	virtual IEntityManagerPtr EntityManager( void ) = 0;
 };
 
 typedef shared_ptr<IEngine> IEnginePtr;

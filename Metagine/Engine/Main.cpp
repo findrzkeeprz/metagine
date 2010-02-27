@@ -18,25 +18,10 @@
 
 int main( int argc, char *argv[] )
 {
-    IEngine* pEngine = NULL;
-    
-    printf(" -> Starting Metagine.\n");
-    
-    if( !( pEngine = Engine::GetInstance() ) ) {
-        printf(" >! ERROR creating MEngine object.\n");
-        return 0;
-    }
-    
-    // Start the main engine.
-    if( !pEngine->Init() ) {
-        printf(" ... Something has gone terribly wrong!\n");
-        return 0;
-    }
-
-	// Enter the main game loop.
+	scoped_ptr<MEngine> pEngine(Engine::GetInstance());
+	assert(pEngine);
+	pEngine->Init();
 	pEngine->Run();
-    
-    delete pEngine;
-    
+
     return 0;
 }
