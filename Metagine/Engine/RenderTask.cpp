@@ -56,6 +56,7 @@ MRenderTask::~MRenderTask( void )
 
 void MRenderTask::VInit( void )
 {
+	printf(" -> MRenderTask::VInit() called.\n");
 	printf(" -> Initialising SDL subsystem.\n");
 
 	m_iResolution[0] = 500;

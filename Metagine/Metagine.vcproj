@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(SolutionDir)\$(ProjectName)\Libraries\SDL.lib $(SolutionDir)\$(ProjectName)\Libraries\SDLmain.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_ttf.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_gfx.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_image.lib winmm.lib $(SolutionDir)\$(ProjectName)\Libraries\Box2D.lib $(SolutionDir)\$(ProjectName)\Libraries\tinyxml.lib"
+				AdditionalDependencies="$(SolutionDir)\$(ProjectName)\Libraries\SDL.lib $(SolutionDir)\$(ProjectName)\Libraries\SDLmain.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_ttf.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_gfx.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_image.lib winmm.lib $(SolutionDir)\$(ProjectName)\Libraries\Box2D.lib $(SolutionDir)\$(ProjectName)\Libraries\tinyxml.lib $(SolutionDir)\$(ProjectName)\Libraries\fmodvc.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -239,6 +239,10 @@
 				UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 				>
 				<File
+					RelativePath=".\Engine\AudioCache.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Engine\AudioTask.cpp"
 					>
 				</File>
@@ -287,10 +291,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Engine\SoundCache.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\Engine\Sprite.cpp"
 					>
 				</File>
@@ -316,6 +316,10 @@
 				Filter="h;hpp;hxx;hm;inl;inc;xsd"
 				UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 				>
+				<File
+					RelativePath=".\Engine\AudioCache.h"
+					>
+				</File>
 				<File
 					RelativePath=".\Engine\AudioTask.h"
 					>
@@ -358,10 +362,6 @@
 				</File>
 				<File
 					RelativePath=".\Engine\RenderTask.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Engine\SoundCache.h"
 					>
 				</File>
 				<File

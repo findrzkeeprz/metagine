@@ -16,12 +16,8 @@ m_bActive(true)
 
 MTestEnt::~MTestEnt( void )
 {
-	printf(" -> I'm getting deleted!\n");
 	Engine::GetInstance()->Renderer()->RemoveDrawable(m_TestSprite);
-}
-
-void MTestEnt::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown )
-{
+	printf(" -> MTestEnt object deleted.\n");
 }
 
 void MTestEnt::UpdateLogic( int iDelta )
@@ -51,10 +47,14 @@ void MTestEnt::UpdateLogic( int iDelta )
 
 void MTestEnt::CollisionEvent( IEntityPtr pEntity, int iDelta )
 {
-	//printf("i can haz collisions!\n");
 }
 
 bool MTestEnt::GetActive( void )
 {
 	return m_bActive;
+}
+
+void MTestEnt::VKill( void )
+{
+	Engine::GetInstance()->AudioTask()->PlaySound("Explosion1.wav");
 }

@@ -55,6 +55,7 @@ public:
 	IInputManagerPtr InputManager( void ) { return m_pInputManager; }
 	ISurfaceCachePtr SurfaceCache( void ) { return m_pSurfaceCache; }
 	IEntityManagerPtr EntityManager( void ) { return m_pEntityManager; }
+	IAudioTaskPtr AudioTask( void ) { return m_pAudioTask; }
 	MTaskManagerPtr TaskManager( void ) { return m_pTaskManager; }
 
 public:
@@ -73,6 +74,7 @@ private:
 	IInputManagerPtr m_pInputManager;
 	IEntityManagerPtr m_pEntityManager;
 	ISurfaceCachePtr m_pSurfaceCache;
+	IAudioTaskPtr m_pAudioTask;
 	MTaskManagerPtr m_pTaskManager;
 
 	//IEntity

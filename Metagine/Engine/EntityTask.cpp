@@ -72,6 +72,7 @@ void MEntityTask::RemoveEntity( IEntityPtr pEntity )
 	while( it != m_Entities.end() ) {
 		if( (*it) && ((*it) == pEntity) ) {
 			printf(" -> Removing object (0x%X) from entity queue.\n",pEntity);
+			(*it)->VKill();
 			(*it).reset();
 			it = m_Entities.erase(it);
 		} else ++it;

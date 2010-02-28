@@ -65,6 +65,7 @@ void MShip::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown
 			//Engine::
 			IEntityPtr pBullet(new MTestEnt(m_vPosition.x - 5,m_vPosition.y - 5,500.0f));
 			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet);
+			Engine::GetInstance()->AudioTask()->PlaySound("Shoot1.wav");
 			m_bFireLock = true;
 		}
 	}
@@ -106,4 +107,8 @@ void MShip::CollisionEvent( IEntityPtr pEntity, int iDelta )
 bool MShip::GetActive( void )
 {
 	return m_bActive;
+}
+
+void MShip::VKill( void )
+{
 }

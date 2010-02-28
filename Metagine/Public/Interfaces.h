@@ -26,5 +26,6 @@
 #include "../Interfaces/IVarManager.h"
 #include "../Interfaces/ISurfaceCache.h"
 #include "../Interfaces/IEntityTask.h"
+#include "../Interfaces/IAudioTask.h"
 
 #endif // _INTERFACES_H_

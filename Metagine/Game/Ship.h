@@ -40,6 +40,7 @@ public:
 	//float GetPositionY( void ) { return m_fPosition[0]; }
 	ISpritePtr GetSprite( void ) { return m_ShipSprite; }
 	void CollisionEvent( IEntityPtr pEntity, int iDelta );
+	void VKill( void );
 
 private:
 

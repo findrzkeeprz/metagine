@@ -38,6 +38,7 @@ public:
 
 	virtual ISpritePtr GetSprite( void ) = 0;
 	virtual void CollisionEvent( IEntityPtr pEntity, int iDelta ) = 0;
+	virtual void VKill( void ) = 0;
 };
 
 #endif // _IENTITY_H_

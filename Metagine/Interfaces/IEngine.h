@@ -25,6 +25,7 @@
 #include "../Interfaces/ICollisionResolver.h"
 #include "../Interfaces/ISurfaceCache.h"
 #include "../Interfaces/IEntityTask.h"
+#include "../Interfaces/IAudioTask.h."
 
 /// Public interface for the MEngine class.
 class IEngine
@@ -38,6 +39,7 @@ public:
 	virtual IInputManagerPtr InputManager( void ) = 0;
 	virtual ISurfaceCachePtr SurfaceCache( void ) = 0;
 	virtual IEntityManagerPtr EntityManager( void ) = 0;
+	virtual IAudioTaskPtr AudioTask( void ) = 0;
 };
 
 typedef shared_ptr<IEngine> IEnginePtr;

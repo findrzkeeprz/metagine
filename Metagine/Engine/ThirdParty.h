@@ -22,5 +22,6 @@
 #include "../Includes/SDL/SDL_image.h"
 #include "../Includes/Box2D/Box2D.h"
 #include "../Includes/TinyXml/tinyxml.h"
+#include "../Includes/FMOD/fmod.h"
 
 #endif // _THIRDPARTY_H_

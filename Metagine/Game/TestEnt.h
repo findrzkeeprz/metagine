@@ -8,14 +8,12 @@ public:
 	MTestEnt( float x, float y, float fSpeed );
 	~MTestEnt( void );
 
-	// Documented in IInputListener.h
-	void UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown );
-
 	// Documented in IEntity.h
 	void UpdateLogic( int iDelta );
 	bool GetActive( void );
 	ISpritePtr GetSprite( void ) { return m_TestSprite; }
 	void CollisionEvent( IEntityPtr pEntity, int iDelta );
+	void VKill( void );
 
 private:
 

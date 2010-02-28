@@ -13,47 +13,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _TASKMANAGER_H_
-#define _TASKMANAGER_H_
+#ifndef _AUDIOCACHE_H_
+#define _AUDIOCACHE_H_
 
 #include "../Public/Public.h"
-#include "../Interfaces/IVarManager.h"
-#include "../Interfaces/ITask.h"
+#include "ThirdParty.h"
 
 /// Fix me.
-class MTaskManager : public noncopyable
+class MAudioCache
 {
 public:
 
-	MTaskManager( void );
-	~MTaskManager( void );
+	MAudioCache( void );
+	~MAudioCache( void );
 
-	void Attach( ITaskPtr pTask, int iType );
-	void InitTasks( void );
-	void UpdateTasks( void );
-	void KillTasks( void );
-	void EarlyAbort( void );
-	bool GetActive( void ) const;
-
-	enum TaskType 
-	{
-		INPUT_TASK,
-		LOGIC_TASK,
-		AUDIO_TASK,
-		RENDER_TASK
-	};
+	FSOUND_SAMPLE* LoadSound( const string sName );
 
 private:
 
-	bool m_bKilledTasks;
-	bool m_bEarlyAbort;
-	bool m_bActive;
-	vector<pair<ITaskPtr,int>> m_TaskList;
-	MTimer m_TaskTimer;
-	MTimer m_FrameTimer;
-	IVarPtr m_iFrameCap;
+	map<string,FSOUND_SAMPLE*> m_AudioSamples;
 };
 
-typedef shared_ptr<MTaskManager> MTaskManagerPtr;
+typedef shared_ptr<MAudioCache> MAudioCachePtr;
 
-#endif // _TASKMANAGER_H_
+#endif // _SURFACECACHE_H_

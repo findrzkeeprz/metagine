@@ -27,6 +27,7 @@
 #include "CollisionResolver.h"
 #include "SurfaceCache.h"
 #include "../Public/Exports.h"
+#include "AudioTask.h"
 
 MEngine::MEngine( void )
 {
@@ -49,9 +50,11 @@ void MEngine::Init( void )
 	m_pRenderer = IRendererPtr(new MRenderTask());
 	m_pEntityManager = IEntityManagerPtr(new MEntityTask());
 	m_pInputManager = IInputManagerPtr(new MInputTask());
+	m_pAudioTask = IAudioTaskPtr(new MAudioTask());
 
 	m_pTaskManager->Attach(m_pInputManager,m_pTaskManager->INPUT_TASK);
 	m_pTaskManager->Attach(m_pEntityManager,m_pTaskManager->LOGIC_TASK);
+	m_pTaskManager->Attach(m_pAudioTask,m_pTaskManager->AUDIO_TASK);
 	m_pTaskManager->Attach(m_pRenderer,m_pTaskManager->RENDER_TASK);
 	m_pTaskManager->InitTasks();
 	
