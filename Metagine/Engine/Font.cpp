@@ -105,7 +105,6 @@ void MFont::SetText( string& sMsg )
 		SDL_FreeSurface(m_Surface);
 
 	m_Surface = TTF_RenderText_Blended(m_Font,sMsg.c_str(),m_Colour);
-	//m_bActive = true;
 }
 
 void MFont::SetPosition( int x, int y )

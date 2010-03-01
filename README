@@ -7,25 +7,48 @@
 
  ABOUT
  
- Git repository: http://github.com/jdmunro/metagine/tree/master
- Project page: http://jdmunro.github.com/metagine/
- Supporting blog: http://learninglab.lincoln.ac.uk/blogs/jmunro/
+ Metagine is a 2D game engine written in C++ using SDL
+ and other supporting libraries. I'm developing the
+ engine primarily as a learning curve and so that I
+ have a framework with which I can develop 2D games 
+ for competitions such as Ludum Dare.
+ 
+ Blog: http://james.blogs.lincoln.ac.uk
  
  FEATURES
  
+ * 2D renderer with depth-sorting.
+ * Animated 2D sprite support.
+	* Animated frames specified in XML.
+	* Clipped from spritesheets.
+ * Sound playback in most popular formats.
+ * Basic game logic and entity management.
+ * Hookable keyboard input.
+ * Easy memory management using shared_ptr.
+ 
  TOOLS & LIBRARIES
  
- SDL for video/audio playback.
- PhysicsFS for file and asset management.
+ * Boost
+ * SDL
+ * SDL_gfx
+ * SDL_image
+ * SDL_ttf
+ * TinyXML
+ * FMOD
+ * Box2D (currently unsupported)
  
  COMPILING
  
- To compile, run 'make' in the project directory.
- No installation is currently required.
- Run './metagine' to execute the engine.
+ Originally written for the Linux platform, I since
+ ported the code to support Windows only for various
+ reasons.
  
- TICKETS
+ I have only tested compilation with Microsoft Visual
+ Studio 2008 Professional. All external libraries are
+ included in source distribution with the exception
+ of Boost.
  
- Tickets are now managed with Lighthouse.
- Available below:
- http://jdmunro.lighthouseapp.com/projects/22235-metagine/tickets
+ TICKETS/CONTRIBUTE
+ 
+ I am accepting fixes and contributions to the project.
+ Issues can be found at the GitHub repository page.

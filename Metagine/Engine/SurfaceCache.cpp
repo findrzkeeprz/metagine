@@ -84,7 +84,7 @@ void* MSurfaceCache::ClippedSurfFromFile( string sFileName, int x, int y, int iW
 		SDL_Surface* pEmpty = NULL;
 
 		if( ( pTemp = IMG_Load(sName.c_str()) ) == NULL ) {
-			printf(" -! ERROR IMG_LoadBMP() returned a NULL object.\n");
+			printf(" -! ERROR IMG_Load() returned a NULL object.\n");
 			return NULL;
 		}
 
