@@ -254,7 +254,7 @@ int MSprite::GetWidth( void )
 
 int MSprite::GetHeight( void )
 {
-	return m_FramesCache[m_iFrame]->w;
+	return m_FramesCache[m_iFrame]->h;
 }
 
 void* MSprite::GetSurface( void )
