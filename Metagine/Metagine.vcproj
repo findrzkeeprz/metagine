@@ -255,6 +255,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Engine\DebugOverlay.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Engine\Engine.cpp"
 					>
 				</File>
@@ -330,6 +334,10 @@
 				</File>
 				<File
 					RelativePath=".\Engine\Console.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Engine\DebugOverlay.h"
 					>
 				</File>
 				<File

@@ -19,6 +19,7 @@
 #include "../Public/Public.h"
 #include "../Interfaces/ITask.h"
 #include "../Interfaces/IEntity.h"
+#include "../Interfaces/ICollisionResolver.h"
 
 /// Public interface for the IEntityTask class.
 class IEntityTask : public ITask
@@ -26,9 +27,9 @@ class IEntityTask : public ITask
 public:
 
 	virtual ~IEntityTask( void ) { };
-
 	virtual void RegisterEntity( IEntityPtr pEntity ) = 0;
 	virtual void RemoveEntity( IEntityPtr pEntity ) = 0;
+	virtual ICollisionResolverPtr CollisionResolver( void ) = 0;
 };
 
 typedef shared_ptr<IEntityTask> IEntityManagerPtr;

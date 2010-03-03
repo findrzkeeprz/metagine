@@ -13,25 +13,30 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _ICOLLISIONRESOLVER_H_
-#define _ICOLLISIONRESOLVER_H_
+#ifndef _DEBUGOVERLAY_H_
+#define _DEBUGOVERLAY_H_
 
 #include "../Public/Public.h"
-#include "../Public/BaseTypes.h"
+#include "../Interfaces/IEngine.h"
+#include "Font.h"
 
-/// Public interface for the ICollisionResolver class.
-class ICollisionResolver
+class MDebugOverlay : public IDrawable, public noncopyable
 {
 public:
 
-	virtual ~ICollisionResolver( void ) { };
+	MDebugOverlay( IEngine* pEngine );
+	~MDebugOverlay( void );
 
-	virtual void ProcessEntityPairs( void ) = 0;
-	virtual void DeterminePartition( IEntityPtr pEntity ) = 0;
-	virtual void Resolve( vector<IEntityPtr> Entities, int iDelta ) = 0;
-	virtual int GetEntitiesInPartition( const int iPartition ) = 0;
+	void Render( void* pSurface );
+	float GetDepth( void ) { return 0.0f; }
+	bool GetActive( void ) { return true; }
+
+private:
+
+	IEngine* m_pEngine;
+	shared_ptr<MFont> m_Font;
 };
 
-typedef shared_ptr<ICollisionResolver> ICollisionResolverPtr;
+typedef shared_ptr<MDebugOverlay> MDebugOverlayPtr;
 
-#endif // _ICOLLISIONRESOLVER_H_
+#endif // _DEBUGOVERLAY_H_

@@ -36,20 +36,21 @@ MCollisionResolver::~MCollisionResolver( void )
 
 void MCollisionResolver::DeterminePartition( IEntityPtr pEntity )
 {
+	ISpritePtr pSprite = pEntity->GetSprite();
 	int w = Engine::GetInstance()->Renderer()->GetScreenWidth() / 2;
 	int h = Engine::GetInstance()->Renderer()->GetScreenHeight() / 2;
-	int x = pEntity->GetSprite()->GetPositionX();
-	int y = pEntity->GetSprite()->GetPositionY();
+	int x = pSprite->GetPositionX();
+	int y = pSprite->GetPositionY();
 	
 	// Entity is currently on-screen.
 	if( CheckScreenBoundary(pEntity) ) {
-		if( x < w && y < h ) 
+		if( x < w && y < h ) // Upper left.
 			m_Partitions[0].push_back(pEntity);
-		else if( x > w && y < h ) 
+		if( x + pSprite->GetWidth() > w && y < h ) // Upper right.
 			m_Partitions[1].push_back(pEntity);
-		else if( x < w && y > h ) 
+		if( x < w && y + pSprite->GetHeight() > h ) // Lower left.
 			m_Partitions[2].push_back(pEntity);
-		else if( x > w && y > h ) 
+		if( x + pSprite->GetWidth() > w && y + pSprite->GetHeight() > h ) // Lower right.
 			m_Partitions[3].push_back(pEntity);
 	}
 }
@@ -95,7 +96,6 @@ void MCollisionResolver::ProcessEntityPairs( void )
 
 		// Test for collision and inform involved parties.
 		if( SDL_CollidePixel(pSurface1,x,y,pSurface2,x2,y2,4) ) {
-		//if( SDL_CollideBoundingBox(pSurface1,x,y,pSurface2,x2,y2) ) {
 			(*it).first->CollisionEvent((*it).second,COLLISION_ENTITY,m_iDelta);
 			(*it).second->CollisionEvent((*it).first,COLLISION_ENTITY,m_iDelta);
 		}
@@ -106,19 +106,16 @@ void MCollisionResolver::ProcessEntityPairs( void )
 
 void MCollisionResolver::Resolve( vector<IEntityPtr> Entities, int iDelta )
 {
-	// 1. Divide screen into 4 divisions.
-	// 2. Perform collision detection.
-	// 3. Notify responsible entities (collision response).
-	
 	m_iDelta = iDelta;
 	
-	vector<IEntityPtr>::iterator it;
-	for( it = Entities.begin(); it < Entities.end(); ++it ) {
-		if( (*it)->GetActive() ) {
-			DeterminePartition((*it));
+	vector<IEntityPtr>::iterator entity;
+	for( entity = Entities.begin(); entity < Entities.end(); ++entity ) {
+		if( (*entity)->GetActive() ) {
+			DeterminePartition((*entity));
 		}
 	}
 
+	// Create the set of possible collision pairs.
 	for( int i = 0; i < 4; i++ ) {
 		for( int j = 0; j < (int)m_Partitions[i].size(); j++ ) {
 			for( int k = j + 1; k < (int)m_Partitions[i].size(); k++ ) {
@@ -127,9 +124,17 @@ void MCollisionResolver::Resolve( vector<IEntityPtr> Entities, int iDelta )
 		}
 	}
 
+	// Perform the collision detection.
 	ProcessEntityPairs();
-	
+
+	// Cleanup and store partition counts for debug purposes.
 	for( int i = 0; i < 4; i++ ) {
+		m_iLastSize[i] = (int)m_Partitions[i].size();
 		m_Partitions[i].clear();
 	}
+}
+
+int MCollisionResolver::GetEntitiesInPartition( const int iPartition )
+{
+	return m_iLastSize[iPartition];
 }

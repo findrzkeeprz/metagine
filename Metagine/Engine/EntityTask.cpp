@@ -27,6 +27,7 @@ MEntityTask::~MEntityTask( void )
 
 void MEntityTask::VInit( void )
 {
+	m_pCollisionResolver = ICollisionResolverPtr(new MCollisionResolver());
 }
 
 void MEntityTask::VKill( void )
@@ -42,6 +43,7 @@ void MEntityTask::VKill( void )
 	}
 
 	m_Entities.clear();
+	m_pCollisionResolver.reset();
 }
 
 void MEntityTask::VFrame( const int iDelta )
@@ -71,7 +73,7 @@ void MEntityTask::VFrame( const int iDelta )
 			(*entity)->UpdateLogic(iDelta);
 	}
 
-	m_CollisionResolver.Resolve(m_Entities,iDelta);
+	m_pCollisionResolver->Resolve(m_Entities,iDelta);
 }
 
 void MEntityTask::RegisterEntity( IEntityPtr pEntity )

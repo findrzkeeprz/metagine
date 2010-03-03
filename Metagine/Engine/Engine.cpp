@@ -61,9 +61,11 @@ void MEngine::Init( void )
 	// Create the remaining engine components (dependent on above systems).
 	m_pConsole = IConsolePtr(new MConsole());
 	m_pSurfaceCache = ISurfaceCachePtr(new MSurfaceCache());
+	m_pDebugOverlay = MDebugOverlayPtr(new MDebugOverlay(this));
 	
 	m_pConsole->Init();
 	m_pRenderer->RegisterDrawable(m_pConsole);
+	m_pRenderer->RegisterDrawable(m_pDebugOverlay);
 
 	// Load the game module.
 	/*if( !LoadGameModule() ) {
@@ -92,6 +94,7 @@ void MEngine::Shutdown( void )
 	m_GameBoard.Kill();
 	
 	m_pConsole.reset();
+	m_pDebugOverlay.reset();
 	m_pSurfaceCache.reset();
 	m_pVarManager.reset();
 	m_pTaskManager.reset();

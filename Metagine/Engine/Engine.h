@@ -23,6 +23,7 @@
 
 #include "TaskManager.h"
 #include "EntityTask.h"
+#include "DebugOverlay.h"
 #include "../Game/GameBoard.h"
 
 /// Main game engine interface.
@@ -76,6 +77,7 @@ private:
 	ISurfaceCachePtr m_pSurfaceCache;
 	IAudioTaskPtr m_pAudioTask;
 	MTaskManagerPtr m_pTaskManager;
+	MDebugOverlayPtr m_pDebugOverlay;
 
 	//IEntity
 	// Game interface pointer.

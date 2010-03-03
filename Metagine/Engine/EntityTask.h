@@ -37,11 +37,13 @@ public:
 	void RegisterEntity( IEntityPtr pEntity );
 	void RemoveEntity( IEntityPtr pEntity );
 
+	ICollisionResolverPtr CollisionResolver( void ) { return m_pCollisionResolver; }
+
 private:
 
 	vector<IEntityPtr> m_Entities;
 	vector<IEntityPtr> m_ExpiredEntities;
-	MCollisionResolver m_CollisionResolver;
+	ICollisionResolverPtr m_pCollisionResolver;
 };
 
 #endif // _ENTITYTASK_H_

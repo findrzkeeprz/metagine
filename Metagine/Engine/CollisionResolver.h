@@ -37,13 +37,14 @@ public:
 	void DeterminePartition( IEntityPtr pEntity );
 	bool CheckScreenBoundary( IEntityPtr pEntity );
 	void Resolve( vector<IEntityPtr> Entities, int iDelta );
+	int GetEntitiesInPartition( const int iPartition );
 
 private:
 
-	//vector<IEntity*> m_Partitions[4];
 	vector<IEntityPtr> m_Partitions[4];
 	vector<pair<IEntityPtr,IEntityPtr>> m_EntityPairs;
 	int m_iDelta;
+	int m_iLastSize[4];
 };
 
 //typedef MSingleton<MCollisionResolver> CollisionResolver;
