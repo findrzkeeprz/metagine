@@ -70,6 +70,7 @@ public:
 	/// currently tracking.
 	//void Frame( void );
 
+	int GetDrawableCount( void );
 	int GetScreenWidth( void );
 	int GetScreenHeight( void );
 

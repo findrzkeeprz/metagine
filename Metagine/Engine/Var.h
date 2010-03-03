@@ -36,13 +36,13 @@ public:
     MVar( void );
 
     /// Custom constructor (integer).
-    MVar( const char* pszName, int iValue );
+    MVar( const string& sName, int iValue );
     
     /// Custom constructor (float).
-    MVar( const char* pszName, float fValue );
+    MVar( const string& sName, float fValue );
     
     /// Custom constructor (boolean).
-    MVar( const char* pszName, bool bValue );
+    MVar( const string& sName, bool bValue );
     
     /// Destructor method.
     ~MVar( void );

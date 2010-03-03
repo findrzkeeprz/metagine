@@ -30,23 +30,23 @@ public:
     /// Creates a new integer-type MVar object.
 	/// This creates a new MVar object with integer type. The MVar object is
 	/// created and automatically registered with the variable manager.
-    virtual IVarPtr CreateVar( const char* pszName, int iValue ) = 0;
+    virtual IVarPtr CreateVar( const string& sName, int iValue ) = 0;
     
     /// Creates a new float-type MVar object.
     /// This creates a new MVar object with integer type. The MVar object is
     /// created and automatically registered with the variable manager.
-    virtual IVarPtr CreateVar( const char* pszName, float fValue ) = 0;
+    virtual IVarPtr CreateVar( const string& sName, float fValue ) = 0;
     
     /// Creates a new boolean-type MVar object.
     /// This creates a new MVar object with integer type. The MVar object is
     /// created and automatically registered with the variable manager.
-    virtual IVarPtr CreateVar( const char* pszName, bool bValue ) = 0;
+    virtual IVarPtr CreateVar( const string& sName, bool bValue ) = 0;
     
     /// Gets a pointer to an MVar object by name.
     /// This searches the list of registered variables and returns a pointer to
     /// the object if it exists. Returns NULL if no variable is found. Spelling
     /// must be exact.
-    virtual IVarPtr GetVarByName( const char* pszName ) = 0;
+    virtual IVarPtr GetVarByName( const string& sName ) = 0;
 };
 
 typedef shared_ptr<IVarManager> IVarManagerPtr;

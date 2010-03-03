@@ -48,6 +48,7 @@ public:
 	/// calls IDrawable::Render() on any active objects that the renderer is
 	/// currently tracking.
 	//virtual void Frame( void ) = 0;
+	virtual int GetDrawableCount( void ) = 0;
 
 	virtual int GetScreenWidth( void ) = 0;
 	virtual int GetScreenHeight( void ) = 0;

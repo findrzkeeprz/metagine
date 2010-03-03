@@ -157,3 +157,8 @@ int MRenderTask::GetScreenHeight( void )
 {
 	return m_iResolution[1];
 }
+
+int MRenderTask::GetDrawableCount( void )
+{
+	return (int)m_RenderQueue.size();
+}

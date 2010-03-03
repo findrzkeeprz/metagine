@@ -39,6 +39,8 @@ public:
 
 	ICollisionResolverPtr CollisionResolver( void ) { return m_pCollisionResolver; }
 
+	int GetEntityCount( void );
+
 private:
 
 	vector<IEntityPtr> m_Entities;

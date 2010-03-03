@@ -38,14 +38,14 @@ public:
     ~MVarManager( void );
     
     // Documented in IVarManager.h
-    IVarPtr CreateVar( const char* pszName, int iValue );
-    IVarPtr CreateVar( const char* pszName, float fValue );
-    IVarPtr CreateVar( const char* pszName, bool bValue );
-    IVarPtr GetVarByName( const char* pszName );
+    IVarPtr CreateVar( const string& sName, int iValue );
+    IVarPtr CreateVar( const string& sName, float fValue );
+    IVarPtr CreateVar( const string& sName, bool bValue );
+    IVarPtr GetVarByName( const string& sName );
     
 private:
 
-    vector<IVarPtr> m_Container; ///< Container to catalog all variables created through this object.
+    map<string,IVarPtr> m_Container; ///< Container to catalog all variables created through this object.
 };
 
 //typedef MSingleton<MVarManager> VarManager;

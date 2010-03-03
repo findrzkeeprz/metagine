@@ -30,6 +30,7 @@ public:
 	virtual void RegisterEntity( IEntityPtr pEntity ) = 0;
 	virtual void RemoveEntity( IEntityPtr pEntity ) = 0;
 	virtual ICollisionResolverPtr CollisionResolver( void ) = 0;
+	virtual int GetEntityCount( void ) = 0;
 };
 
 typedef shared_ptr<IEntityTask> IEntityManagerPtr;

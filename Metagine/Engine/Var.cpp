@@ -21,24 +21,24 @@ m_iType(CVAR_NULL)
 {
 }
 
-MVar::MVar( const char* pszName, int iValue ) :
-m_sName(pszName),
+MVar::MVar( const string& sName, int iValue ) :
+m_sName(sName),
 m_iType(CVAR_INT)
 {
 	m_Value.iValue = iValue;
 	printf(" -> MVar object constructed (%s).\n",m_sName.c_str());
 }
 
-MVar::MVar( const char* pszName, float fValue ) :
-m_sName(pszName),
+MVar::MVar( const string& sName, float fValue ) :
+m_sName(sName),
 m_iType(CVAR_FLOAT)
 {
 	m_Value.fValue = fValue;
 	printf(" -> MVar object constructed (%s).\n",m_sName.c_str());
 }
 
-MVar::MVar( const char* pszName, bool bValue ) :
-m_sName(pszName),
+MVar::MVar( const string& sName, bool bValue ) :
+m_sName(sName),
 m_iType(CVAR_BOOL)
 {
 	m_Value.bValue = bValue;

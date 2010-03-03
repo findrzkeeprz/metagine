@@ -23,63 +23,58 @@ MVarManager::MVarManager( void )
 
 MVarManager::~MVarManager( void )
 {
-	// Free all of the allocated variables.
-    vector<IVarPtr>::iterator it;
-    for( it = m_Container.begin(); it < m_Container.end(); ++it ) {
-    	if( (*it) ) {
-            printf(" -> Releasing variable object (0x%X).\n",(*it).get());
-			(*it).reset();
-        }
-    }
+	// Free all of the unallocated variables.
+	map<string,IVarPtr>::iterator var = m_Container.begin();
+	for( var = m_Container.begin(); var != m_Container.end(); ++var ) {
+		if( var->second ) var->second.reset();
+	}
+
+	m_Container.clear();
 
     printf(" -> MVarManager object destructed.\n");
 }
 
-IVarPtr MVarManager::CreateVar( const char* pszName, int iValue )
+IVarPtr MVarManager::CreateVar( const string& sName, int iValue )
 {
     IVarPtr pResult;
     
-    if( !GetVarByName(pszName) ) {
-        pResult = IVarPtr(new MVar(pszName,iValue));
-        m_Container.push_back(pResult);
+    if( !GetVarByName(sName) ) {
+        pResult = IVarPtr(new MVar(sName,iValue));
+        m_Container.insert(make_pair(sName,pResult));
     }
     
     return pResult;
 }
 
-IVarPtr MVarManager::CreateVar( const char* pszName, float fValue )
+IVarPtr MVarManager::CreateVar( const string& sName, float fValue )
 {
     IVarPtr pResult;
     
-    if( !GetVarByName(pszName) ) {
-        pResult = IVarPtr(new MVar(pszName,fValue));
-        m_Container.push_back(pResult);
+    if( !GetVarByName(sName) ) {
+        pResult = IVarPtr(new MVar(sName,fValue));
+        m_Container.insert(make_pair(sName,pResult));
     }
     
     return pResult;
 }
 
-IVarPtr MVarManager::CreateVar( const char* pszName, bool bValue )
+IVarPtr MVarManager::CreateVar( const string& sName, bool bValue )
 {
     IVarPtr pResult;
     
-    if( !GetVarByName(pszName) ) {
-        pResult = IVarPtr(new MVar(pszName,bValue));
-        m_Container.push_back(pResult);
+    if( !GetVarByName(sName) ) {
+        pResult = IVarPtr(new MVar(sName,bValue));
+        m_Container.insert(make_pair(sName,pResult));
     }
     
     return pResult;
 }
 
-IVarPtr MVarManager::GetVarByName( const char* pszName )
+IVarPtr MVarManager::GetVarByName( const string& sName )
 {
-    // Compare each variable against the specified name.
-	vector<IVarPtr>::iterator it;
-	for( it = m_Container.begin(); it < m_Container.end(); ++it ) {
-        if( !strcmp((*it)->GetName(),pszName) ) {
-            return (*it);
-        }
-    }
-    
-    return IVarPtr();
+	map<string,IVarPtr>::iterator var = m_Container.find(sName);
+	if( var == m_Container.end() )
+		return IVarPtr();
+
+	return var->second;
 }

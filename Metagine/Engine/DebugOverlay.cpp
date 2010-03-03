@@ -26,15 +26,29 @@ MDebugOverlay::MDebugOverlay( IEngine* pEngine )
 
 MDebugOverlay::~MDebugOverlay( void )
 {
+	m_Font.reset();
+	
 	printf(" -> MDebugOverlay object destructed.\n");
 }
 
 void MDebugOverlay::Render( void *pSurface )
 {
+	int iCount = 0;
+	
 	for( int i = 0; i < 4; ++i ) {
-		int iCount = m_pEngine->EntityManager()->CollisionResolver()->GetEntitiesInPartition(i);
-		m_Font->SetPosition(20,100 + (i * 20));
+		iCount = m_pEngine->EntityManager()->CollisionResolver()->GetEntitiesInPartition(i);
+		m_Font->SetPosition(15,100 + (i * 20));
 		m_Font->SetText((boost::format("Partition[%1%]: %2%") % i % iCount).str());
 		m_Font->Render(pSurface);
 	}
+
+	iCount = m_pEngine->Renderer()->GetDrawableCount();
+	m_Font->SetPosition(15,180);
+	m_Font->SetText((boost::format("Drawables: %1%") % iCount).str());
+	m_Font->Render(pSurface);
+
+	iCount = m_pEngine->EntityManager()->GetEntityCount();
+	m_Font->SetPosition(15,200);
+	m_Font->SetText((boost::format("Entities: %1%") % iCount).str());
+	m_Font->Render(pSurface);
 }

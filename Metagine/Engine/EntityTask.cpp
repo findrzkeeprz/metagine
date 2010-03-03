@@ -100,3 +100,7 @@ void MEntityTask::RemoveEntity( IEntityPtr pEntity )
 	}
 }
 
+int MEntityTask::GetEntityCount( void )
+{
+	return (int)m_Entities.size();
+}
