@@ -58,15 +58,10 @@ m_iAlpha(255)
 	m_Colour.b = iBlue;
 	m_Coords[0] = 0;
 	m_Coords[1] = 0;
-
-	// Push back to the renderer queue.
-	//Engine::GetInstance()->Renderer()->RegisterDrawable(shared_from_this());
 }
 
 MFont::~MFont( void )
 {
-	//Engine::GetInstance()->Renderer()->RemoveDrawable(shared_from_this());
-    
 	if( m_Surface ) {
 		SDL_FreeSurface(m_Surface);
 		m_Surface = NULL;
@@ -134,6 +129,6 @@ void MFont::Render( void* pSurface )
 	Rect.x = m_Coords[0];
 	Rect.y = m_Coords[1];
 
-	SDL_SetAlpha(m_Surface,SDL_RLEACCEL|SDL_SRCALPHA,m_iAlpha);
+	//SDL_SetAlpha(m_Surface,SDL_RLEACCEL|SDL_SRCALPHA,m_iAlpha);
 	SDL_BlitSurface(m_Surface,NULL,(SDL_Surface*)pSurface,&Rect);
 }

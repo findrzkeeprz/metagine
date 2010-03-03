@@ -28,4 +28,16 @@
 #include "../Interfaces/IEntityTask.h"
 #include "../Interfaces/IAudioTask.h"
 
+/*class ICollisionResolver;
+class IConsole;
+class IEngine;
+//class IFileSystem;
+class IInputTask;
+//class IObjectFactory;
+class IRenderTask;
+class IVarManager;
+class ISurfaceCache;
+class IEntityTask;
+class IAudioTask;*/
+
 #endif // _INTERFACES_H_

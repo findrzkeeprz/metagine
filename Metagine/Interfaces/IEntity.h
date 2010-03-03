@@ -30,14 +30,13 @@ public:
     /// Virtual destructor method.
     virtual ~IEntity( void ) { };
 
-    /// Virtual method to update the entity.
-    virtual void UpdateLogic( int iDelta ) = 0;
-
-    /// Virtual accessor to determine object validity.
+	/// Virtual accessor to determine object validity.
     virtual bool GetActive( void ) = 0;
-
+	virtual bool GetExpired( void ) = 0;
 	virtual ISpritePtr GetSprite( void ) = 0;
-	virtual void CollisionEvent( IEntityPtr pEntity, int iDelta ) = 0;
+	
+	virtual void CollisionEvent( const IEntityPtr pEntity, const int iType, const int iDelta ) = 0;
+	virtual void UpdateLogic( int iDelta ) = 0;
 	virtual void VKill( void ) = 0;
 };
 

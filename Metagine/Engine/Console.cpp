@@ -47,8 +47,7 @@ bool MConsole::Init( void )
 	m_iPositionYoff = Engine::GetInstance()->VarManager()->CreateVar("b_con_posyoff",-30);
 	m_iScrollFactor = Engine::GetInstance()->VarManager()->CreateVar("b_con_scrollfactor",3);
 	
-	m_Font = shared_ptr<MFont>(new MFont("MAINBB__.TTF",15,255,255,255,0.0f));
-	m_Font->SetColour(255,255,255);
+	m_Font = shared_ptr<MFont>(new MFont("crayon_alphabet.ttf",15,193,254,154,0.0f));
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_Font);
 	
 	return true;

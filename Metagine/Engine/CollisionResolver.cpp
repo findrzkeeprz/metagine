@@ -38,21 +38,45 @@ void MCollisionResolver::DeterminePartition( IEntityPtr pEntity )
 {
 	int w = Engine::GetInstance()->Renderer()->GetScreenWidth() / 2;
 	int h = Engine::GetInstance()->Renderer()->GetScreenHeight() / 2;
+	int x = pEntity->GetSprite()->GetPositionX();
+	int y = pEntity->GetSprite()->GetPositionY();
+	
+	// Entity is currently on-screen.
+	if( CheckScreenBoundary(pEntity) ) {
+		if( x < w && y < h ) 
+			m_Partitions[0].push_back(pEntity);
+		else if( x > w && y < h ) 
+			m_Partitions[1].push_back(pEntity);
+		else if( x < w && y > h ) 
+			m_Partitions[2].push_back(pEntity);
+		else if( x > w && y > h ) 
+			m_Partitions[3].push_back(pEntity);
+	}
+}
+
+bool MCollisionResolver::CheckScreenBoundary( IEntityPtr pEntity )
+{
 	ISpritePtr pSprite = pEntity->GetSprite();
-	int x, y = 0;
-	
-	pSprite->GetPosition(x,y);
-	
-	// Hacky...
-	if( x > w * 2 || y > h * 2 || x < 0 || y < 0 ) {
-		Engine::GetInstance()->EntityManager()->RemoveEntity(pEntity);
-		return;
+	int w = Engine::GetInstance()->Renderer()->GetScreenWidth();
+	int h = Engine::GetInstance()->Renderer()->GetScreenHeight();
+	int x = pSprite->GetPositionX();
+	int y = pSprite->GetPositionY();
+
+	if( ( x + pSprite->GetWidth() ) > w ) {
+		pEntity->CollisionEvent(IEntityPtr(),COLLISION_RIGHT_SCREEN,m_iDelta);
+		return false;
+	} else if( ( y + pSprite->GetHeight() ) > h ) {
+		pEntity->CollisionEvent(IEntityPtr(),COLLISION_LOWER_SCREEN,m_iDelta);
+		return false;
+	} else if( x < 0 ) {
+		pEntity->CollisionEvent(IEntityPtr(),COLLISION_LEFT_SCREEN,m_iDelta);
+		return false;
+	} else if( y < 0 ) {
+		pEntity->CollisionEvent(IEntityPtr(),COLLISION_UPPER_SCREEN,m_iDelta);
+		return false;
 	}
 	
-	if( x < w && y < h ) m_Partitions[0].push_back(pEntity);
-	else if( x > w && y < h ) m_Partitions[1].push_back(pEntity);
-	else if( x < w && y > h ) m_Partitions[2].push_back(pEntity);
-	else if( x > w && y > h ) m_Partitions[3].push_back(pEntity);
+	return true;
 }
 
 void MCollisionResolver::ProcessEntityPairs( void )
@@ -63,16 +87,17 @@ void MCollisionResolver::ProcessEntityPairs( void )
 		SDL_Surface* pSurface2 = (SDL_Surface*)(*it).second->GetSprite()->GetSurface();
 		ISpritePtr pSprite1 = (*it).first->GetSprite();
 		ISpritePtr pSprite2 = (*it).second->GetSprite();
-
-		int x, y, x2, y2 = 0;
-		pSprite1->GetPosition(x,y);
-		pSprite2->GetPosition(x2,y2);
+		
+		int x = pSprite1->GetPositionX();
+		int y = pSprite1->GetPositionY();
+		int x2 = pSprite2->GetPositionX();
+		int y2 = pSprite2->GetPositionY();
 
 		// Test for collision and inform involved parties.
 		if( SDL_CollidePixel(pSurface1,x,y,pSurface2,x2,y2,4) ) {
 		//if( SDL_CollideBoundingBox(pSurface1,x,y,pSurface2,x2,y2) ) {
-			(*it).first->CollisionEvent((*it).second,m_iDelta);
-			(*it).second->CollisionEvent((*it).first,m_iDelta);
+			(*it).first->CollisionEvent((*it).second,COLLISION_ENTITY,m_iDelta);
+			(*it).second->CollisionEvent((*it).first,COLLISION_ENTITY,m_iDelta);
 		}
 	}
 

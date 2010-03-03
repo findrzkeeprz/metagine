@@ -47,7 +47,9 @@ public:
 	/// @param iAngle An angle between 0 and 359.
 	virtual void SetRotation( double iAngle ) = 0;
 
-	virtual void GetPosition( int& x, int&y ) = 0;
+	virtual int GetPositionX( void ) = 0;
+	virtual int GetPositionY( void ) = 0;
+
 	virtual void* GetSurface( void ) = 0;
 
 	virtual int GetWidth( void ) = 0;

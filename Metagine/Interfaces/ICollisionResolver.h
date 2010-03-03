@@ -17,6 +17,7 @@
 #define _ICOLLISIONRESOLVER_H_
 
 #include "../Public/Public.h"
+#include "../Public/BaseTypes.h"
 
 /// Public interface for the ICollisionResolver class.
 class ICollisionResolver

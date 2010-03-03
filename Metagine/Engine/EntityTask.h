@@ -40,6 +40,7 @@ public:
 private:
 
 	vector<IEntityPtr> m_Entities;
+	vector<IEntityPtr> m_ExpiredEntities;
 	MCollisionResolver m_CollisionResolver;
 };
 

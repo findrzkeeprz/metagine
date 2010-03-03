@@ -4,7 +4,8 @@
 #include "../Engine/RenderTask.h"
 
 MTestEnt::MTestEnt( float x, float y, float fSpeed ) :
-m_bActive(true)
+m_bActive(true),
+m_bExpired(false)
 {
 	m_TestSprite = ISpritePtr(new MSprite("Explosion1.xml"));
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_TestSprite);
@@ -45,13 +46,20 @@ void MTestEnt::UpdateLogic( int iDelta )
 	m_TestSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
 }
 
-void MTestEnt::CollisionEvent( IEntityPtr pEntity, int iDelta )
+void MTestEnt::CollisionEvent( const IEntityPtr pEntity, const int iType, const int iDelta )
 {
+	if( iType != COLLISION_ENTITY )
+		m_bExpired = true;
 }
 
 bool MTestEnt::GetActive( void )
 {
 	return m_bActive;
+}
+
+bool MTestEnt::GetExpired( void )
+{
+	return m_bExpired;
 }
 
 void MTestEnt::VKill( void )

@@ -24,6 +24,7 @@
 
 MShip::MShip( void ) :
 m_bActive(true),
+m_bExpired(false),
 m_bFireLock(false)
 {
 	// This will all need to go through the engine interface in future.
@@ -97,16 +98,27 @@ void MShip::UpdateLogic( int iDelta )
 	m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
 }
 
-void MShip::CollisionEvent( IEntityPtr pEntity, int iDelta )
+void MShip::CollisionEvent( const IEntityPtr pEntity, const int iType, const int iDelta )
 {
-	//m_vPosition += ( ( -m_vVelocity * (float)iDelta ) / 1000.0f );
-	//m_vVelocity.Zero();
-	//m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
+	if( iType == COLLISION_LEFT_SCREEN || COLLISION_RIGHT_SCREEN ) {
+		m_vPosition += ( ( -m_vVelocity * (float)iDelta ) / 1000.0f );
+		m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
+		m_vVelocity.x = 0;
+	} else if( iType == COLLISION_UPPER_SCREEN || COLLISION_LOWER_SCREEN ) {
+		m_vPosition += ( ( -m_vVelocity * (float)iDelta ) / 1000.0f );
+		m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
+		m_vVelocity.y = 0;
+	}
 }
 
 bool MShip::GetActive( void )
 {
 	return m_bActive;
+}
+
+bool MShip::GetExpired( void )
+{
+	return m_bExpired;
 }
 
 void MShip::VKill( void )

@@ -36,7 +36,8 @@ public:
 	
 	// Documented in ISprite.h
 	void SetPosition( int x, int y );
-	void GetPosition( int& x, int& y );
+	int GetPositionX( void );
+	int GetPositionY( void );
 	void SetRotation( double iAngle );
 	void SetFrame( int iFrame );
 	int GetFrame( void );

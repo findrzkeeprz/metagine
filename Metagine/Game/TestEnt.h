@@ -11,8 +11,9 @@ public:
 	// Documented in IEntity.h
 	void UpdateLogic( int iDelta );
 	bool GetActive( void );
+	bool GetExpired( void );
 	ISpritePtr GetSprite( void ) { return m_TestSprite; }
-	void CollisionEvent( IEntityPtr pEntity, int iDelta );
+	void CollisionEvent( const IEntityPtr pEntity, const int iType, const int iDelta );
 	void VKill( void );
 
 private:
@@ -22,4 +23,5 @@ private:
 	MVector2 m_vVelocity;
 	MVector2 m_vAcceleration;
 	bool m_bActive;
+	bool m_bExpired;
 };

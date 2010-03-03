@@ -25,4 +25,18 @@
 #include "../Interfaces/IVar.h"
 #include "../Interfaces/ITask.h"
 
+#define COLLISION_ENTITY			0
+#define COLLISION_UPPER_SCREEN		1
+#define COLLISION_LOWER_SCREEN		2
+#define COLLISION_LEFT_SCREEN		3
+#define COLLISION_RIGHT_SCREEN		4
+
+/*class ITask;
+class IDrawable;
+class ISprite;
+class IEntity;
+class IListenEntity;
+class IInputListener;
+class IVar;*/
+
 #endif // _BASETYPES_H_

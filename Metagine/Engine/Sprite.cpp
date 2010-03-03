@@ -125,10 +125,14 @@ void MSprite::SetPosition( int x, int y )
 	m_Coords[1] = y;
 }
 
-void MSprite::GetPosition( int& x, int& y )
+int MSprite::GetPositionX( void )
 {
-	x = m_Coords[0];
-	y = m_Coords[1];
+	return m_Coords[0];
+}
+
+int MSprite::GetPositionY( void )
+{
+	return m_Coords[1];
 }
 
 void MSprite::SetRotation( double iAngle )

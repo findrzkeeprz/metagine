@@ -35,6 +35,7 @@ public:
 
 	void ProcessEntityPairs( void );
 	void DeterminePartition( IEntityPtr pEntity );
+	bool CheckScreenBoundary( IEntityPtr pEntity );
 	void Resolve( vector<IEntityPtr> Entities, int iDelta );
 
 private:

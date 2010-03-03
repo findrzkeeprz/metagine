@@ -36,10 +36,11 @@ public:
 	// Documented in IEntity.h
 	void UpdateLogic( int iDelta );
 	bool GetActive( void );
+	bool GetExpired( void );
 	//float GetPositionX( void ) { return m_fPosition[0]; }
 	//float GetPositionY( void ) { return m_fPosition[0]; }
 	ISpritePtr GetSprite( void ) { return m_ShipSprite; }
-	void CollisionEvent( IEntityPtr pEntity, int iDelta );
+	void CollisionEvent( const IEntityPtr pEntity, const int iType, const int iDelta );
 	void VKill( void );
 
 private:
@@ -52,6 +53,7 @@ private:
 	IVarPtr m_fImpulse;
 	IVarPtr m_fCutOff;
 	bool m_bActive;
+	bool m_bExpired;
 	bool m_bFireLock;
 };
 
