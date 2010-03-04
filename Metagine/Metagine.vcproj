@@ -481,6 +481,14 @@
 				Name="Header Files"
 				>
 				<File
+					RelativePath=".\Game\BaseEnemy.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Game\BaseProjectile.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Game\GameBoard.h"
 					>
 				</File>
@@ -488,24 +496,24 @@
 					RelativePath=".\Game\Ship.h"
 					>
 				</File>
-				<File
-					RelativePath=".\Game\TestEnt.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Source Files"
 				>
+				<File
+					RelativePath=".\Game\BaseEnemy.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Game\BaseProjectile.cpp"
+					>
+				</File>
 				<File
 					RelativePath=".\Game\GameBoard.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Game\Ship.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\TestEnt.cpp"
 					>
 				</File>
 			</Filter>

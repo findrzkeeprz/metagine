@@ -55,6 +55,7 @@ protected:
 	int m_iAlpha;
 	bool m_bActive;
 	float m_fDepth;
+	string m_sLastMsg;
 };
 
 #endif // _FONT_H_

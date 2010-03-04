@@ -13,33 +13,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef _SHIP_H_
-#define _SHIP_H_
 
 #include "../Interfaces/ISprite.h"
-#include "../Interfaces/IInputListener.h"
 #include "../Interfaces/IEntity.h"
-#include "../Interfaces/IListenEntity.h"
-#include "../Interfaces/IVar.h"
-#include "../Public/Vector2.h"
 
-class MShip : public IListenEntity
+class MBaseProjectile : public IEntity
 {
 public:
 
-	MShip( void );
-	~MShip( void );
-
-	// Documented in IInputListener.h
-	void UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown );
+	MBaseProjectile( int iType, float x, float y, float fSpeed );
+	~MBaseProjectile( void );
 
 	// Documented in IEntity.h
 	void UpdateLogic( int iDelta );
 	bool GetActive( void );
 	bool GetExpired( void );
-	//float GetPositionX( void ) { return m_fPosition[0]; }
-	//float GetPositionY( void ) { return m_fPosition[0]; }
-	ISpritePtr GetSprite( void ) { return m_ShipSprite; }
+	ISpritePtr GetSprite( void ) { return m_TestSprite; }
 	void CollisionEvent( const IEntityPtr pEntity, const int iType, const int iDelta );
 	void VKill( void );
 	void SetVelocity( MVector2& vVelocity );
@@ -48,17 +37,10 @@ public:
 
 private:
 
-	ISpritePtr m_ShipSprite;
+	ISpritePtr m_TestSprite;
 	MVector2 m_vPosition;
 	MVector2 m_vVelocity;
 	MVector2 m_vAcceleration;
-	IVarPtr m_fFriction;
-	IVarPtr m_fImpulse;
-	IVarPtr m_fCutOff;
 	bool m_bActive;
 	bool m_bExpired;
-	bool m_bFireLock;
-	bool m_bFlipFlop;
 };
-
-#endif // _SHIP_H_

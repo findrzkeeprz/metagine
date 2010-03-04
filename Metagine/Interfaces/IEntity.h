@@ -34,6 +34,9 @@ public:
     virtual bool GetActive( void ) = 0;
 	virtual bool GetExpired( void ) = 0;
 	virtual ISpritePtr GetSprite( void ) = 0;
+	virtual void SetVelocity( MVector2& vVelocity ) = 0;
+	virtual void SetPosition( float x, float y ) = 0;
+	virtual MVector2 GetPosition( void ) = 0;
 	
 	virtual void CollisionEvent( const IEntityPtr pEntity, const int iType, const int iDelta ) = 0;
 	virtual void UpdateLogic( int iDelta ) = 0;

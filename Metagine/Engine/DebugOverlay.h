@@ -35,6 +35,7 @@ private:
 
 	IEngine* m_pEngine;
 	shared_ptr<MFont> m_Font;
+	IVarPtr m_bDebugOverlay;
 };
 
 typedef shared_ptr<MDebugOverlay> MDebugOverlayPtr;

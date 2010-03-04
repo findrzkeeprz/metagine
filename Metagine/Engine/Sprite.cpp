@@ -221,9 +221,9 @@ bool MSprite::ParseFromXml( const char* pszXmlFile )
 		int w = atoi(pSpriteFrame->Attribute("clipW"));
 		int h = atoi(pSpriteFrame->Attribute("clipH"));
 
-		// Load into/retrieve from cache with "File+0" format.
+		// Load into/retrieve from cache with "File+x,y,w,h" format.
 		string sFileFrame = sFileName;
-		sFileFrame.append((boost::format("+%1%") % iCount).str());
+		sFileFrame.append((boost::format("+%1%,%2%,%3%,%4%") % x % y % w % h).str());
 
 		SDL_Surface* pSurface = NULL;
 		if( ( pSurface = (SDL_Surface*)Engine::GetInstance()->SurfaceCache()->ClippedSurfFromFile(sFileFrame,x,y,w,h,r,g,b) ) == NULL ) {

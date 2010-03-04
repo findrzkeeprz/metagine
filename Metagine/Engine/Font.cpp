@@ -96,10 +96,11 @@ void MFont::SetText( string& sMsg )
 		return;
 	}
 
-	if( m_Surface )
-		SDL_FreeSurface(m_Surface);
-
-	m_Surface = TTF_RenderText_Blended(m_Font,sMsg.c_str(),m_Colour);
+	if( sMsg != m_sLastMsg ) {
+		if( m_Surface ) SDL_FreeSurface(m_Surface);
+		m_Surface = TTF_RenderText_Blended(m_Font,sMsg.c_str(),m_Colour);
+		m_sLastMsg = sMsg;
+	}
 }
 
 void MFont::SetPosition( int x, int y )

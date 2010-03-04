@@ -22,33 +22,37 @@ MDebugOverlay::MDebugOverlay( IEngine* pEngine )
 	m_pEngine = pEngine;
 	m_Font = shared_ptr<MFont>(new MFont("crayon_alphabet.ttf",15,193,254,154,0.0f));
 	m_pEngine->Renderer()->RegisterDrawable(m_Font);
+	m_bDebugOverlay = m_pEngine->VarManager()->CreateVar("b_debugoverlay",false);
 }
 
 MDebugOverlay::~MDebugOverlay( void )
 {
 	m_Font.reset();
+	m_bDebugOverlay.reset();
 	
 	printf(" -> MDebugOverlay object destructed.\n");
 }
 
 void MDebugOverlay::Render( void *pSurface )
 {
-	int iCount = 0;
+	if( m_bDebugOverlay->GetValueBool() ) {
+		int iCount = 0;
 	
-	for( int i = 0; i < 4; ++i ) {
-		iCount = m_pEngine->EntityManager()->CollisionResolver()->GetEntitiesInPartition(i);
-		m_Font->SetPosition(15,100 + (i * 20));
-		m_Font->SetText((boost::format("Partition[%1%]: %2%") % i % iCount).str());
+		for( int i = 0; i < 4; ++i ) {
+			iCount = m_pEngine->EntityManager()->CollisionResolver()->GetEntitiesInPartition(i);
+			m_Font->SetPosition(15,100 + (i * 20));
+			m_Font->SetText((boost::format("Partition[%1%]: %2%") % i % iCount).str());
+			m_Font->Render(pSurface);
+		}
+
+		iCount = m_pEngine->Renderer()->GetDrawableCount();
+		m_Font->SetPosition(15,180);
+		m_Font->SetText((boost::format("Drawables: %1%") % iCount).str());
+		m_Font->Render(pSurface);
+
+		iCount = m_pEngine->EntityManager()->GetEntityCount();
+		m_Font->SetPosition(15,200);
+		m_Font->SetText((boost::format("Entities: %1%") % iCount).str());
 		m_Font->Render(pSurface);
 	}
-
-	iCount = m_pEngine->Renderer()->GetDrawableCount();
-	m_Font->SetPosition(15,180);
-	m_Font->SetText((boost::format("Drawables: %1%") % iCount).str());
-	m_Font->Render(pSurface);
-
-	iCount = m_pEngine->EntityManager()->GetEntityCount();
-	m_Font->SetPosition(15,200);
-	m_Font->SetText((boost::format("Entities: %1%") % iCount).str());
-	m_Font->Render(pSurface);
 }

@@ -18,7 +18,10 @@
 
 #include "../Interfaces/ISprite.h"
 #include "Ship.h"
-#include "TestEnt.h"
+#include "BaseProjectile.h"
+
+#define INVADERS_NUM_ROWS 6
+#define INVADERS_NUM_COLS 12
 
 class MGameBoard
 {
@@ -29,12 +32,18 @@ public:
 
 	void Init( void );
 	void Kill( void );
+	void CollisionEvent( int iType, int iIndex, int iRow );
+	IEntity* GetEnemyEntity( int iRow, int iIndex );
 
 private:
 
 	ISpritePtr m_BgSprite;
+	ISpritePtr m_pMonkey;
 	IListenEntityPtr m_PlayerShip;
-	IEntityPtr m_TestEnt;
+	IEntityPtr m_pEnemies[INVADERS_NUM_ROWS][INVADERS_NUM_COLS];
+	IEntityPtr m_pEnemy;
+	bool m_bRowShift;
+	int m_iRowDepth;
 };
 
 #endif // _GAMEBOARD_H_

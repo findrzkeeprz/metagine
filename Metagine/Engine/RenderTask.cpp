@@ -59,13 +59,13 @@ void MRenderTask::VInit( void )
 	printf(" -> MRenderTask::VInit() called.\n");
 	printf(" -> Initialising SDL subsystem.\n");
 
-	m_iResolution[0] = 500;
-	m_iResolution[1] = 650;
+	m_iResolution[0] = 1024;
+	m_iResolution[1] = 576;
 	
 	if( SDL_Init(SDL_INIT_EVERYTHING) == -1 ) {
 		printf(" -! ERROR initialising SDL.\n");
 		return;
-	} else if( ( m_Screen = SDL_SetVideoMode(m_iResolution[0],m_iResolution[1],32,SDL_HWSURFACE|SDL_DOUBLEBUF) ) == NULL ) {
+	} else if( ( m_Screen = SDL_SetVideoMode(m_iResolution[0],m_iResolution[1],32,SDL_SWSURFACE|SDL_DOUBLEBUF) ) == NULL ) {
 		printf(" -! ERROR setting SDL video mode.\n");
 		return;
 	} else if( TTF_Init() == -1 ) {

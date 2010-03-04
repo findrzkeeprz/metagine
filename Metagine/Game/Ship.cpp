@@ -25,17 +25,19 @@
 MShip::MShip( void ) :
 m_bActive(true),
 m_bExpired(false),
-m_bFireLock(false)
+m_bFireLock(false),
+m_bFlipFlop(false)
 {
 	// This will all need to go through the engine interface in future.
 	//m_ShipSprite(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
-	m_ShipSprite = ISpritePtr(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
+	//m_ShipSprite = ISpritePtr(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
+	m_ShipSprite = ISpritePtr(new MSprite("gogorisset1.png",0,true,52,13,39,36,255,0,255,0.99f));
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_ShipSprite);
 	
 	// Center the ship on the center of the screen initially.
 	int iCenter = (Engine::GetInstance()->Renderer()->GetScreenWidth() / 2) - ( m_ShipSprite->GetWidth() / 2 );
 	m_vPosition.x = (float)iCenter;
-	m_vPosition.y = 575.0f;
+	m_vPosition.y = 520.0f;
 	m_vVelocity.Zero();
 	m_vAcceleration.Zero();
 	m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
@@ -54,28 +56,42 @@ MShip::~MShip( void )
 
 void MShip::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown )
 {
-	if( !bKeyDown ) {
-		if( iKey == SDLK_SPACE && m_bFireLock ) m_bFireLock = false;
-	} else {
-		if( bKeys[SDLK_LEFT] ) m_vVelocity.x -= m_fImpulse->GetValueFloat();
-		if( bKeys[SDLK_RIGHT] ) m_vVelocity.x += m_fImpulse->GetValueFloat();
-		if( bKeys[SDLK_UP] ) m_vVelocity.y -= m_fImpulse->GetValueFloat();
-		if( bKeys[SDLK_DOWN] ) m_vVelocity.y += m_fImpulse->GetValueFloat();
+	if( !bKeys[SDLK_SPACE] && m_bFireLock ) 
+		m_bFireLock = false;
 
-		if( iKey == SDLK_SPACE && !m_bFireLock ) {
-			//Engine::
-			IEntityPtr pBullet(new MTestEnt(m_vPosition.x - 5,m_vPosition.y - 5,500.0f));
+	if( bKeys[SDLK_LEFT] ) m_vVelocity.x -= m_fImpulse->GetValueFloat();
+	if( bKeys[SDLK_RIGHT] ) m_vVelocity.x += m_fImpulse->GetValueFloat();
+	if( bKeys[SDLK_UP] ) m_vVelocity.y -= m_fImpulse->GetValueFloat();
+	if( bKeys[SDLK_DOWN] ) m_vVelocity.y += m_fImpulse->GetValueFloat();
+
+	if( bKeys[SDLK_SPACE] && !m_bFireLock ) {
+		if( !m_bFlipFlop ){
+			IEntityPtr pBullet(new MBaseProjectile(0,m_vPosition.x - 1,m_vPosition.y - 25,-300.0f));
 			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet);
-			Engine::GetInstance()->AudioTask()->PlaySound("Shoot1.wav");
-			m_bFireLock = true;
+
+			IEntityPtr pBullet2(new MBaseProjectile(0,(m_vPosition.x + m_ShipSprite->GetWidth()) - 4,m_vPosition.y - 25,-300.0f));
+			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet2);
+
+			m_bFlipFlop = !m_bFlipFlop;
+		} else {
+			IEntityPtr pBullet3(new MBaseProjectile(1,m_vPosition.x + 8,m_vPosition.y - 35,-500.0f));
+			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet3);
+
+			IEntityPtr pBullet4(new MBaseProjectile(1,m_vPosition.x + m_ShipSprite->GetWidth() - 11,m_vPosition.y - 35,-500.0f));
+			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet4);
+
+			m_bFlipFlop = !m_bFlipFlop;
 		}
+
+		Engine::GetInstance()->AudioTask()->PlaySound("Shoot1.wav");
+		m_bFireLock = true;
 	}
 }
 
 void MShip::UpdateLogic( int iDelta )
 {
-	if( m_vVelocity.Magnitude() <= 0.0f )
-		return;
+	//if( m_vVelocity.Magnitude() <= 0.0f )
+	//	return;
 	
 	m_vAcceleration = -m_vVelocity.Normalised();
 
@@ -101,13 +117,13 @@ void MShip::UpdateLogic( int iDelta )
 void MShip::CollisionEvent( const IEntityPtr pEntity, const int iType, const int iDelta )
 {
 	if( iType == COLLISION_LEFT_SCREEN || COLLISION_RIGHT_SCREEN ) {
-		m_vPosition += ( ( -m_vVelocity * (float)iDelta ) / 1000.0f );
+		m_vPosition -= ( ( m_vVelocity * (float)iDelta ) / 1000.0f );
 		m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
-		m_vVelocity.x = 0;
+		m_vVelocity.x = 0.0f;
 	} else if( iType == COLLISION_UPPER_SCREEN || COLLISION_LOWER_SCREEN ) {
 		m_vPosition += ( ( -m_vVelocity * (float)iDelta ) / 1000.0f );
 		m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
-		m_vVelocity.y = 0;
+		m_vVelocity.y = 0.0f;
 	}
 }
 
@@ -123,4 +139,21 @@ bool MShip::GetExpired( void )
 
 void MShip::VKill( void )
 {
+}
+
+void MShip::SetVelocity( MVector2& vVelocity )
+{
+	m_vVelocity = vVelocity;
+}
+
+void MShip::SetPosition( float x, float y )
+{
+	m_vPosition.x = x;
+	m_vPosition.y = y;
+	m_ShipSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
+}
+
+MVector2 MShip::GetPosition( void )
+{
+	return m_vPosition;
 }
