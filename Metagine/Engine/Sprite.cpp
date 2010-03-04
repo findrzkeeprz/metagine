@@ -67,7 +67,9 @@ m_iFrameDelay(0)
 	m_Coords[1] = 0;
 	
 	SDL_Surface* pSurface = NULL;
-	if( ( pSurface = (SDL_Surface*)Engine::GetInstance()->SurfaceCache()->ClippedSurfFromFile(pszFileName,x,y,iWidth,iHeight,r,g,b) ) == NULL ) {
+	string sFileFrame = pszFileName;
+	sFileFrame.append((boost::format("+%1%,%2%,%3%,%4%") % x % y % iWidth % iHeight).str());
+	if( ( pSurface = (SDL_Surface*)Engine::GetInstance()->SurfaceCache()->ClippedSurfFromFile(sFileFrame,x,y,iWidth,iHeight,r,g,b) ) == NULL ) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
 		return;
 	}
