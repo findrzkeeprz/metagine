@@ -34,7 +34,10 @@ void MTimer::Start( void )
 {
 	m_bActive = true;
 	m_bPaused = false;
-	m_iStartTicks = timeGetTime();
+	unsigned __int64 iFrequency;
+	QueryPerformanceFrequency((LARGE_INTEGER *)&iFrequency);
+	m_dFrequency = 1.0 / (double)iFrequency;
+	QueryPerformanceCounter((LARGE_INTEGER *)&m_iStartTicks);
 }
 
 void MTimer::Stop( void )
@@ -50,7 +53,8 @@ void MTimer::Pause( void )
 		return;
 
 	m_bPaused = true;
-	m_iPausedTicks = timeGetTime() - m_iStartTicks;
+	QueryPerformanceCounter((LARGE_INTEGER *)&m_iPausedTicks);
+	m_iPausedTicks -= m_iStartTicks;
 }
 
 void MTimer::Resume( void )
@@ -60,15 +64,17 @@ void MTimer::Resume( void )
 		return;
 
 	m_bPaused = false;
-	m_iStartTicks = timeGetTime() - m_iPausedTicks;
+	QueryPerformanceCounter((LARGE_INTEGER *)&m_iStartTicks);
+	m_iStartTicks -= m_iPausedTicks;
 	m_iPausedTicks = 0;
 }
 
-int MTimer::GetTicks( void ) const
+float MTimer::GetTicks( void ) const
 {
 	if( !m_bActive ) return 0;
-	else if( m_bPaused ) return m_iPausedTicks;
-	else return timeGetTime() - m_iStartTicks;
+	unsigned __int64 iTime;
+	QueryPerformanceCounter((LARGE_INTEGER *)&iTime);
+	return (float)( (iTime - m_iStartTicks) * m_dFrequency ) * 1000.0f;
 }
 
 bool MTimer::GetPaused( void ) const

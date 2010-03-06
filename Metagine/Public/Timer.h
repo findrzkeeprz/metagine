@@ -42,7 +42,7 @@ public:
 	void Resume( void );
 
 	/// Get the number of elapsed ticks.
-	int GetTicks( void ) const;
+	float GetTicks( void ) const;
 	
 	/// Determines whether the the timer is paused.
 	bool GetPaused( void ) const;
@@ -52,10 +52,11 @@ public:
 
 private:
 
-	int m_iStartTicks;		///< The number of system ticks at timer start.
-	int m_iPausedTicks;		///< The number of system ticks at timer pause.
-	bool m_bPaused;			///< Whether the timer is paused or not.
-	bool m_bActive;			///< Whether the time is currently running.
+	double m_dFrequency;
+    unsigned __int64 m_iStartTicks;
+	unsigned __int64 m_iPausedTicks;
+	bool m_bPaused;						///< Whether the timer is paused or not.
+	bool m_bActive;						///< Whether the time is currently running.
 };
 
 #endif // _TIMER_H_
