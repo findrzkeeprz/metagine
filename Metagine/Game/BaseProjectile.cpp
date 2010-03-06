@@ -49,7 +49,7 @@ void MBaseProjectile::UpdateLogic( float fDelta )
 	m_pSprite->SetPosition(m_vPosition.x,m_vPosition.y);
 }
 
-void MBaseProjectile::CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta )
+void MBaseProjectile::CollisionEvent( const IEntity* pEntity, const int iType, const float fDelta )
 {
 	m_bExpired = true;
 }

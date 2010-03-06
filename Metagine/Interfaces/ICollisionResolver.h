@@ -27,8 +27,8 @@ public:
 	virtual ~ICollisionResolver( void ) { };
 
 	virtual void ProcessEntityPairs( void ) = 0;
-	virtual void DeterminePartition( IEntityPtr pEntity ) = 0;
-	virtual void Resolve( vector<IEntityPtr>& Entities, float fDelta ) = 0;
+	virtual void DeterminePartition( IEntity* pEntity ) = 0;
+	virtual void Resolve( IEntity** pEntities, int iCount, float fDelta ) = 0;
 	virtual int GetEntitiesInPartition( const int iPartition ) = 0;
 };
 

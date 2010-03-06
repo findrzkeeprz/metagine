@@ -34,7 +34,7 @@ MCollisionResolver::~MCollisionResolver( void )
 	printf(" -> MCollisionResolver object destructed.\n");
 }
 
-void MCollisionResolver::DeterminePartition( IEntityPtr pEntity )
+void MCollisionResolver::DeterminePartition( IEntity* pEntity )
 {
 	ISpritePtr pSprite = pEntity->GetSprite();
 	int w = Engine::GetInstance()->Renderer()->GetScreenWidth() / 2;
@@ -55,7 +55,7 @@ void MCollisionResolver::DeterminePartition( IEntityPtr pEntity )
 	}
 }
 
-bool MCollisionResolver::CheckScreenBoundary( IEntityPtr pEntity )
+bool MCollisionResolver::CheckScreenBoundary( IEntity* pEntity )
 {
 	ISpritePtr pSprite = pEntity->GetSprite();
 	int w = Engine::GetInstance()->Renderer()->GetScreenWidth();
@@ -64,16 +64,16 @@ bool MCollisionResolver::CheckScreenBoundary( IEntityPtr pEntity )
 	float y = pSprite->GetPositionY();
 
 	if( ( x + pSprite->GetWidth() ) > w ) {
-		pEntity->CollisionEvent(IEntityPtr(),COLLISION_RIGHT_SCREEN,m_fDelta);
+		pEntity->CollisionEvent(NULL,COLLISION_RIGHT_SCREEN,m_fDelta);
 		return false;
 	} else if( ( y + pSprite->GetHeight() ) > h ) {
-		pEntity->CollisionEvent(IEntityPtr(),COLLISION_LOWER_SCREEN,m_fDelta);
+		pEntity->CollisionEvent(NULL,COLLISION_LOWER_SCREEN,m_fDelta);
 		return false;
 	} else if( x < 0 ) {
-		pEntity->CollisionEvent(IEntityPtr(),COLLISION_LEFT_SCREEN,m_fDelta);
+		pEntity->CollisionEvent(NULL,COLLISION_LEFT_SCREEN,m_fDelta);
 		return false;
 	} else if( y < 0 ) {
-		pEntity->CollisionEvent(IEntityPtr(),COLLISION_UPPER_SCREEN,m_fDelta);
+		pEntity->CollisionEvent(NULL,COLLISION_UPPER_SCREEN,m_fDelta);
 		return false;
 	}
 	
@@ -82,7 +82,7 @@ bool MCollisionResolver::CheckScreenBoundary( IEntityPtr pEntity )
 
 void MCollisionResolver::ProcessEntityPairs( void )
 {
-	vector<pair<IEntityPtr,IEntityPtr>>::iterator it;
+	vector<pair<IEntity*,IEntity*>>::iterator it;
 	for( it = m_EntityPairs.begin(); it < m_EntityPairs.end(); ++it ) {
 		// Two objects that are not moving will never collide.
 		if( (*it).first->GetVelocity().Magnitude() == 0.0f &&
@@ -115,14 +115,13 @@ void MCollisionResolver::ProcessEntityPairs( void )
 	m_EntityPairs.clear();
 }
 
-void MCollisionResolver::Resolve( vector<IEntityPtr>& Entities, float fDelta )
+void MCollisionResolver::Resolve( IEntity** pEntities, int iCount, float fDelta )
 {
 	m_fDelta = fDelta;
-	
-	vector<IEntityPtr>::iterator entity;
-	for( entity = Entities.begin(); entity < Entities.end(); ++entity ) {
-		if( (*entity)->GetActive() ) {
-			DeterminePartition((*entity));
+
+	for( int i = 0; i < iCount; ++i ) {
+		if( pEntities[i] && pEntities[i]->GetActive() ) {
+			DeterminePartition(pEntities[i]);
 		}
 	}
 

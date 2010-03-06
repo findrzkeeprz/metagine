@@ -46,6 +46,7 @@ private:
 	vector<IEntityPtr> m_Entities;
 	vector<IEntityPtr> m_ExpiredEntities;
 	ICollisionResolverPtr m_pCollisionResolver;
+	IEntity* m_pEntities[1024];
 };
 
 #endif // _ENTITYTASK_H_

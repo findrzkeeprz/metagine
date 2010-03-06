@@ -27,6 +27,7 @@ MEntityTask::~MEntityTask( void )
 
 void MEntityTask::VInit( void )
 {
+	memset(&m_pEntities,0,1024);
 	m_pCollisionResolver = ICollisionResolverPtr(new MCollisionResolver());
 }
 
@@ -70,13 +71,18 @@ void MEntityTask::VFrame( const float fDelta )
 		m_ExpiredEntities.clear();
 	}
 	
-	// Advance active entities forwards one game frame.
+	// Advance active entities forwards one game frame and
+	// create array of naked pointers for collision detection.
+	int iCount = 0;
 	for( entity = m_Entities.begin(); entity < m_Entities.end(); ++entity ) {
-		if( (*entity)->GetActive() )
+		if( (*entity)->GetActive() ) {
 			(*entity)->UpdateLogic(fDelta);
+			m_pEntities[iCount] = (*entity).get();
+			++iCount;
+		}
 	}
-
-	m_pCollisionResolver->Resolve(m_Entities,fDelta);
+	
+	m_pCollisionResolver->Resolve(&m_pEntities[0],iCount,fDelta);
 }
 
 void MEntityTask::RegisterEntity( IEntityPtr pEntity )

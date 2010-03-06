@@ -30,10 +30,6 @@ m_iRowDepth(1)
 
 MGameBoard::~MGameBoard( void )
 {
-	//if( m_PlayerShip ) {
-	//	delete m_PlayerShip;
-	//	m_PlayerShip = NULL;
-	//}
 }
 
 void MGameBoard::Init( void )

@@ -60,7 +60,7 @@ void MBaseEnemy::UpdateLogic( float fDelta )
 	}*/
 }
 
-void MBaseEnemy::CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta )
+void MBaseEnemy::CollisionEvent( const IEntity* pEntity, const int iType, const float fDelta )
 {
 	if( iType == COLLISION_ENTITY )
 		m_bExpired = true;

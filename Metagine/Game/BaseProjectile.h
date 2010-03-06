@@ -25,7 +25,7 @@ public:
 
 	// Documented in IEntity.h
 	void UpdateLogic( float fDelta );
-	void CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta );
+	void CollisionEvent( const IEntity* pEntity, const int iType, const float fDelta );
 	void VKill( void );
 
 private:

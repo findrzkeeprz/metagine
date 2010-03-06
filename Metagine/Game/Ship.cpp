@@ -124,7 +124,7 @@ void MShip::UpdateLogic( float fDelta )
 	m_pSprite->SetPosition(m_vPosition.x,m_vPosition.y);
 }
 
-void MShip::CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta )
+void MShip::CollisionEvent( const IEntity* pEntity, const int iType, const float fDelta )
 {
 	if( iType == COLLISION_LEFT_SCREEN || iType == COLLISION_RIGHT_SCREEN ) {
 		m_vPosition.x -= ( ( m_vVelocity.x * fDelta ) / 1000.0f );

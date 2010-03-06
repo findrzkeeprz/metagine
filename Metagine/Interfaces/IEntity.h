@@ -39,7 +39,7 @@ public:
 	virtual void SetPosition( MVector2& vPosition ) = 0;
 	virtual MVector2 GetPosition( void ) = 0;
 	
-	virtual void CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta ) = 0;
+	virtual void CollisionEvent( const IEntity* pEntity, const int iType, const float fDelta ) = 0;
 	virtual void UpdateLogic( float fDelta ) = 0;
 	virtual void VKill( void ) = 0;
 };

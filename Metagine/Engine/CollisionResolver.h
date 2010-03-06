@@ -34,16 +34,16 @@ public:
 	void VKill( void );
 
 	void ProcessEntityPairs( void );
-	void DeterminePartition( IEntityPtr pEntity );
-	bool CheckScreenBoundary( IEntityPtr pEntity );
-	void Resolve( vector<IEntityPtr>& Entities, float fDelta );
+	void DeterminePartition( IEntity* pEntity );
+	bool CheckScreenBoundary( IEntity* pEntity );
+	void Resolve( IEntity** pEntities, int iCount, float fDelta );
 	int GetEntitiesInPartition( const int iPartition );
 	bool RectangleIntersects( float x1, float y1, float x2, float y2, int w1, int h1, int w2, int h2 );
 
 private:
 
-	vector<IEntityPtr> m_Partitions[4];
-	vector<pair<IEntityPtr,IEntityPtr>> m_EntityPairs;
+	vector<IEntity*> m_Partitions[4];
+	vector<pair<IEntity*,IEntity*>> m_EntityPairs;
 	float m_fDelta;
 	int m_iLastSize[4];
 };
