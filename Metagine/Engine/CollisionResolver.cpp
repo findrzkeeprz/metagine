@@ -84,6 +84,12 @@ void MCollisionResolver::ProcessEntityPairs( void )
 {
 	vector<pair<IEntityPtr,IEntityPtr>>::iterator it;
 	for( it = m_EntityPairs.begin(); it < m_EntityPairs.end(); ++it ) {
+		// Two objects that are not moving will never collide.
+		if( (*it).first->GetVelocity().Magnitude() == 0.0f &&
+			(*it).second->GetVelocity().Magnitude() == 0.0f ) {
+				continue;
+		}
+		
 		SDL_Surface* pSurface1 = (SDL_Surface*)(*it).first->GetSprite()->GetSurface();
 		SDL_Surface* pSurface2 = (SDL_Surface*)(*it).second->GetSprite()->GetSurface();
 		ISpritePtr pSprite1 = (*it).first->GetSprite();

@@ -32,6 +32,7 @@ public:
 	void CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta );
 	void VKill( void );
 	void SetVelocity( MVector2& vVelocity );
+	MVector2 GetVelocity( void );
 	void SetPosition( float x, float y );
 	MVector2 GetPosition( void );
 

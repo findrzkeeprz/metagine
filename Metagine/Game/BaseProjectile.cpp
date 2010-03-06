@@ -77,6 +77,11 @@ void MBaseProjectile::SetVelocity( MVector2& vVelocity )
 	m_vVelocity = vVelocity;
 }
 
+MVector2 MBaseProjectile::GetVelocity( void )
+{
+	return m_vVelocity;
+}
+
 void MBaseProjectile::SetPosition( float x, float y )
 {
 	m_vPosition.x = x;

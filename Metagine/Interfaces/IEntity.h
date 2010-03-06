@@ -35,6 +35,7 @@ public:
 	virtual bool GetExpired( void ) = 0;
 	virtual ISpritePtr GetSprite( void ) = 0;
 	virtual void SetVelocity( MVector2& vVelocity ) = 0;
+	virtual MVector2 GetVelocity( void ) = 0;
 	virtual void SetPosition( float x, float y ) = 0;
 	virtual MVector2 GetPosition( void ) = 0;
 	

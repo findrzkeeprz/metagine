@@ -38,12 +38,12 @@ MBaseEnemy::~MBaseEnemy( void )
 
 void MBaseEnemy::UpdateLogic( float fDelta )
 {
-	//m_TestSprite->Animate(true);
+	m_TestSprite->Animate(true);
 	m_vPosition += ( ( m_vVelocity * (float)fDelta ) / 1000.0f );
 	m_TestSprite->SetPosition(m_vPosition.x,m_vPosition.y);
 
 	//if( m_ShotTimer.GetTicks() > 5000 && ( rand() % 8 + 1 ) == 5 ) {
-	/*if( ( rand() % 1000 + 1 ) == 500 ) {
+	if( ( rand() % 1000 + 1 ) == 500 ) {
 		if( m_iRow == INVADERS_NUM_ROWS - 1 ) {
 			IEntityPtr pBullet(new MBaseProjectile(2,m_vPosition.x + 15,m_vPosition.y + 35,400.0f));
 			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet);
@@ -58,10 +58,9 @@ void MBaseEnemy::UpdateLogic( float fDelta )
 			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet);
 			Engine::GetInstance()->AudioTask()->PlaySound("Shoot2.wav");
 		}
-	}*/
-
-	//	m_ShotTimer.Start();
-	//}
+		
+		//m_ShotTimer.Start();
+	}
 }
 
 void MBaseEnemy::CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta )
@@ -91,6 +90,11 @@ void MBaseEnemy::VKill( void )
 void MBaseEnemy::SetVelocity( MVector2& vVelocity )
 {
 	m_vVelocity = vVelocity;
+}
+
+MVector2 MBaseEnemy::GetVelocity( void )
+{
+	return m_vVelocity;
 }
 
 void MBaseEnemy::SetPosition( float x, float y )

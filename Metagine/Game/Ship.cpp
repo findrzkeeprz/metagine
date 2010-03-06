@@ -66,10 +66,10 @@ void MShip::UpdateInput( const Uint8* pKeyState, const int iKey, const bool bKey
 
 	if( pKeyState[SDLK_SPACE] && !m_bFireLock ) {
 		if( !m_bFlipFlop ){
-			IEntityPtr pBullet(new MBaseProjectile(0,m_vPosition.x - 1,m_vPosition.y - 25,-300.0f));
+			IEntityPtr pBullet(new MBaseProjectile(0,m_vPosition.x - 1,m_vPosition.y - 35,-300.0f));
 			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet);
 
-			IEntityPtr pBullet2(new MBaseProjectile(0,(m_vPosition.x + m_ShipSprite->GetWidth()) - 4,m_vPosition.y - 25,-300.0f));
+			IEntityPtr pBullet2(new MBaseProjectile(0,(m_vPosition.x + m_ShipSprite->GetWidth()) - 4,m_vPosition.y - 35,-300.0f));
 			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet2);
 
 			m_bFlipFlop = !m_bFlipFlop;
@@ -90,8 +90,8 @@ void MShip::UpdateInput( const Uint8* pKeyState, const int iKey, const bool bKey
 
 void MShip::UpdateLogic( float fDelta )
 {
-	//if( m_vVelocity.Magnitude() <= 0.0f )
-	//	return;
+	if( m_vVelocity.Magnitude() <= 0.0f )
+		return;
 	//printf("fDelta: %f\n",fDelta);
 	
 	m_vAcceleration = -m_vVelocity.Normalised();
@@ -117,12 +117,12 @@ void MShip::UpdateLogic( float fDelta )
 
 void MShip::CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta )
 {
-	if( iType == COLLISION_LEFT_SCREEN || COLLISION_RIGHT_SCREEN ) {
-		m_vPosition -= ( ( m_vVelocity * fDelta ) / 1000.0f );
+	if( iType == COLLISION_LEFT_SCREEN || iType == COLLISION_RIGHT_SCREEN ) {
+		m_vPosition.x -= ( ( m_vVelocity.x * fDelta ) / 1000.0f );
 		m_ShipSprite->SetPosition(m_vPosition.x,m_vPosition.y);
 		m_vVelocity.x = 0.0f;
-	} else if( iType == COLLISION_UPPER_SCREEN || COLLISION_LOWER_SCREEN ) {
-		m_vPosition += ( ( -m_vVelocity * fDelta ) / 1000.0f );
+	} else if( iType == COLLISION_UPPER_SCREEN || iType == COLLISION_LOWER_SCREEN ) {
+		m_vPosition.y += ( ( -m_vVelocity.y * fDelta ) / 1000.0f );
 		m_ShipSprite->SetPosition(m_vPosition.x,m_vPosition.y);
 		m_vVelocity.y = 0.0f;
 	}
@@ -145,6 +145,11 @@ void MShip::VKill( void )
 void MShip::SetVelocity( MVector2& vVelocity )
 {
 	m_vVelocity = vVelocity;
+}
+
+MVector2 MShip::GetVelocity( void )
+{
+	return m_vVelocity;
 }
 
 void MShip::SetPosition( float x, float y )
