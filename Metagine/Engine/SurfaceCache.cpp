@@ -41,29 +41,29 @@ unsigned int MSurfaceCache::SurfFromFile( string sFileName )
 		
 		printf(" -> Allocating surface: %s in MSurfaceCache::SurfFromFile().\n",sFileName.c_str());
 		
-		SDL_Surface* pTemp = NULL;
-		SDL_Surface* pResult = NULL;
-		unsigned int pResult2 = 0;
+		SDL_Surface* pTemp[2];
+		unsigned int iTexture = 0;
 	
-		if( ( pTemp = IMG_Load(sFileName.c_str()) ) == NULL ) {
+		if( ( pTemp[0] = IMG_Load(sFileName.c_str()) ) == NULL ) {
 			printf(" -! ERROR IMG_LoadBMP() returned a NULL object.\n");
 			return false;
 		}
 
-		int iColKey = SDL_MapRGB(pTemp->format,0xFF,0,0xFF);
-		SDL_SetColorKey(pTemp,SDL_SRCCOLORKEY,iColKey);
-		pResult = SDL_DisplayFormat(pTemp);
-		SDL_FreeSurface(pTemp);
+		int iColKey = SDL_MapRGB(pTemp[0]->format,0xFF,0,0xFF);
+		SDL_SetColorKey(pTemp[0],SDL_SRCCOLORKEY,iColKey);
+		pTemp[1] = SDL_DisplayFormat(pTemp[0]);
 
-		glGenTextures(1,&pResult2);
-		glBindTexture(GL_TEXTURE_2D,pResult2);
+		glGenTextures(1,&iTexture);
+		glBindTexture(GL_TEXTURE_2D,iTexture);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-		glTexImage2D(GL_TEXTURE_2D,0,pResult->format->BytesPerPixel, pResult->w, pResult->h, 0,
-                      GL_BGRA,GL_UNSIGNED_BYTE,pResult->pixels);
+		glTexImage2D(GL_TEXTURE_2D,0,pTemp[1]->format->BytesPerPixel, pTemp[1]->w, pTemp[1]->h, 0,
+                      GL_BGRA,GL_UNSIGNED_BYTE,pTemp[1]->pixels);
 
-		m_Surfaces.insert(make_pair(sFileName,pResult2));
-		return pResult2;
+		for( int i = 0; i < 2; i++ ) if( pTemp[i] ) { SDL_FreeSurface(pTemp[i]); pTemp[i] = NULL; }
+		m_Surfaces.insert(make_pair(sFileName,iTexture));
+		
+		return iTexture;
 	}
 	
 	return it->second;
@@ -87,12 +87,10 @@ unsigned int MSurfaceCache::ClippedSurfFromFile( string sFileName, int x, int y,
 	if( it == m_Surfaces.end() ) {
 		printf(" -> Allocating surface: %s in MSurfaceCache::ClippedSurfFromFile().\n",sFileName.c_str());
 		
-		SDL_Surface* pTemp = NULL;
-		SDL_Surface* pResult = NULL;
-		SDL_Surface* pEmpty = NULL;
-		unsigned int pResult2 = 0;
+		SDL_Surface* pTemp[3];
+		unsigned int iTexture = 0;
 
-		if( ( pTemp = IMG_Load(sName.c_str()) ) == NULL ) {
+		if( ( pTemp[0] = IMG_Load(sName.c_str()) ) == NULL ) {
 			printf(" -! ERROR IMG_Load() returned a NULL object.\n");
 			return NULL;
 		}
@@ -101,27 +99,25 @@ unsigned int MSurfaceCache::ClippedSurfFromFile( string sFileName, int x, int y,
 		SDL_Rect dstRect = { 0, 0, iWidth, iHeight };
 
 		// Create an empty surface and blit clipped surface to it.
-		pEmpty = SDL_CreateRGBSurface(SDL_SWSURFACE,iWidth,iHeight,32,0,0,0,0);
-		SDL_BlitSurface(pTemp,&srcRect,pEmpty,&dstRect);
-		SDL_FreeSurface(pTemp);
+		pTemp[2] = SDL_CreateRGBSurface(SDL_SWSURFACE,iWidth,iHeight,32,0,0,0,0);
+		SDL_BlitSurface(pTemp[0],&srcRect,pTemp[2],&dstRect);
 
 		// Set the colour key to enable transparency.
-		int iColKey = SDL_MapRGB(pEmpty->format,r,g,b);
-		SDL_SetColorKey(pEmpty,SDL_SRCCOLORKEY,iColKey);
-		pResult = SDL_DisplayFormatAlpha(pEmpty);
-		SDL_FreeSurface(pEmpty);
+		int iColKey = SDL_MapRGB(pTemp[2]->format,r,g,b);
+		SDL_SetColorKey(pTemp[2],SDL_SRCCOLORKEY,iColKey);
+		pTemp[1] = SDL_DisplayFormatAlpha(pTemp[2]);
 
-		glGenTextures(1,&pResult2);
-		glBindTexture(GL_TEXTURE_2D,pResult2);
+		glGenTextures(1,&iTexture);
+		glBindTexture(GL_TEXTURE_2D,iTexture);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-		glTexImage2D(GL_TEXTURE_2D,0,pResult->format->BytesPerPixel, pResult->w, pResult->h, 0,
-                      GL_BGRA,GL_UNSIGNED_BYTE,pResult->pixels);
+		glTexImage2D(GL_TEXTURE_2D,0,pTemp[1]->format->BytesPerPixel, pTemp[1]->w, pTemp[1]->h, 0,
+                      GL_BGRA,GL_UNSIGNED_BYTE,pTemp[1]->pixels);
 
-
+		for( int i = 0; i < 3; i++ ) if( pTemp[i] ) { SDL_FreeSurface(pTemp[i]); pTemp[i] = NULL; }
+		m_Surfaces.insert(make_pair(sFileName,iTexture));
 		
-		m_Surfaces.insert(make_pair(sFileName,pResult2));
-		return pResult2;
+		return iTexture;
 	}
 
 	return it->second;

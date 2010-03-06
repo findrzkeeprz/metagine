@@ -72,9 +72,9 @@ void MTaskManager::UpdateTasks( void )
 	}
 
 	// Limit the engine tick rate.
-	//int iFrameCap = m_iFrameCap->GetValueInt();
-	//if( iFrameCap > 0 && m_FrameTimer.GetTicks() < ( 1000 / iFrameCap ) )
-	//	SDL_Delay(( 1000 / iFrameCap ) - (int)m_FrameTimer.GetTicks());
+	int iFrameCap = m_iFrameCap->GetValueInt();
+	if( iFrameCap > 0 && m_FrameTimer.GetTicks() < ( 1000 / iFrameCap ) )
+		SDL_Delay(( 1000 / iFrameCap ) - (int)m_FrameTimer.GetTicks());
 }
 
 void MTaskManager::KillTasks( void )
