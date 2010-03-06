@@ -31,7 +31,7 @@ public:
 
 	void VInit( void );
 	void VKill( void );
-	void VFrame( const int iDelta );
+	void VFrame( const float fDelta );
 
 	void PlaySound( const string sName );
 

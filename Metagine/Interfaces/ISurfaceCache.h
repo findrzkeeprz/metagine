@@ -24,8 +24,8 @@ public:
 
 	virtual ~ISurfaceCache( void ) { };
 
-	virtual void* SurfFromFile( string sFileName ) = 0;
-	virtual void* ClippedSurfFromFile( string sFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b ) = 0;
+	virtual unsigned int SurfFromFile( string sFileName ) = 0;
+	virtual unsigned int ClippedSurfFromFile( string sFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b ) = 0;
 };
 
 typedef shared_ptr<ISurfaceCache> ISurfaceCachePtr;

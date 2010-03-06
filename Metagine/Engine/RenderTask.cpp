@@ -62,10 +62,10 @@ void MRenderTask::VInit( void )
 	m_iResolution[0] = 1024;
 	m_iResolution[1] = 576;
 	
-	if( SDL_Init(SDL_INIT_EVERYTHING) == -1 ) {
+	if( SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) == -1 ) {
 		printf(" -! ERROR initialising SDL.\n");
 		return;
-	} else if( ( m_Screen = SDL_SetVideoMode(m_iResolution[0],m_iResolution[1],32,SDL_SWSURFACE|SDL_DOUBLEBUF) ) == NULL ) {
+	} else if( ( m_Screen = SDL_SetVideoMode(m_iResolution[0],m_iResolution[1],32,SDL_OPENGL) ) == NULL ) {
 		printf(" -! ERROR setting SDL video mode.\n");
 		return;
 	} else if( TTF_Init() == -1 ) {
@@ -77,7 +77,21 @@ void MRenderTask::VInit( void )
 	}
 
 	// Set the window caption.
-	SDL_WM_SetCaption("Metagine",NULL); 
+	SDL_WM_SetCaption("Metagine",NULL);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
+
+	glEnable( GL_TEXTURE_2D );
+	glClearColor(0.0f,0.0f,0.0f,0.0f);
+	glViewport(0,0,m_iResolution[0],m_iResolution[1]);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0.0f,m_iResolution[0],m_iResolution[1],0.0f,-1.0f,1.0f);
+	glMatrixMode(GL_TEXTURE);
+	glRotatef(180.0f,0.0f,0.0f,1.0f);
+	glScalef(-1.0f,1.0f,1.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void MRenderTask::VKill( void )
@@ -98,15 +112,17 @@ void MRenderTask::VKill( void )
 	TTF_Quit();
 }
 
-void MRenderTask::VFrame( const int iDelta )
+void MRenderTask::VFrame( const float fDelta )
 {
+	glClear(GL_COLOR_BUFFER_BIT);
 	// Render all queued objects.
 	vector<IDrawablePtr>::iterator it;
 	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it )
 		if( (*it)->GetActive() )
 			(*it)->Render((void*)m_Screen);
 
-	SDL_Flip(m_Screen);
+	SDL_GL_SwapBuffers();
+	//SDL_Flip(m_Screen);
 }
 
 

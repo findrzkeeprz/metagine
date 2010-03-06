@@ -25,7 +25,7 @@ m_bActive(false)
 	m_FrameTimer.Start();
 	m_TaskTimer.Start();
 
-	m_iFrameCap = Engine::GetInstance()->VarManager()->CreateVar("i_framecap",60);
+	m_iFrameCap = Engine::GetInstance()->VarManager()->CreateVar("i_framecap",0);
 }
 
 MTaskManager::~MTaskManager( void )
@@ -56,7 +56,7 @@ void MTaskManager::InitTasks( void )
 
 void MTaskManager::UpdateTasks( void )
 {
-	int iDelta = m_TaskTimer.GetTicks();
+	float fDelta = m_TaskTimer.GetTicks();
 	m_FrameTimer.Start();
 	
 	vector<pair<ITaskPtr,int>>::iterator task;
@@ -64,7 +64,7 @@ void MTaskManager::UpdateTasks( void )
 		if( !m_bEarlyAbort ) {
 			if( (*task).second == this->RENDER_TASK )
 				m_TaskTimer.Start();
-			(*task).first->VFrame(iDelta);
+			(*task).first->VFrame(fDelta);
 		} else {
 			m_bActive = false;
 			break;
@@ -72,9 +72,9 @@ void MTaskManager::UpdateTasks( void )
 	}
 
 	// Limit the engine tick rate.
-	int iFrameCap = m_iFrameCap->GetValueInt();
-	if( iFrameCap > 0 && m_FrameTimer.GetTicks() < ( 1000 / iFrameCap ) )
-		SDL_Delay( ( 1000 / iFrameCap ) - m_FrameTimer.GetTicks());
+	//int iFrameCap = m_iFrameCap->GetValueInt();
+	//if( iFrameCap > 0 && m_FrameTimer.GetTicks() < ( 1000 / iFrameCap ) )
+	//	SDL_Delay(( 1000 / iFrameCap ) - (int)m_FrameTimer.GetTicks());
 }
 
 void MTaskManager::KillTasks( void )

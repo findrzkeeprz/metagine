@@ -48,7 +48,7 @@ public:
 	float GetDepth( void );
 
 	// Documented in IInputListener.h
-	void UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown );
+	void UpdateInput( const Uint8* pKeyState, const int iKey, const bool bKeyDown );
 
 private:
 

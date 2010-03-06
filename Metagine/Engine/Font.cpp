@@ -88,7 +88,7 @@ void MFont::SetAlpha( int iAlpha )
 
 void MFont::SetText( string& sMsg )
 {
-	if( !sMsg.c_str() ) {
+	/*if( !sMsg.c_str() ) {
 		printf(" -! ERROR invalid message string in MFont::SetText().\n");
 		return;
 	} else if( !m_Font ) {
@@ -100,7 +100,7 @@ void MFont::SetText( string& sMsg )
 		if( m_Surface ) SDL_FreeSurface(m_Surface);
 		m_Surface = TTF_RenderText_Blended(m_Font,sMsg.c_str(),m_Colour);
 		m_sLastMsg = sMsg;
-	}
+	}*/
 }
 
 void MFont::SetPosition( int x, int y )
@@ -121,7 +121,7 @@ float MFont::GetDepth( void )
 
 void MFont::Render( void* pSurface )
 {
-	if( !m_Surface ) {
+	/*if( !m_Surface ) {
 		printf(" -! ERROR invalid surface in MFont::Render().\n");
 		return;
 	}
@@ -131,5 +131,5 @@ void MFont::Render( void* pSurface )
 	Rect.y = m_Coords[1];
 
 	//SDL_SetAlpha(m_Surface,SDL_RLEACCEL|SDL_SRCALPHA,m_iAlpha);
-	SDL_BlitSurface(m_Surface,NULL,(SDL_Surface*)pSurface,&Rect);
+	SDL_BlitSurface(m_Surface,NULL,(SDL_Surface*)pSurface,&Rect);*/
 }

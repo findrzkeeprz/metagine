@@ -28,12 +28,12 @@ public:
 	MSurfaceCache( void );
 	~MSurfaceCache( void );
 
-	void* SurfFromFile( string sFileName );
-	void* ClippedSurfFromFile( string sFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b );
+	unsigned int SurfFromFile( string sFileName );
+	unsigned int ClippedSurfFromFile( string sFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b );
 
 private:
 
-	map<string,SDL_Surface*> m_Surfaces;
+	map<string,unsigned int> m_Surfaces;
 };
 
 typedef shared_ptr<MSurfaceCache> MSurfaceCachePtr;

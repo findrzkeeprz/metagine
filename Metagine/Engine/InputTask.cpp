@@ -47,31 +47,22 @@ void MInputTask::VKill( void )
 		}
 }
 
-void MInputTask::VFrame( const int iDelta )
+void MInputTask::VFrame( const float fDelta )
 {
 	while( SDL_PollEvent(&m_Event) ) {
 		if( m_Event.type == SDL_QUIT ) Engine::GetInstance()->TaskManager()->EarlyAbort();
-		else if( m_Event.type == SDL_KEYDOWN ) KeyDownEvent(m_Event.key.keysym.sym);
-		else if( m_Event.type == SDL_KEYUP ) KeyUpEvent(m_Event.key.keysym.sym);
+		else if( m_Event.type == SDL_KEYDOWN ) KeyEvent(m_Event.key.keysym.sym,true);
+		else if( m_Event.type == SDL_KEYUP ) KeyEvent(m_Event.key.keysym.sym,false);
 	}
 }
 
-void MInputTask::KeyDownEvent( int iKey )
+void MInputTask::KeyEvent( int iKey, bool bKeyDown )
 {
-	m_bKeysHeld[iKey] = true;
+	Uint8 *pKeyState = SDL_GetKeyState(NULL);
 	
 	vector<IInputListenerPtr>::iterator it;
 	for( it = m_Listeners.begin(); it < m_Listeners.end(); ++it )
-		(*it)->UpdateInput(m_bKeysHeld,iKey,true);		
-}
-
-void MInputTask::KeyUpEvent( int iKey )
-{
-	m_bKeysHeld[iKey] = false;
-	
-	vector<IInputListenerPtr>::iterator it;
-	for( it = m_Listeners.begin(); it < m_Listeners.end(); ++it )
-		(*it)->UpdateInput(m_bKeysHeld,iKey,false);		
+		(*it)->UpdateInput(pKeyState,iKey,bKeyDown);		
 }
 
 void MInputTask::SetKeyRepeat( int iDelay, int iInterval )

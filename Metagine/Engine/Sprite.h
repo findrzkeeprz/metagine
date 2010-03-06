@@ -20,24 +20,30 @@
 #include "../Public/Public.h"
 #include "../Public/BaseTypes.h"
 
+typedef struct MTexture_s
+{
+	unsigned int iTexture;
+	int iWidth;
+	int iHeight;
+} MTexture_t;
+
 class MSprite : public ISprite
 {
 public:
 
 	/// Default constructor (takes no arguments).
 	MSprite( void );
-	MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, float fDepth );
-	MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, 
-		int x, int y, int iWidth, int iHeight, int r, int g, int b, float fDepth );
+	MSprite( const char* pszFileName, int iWidth, int iHeight, float fDepth );
+	MSprite( const char* pszFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b, float fDepth );
 	MSprite( const char* pszXmlFile );
 
 	/// Destructor method.
 	~MSprite( void );
 	
 	// Documented in ISprite.h
-	void SetPosition( int x, int y );
-	int GetPositionX( void );
-	int GetPositionY( void );
+	void SetPosition( float x, float y );
+	float GetPositionX( void );
+	float GetPositionY( void );
 	void SetRotation( double iAngle );
 	void SetFrame( int iFrame );
 	int GetFrame( void );
@@ -45,7 +51,7 @@ public:
 	void Animate( bool bLoop );
 	int GetWidth( void );
 	int GetHeight( void );
-	void* GetSurface( void );
+	unsigned int GetSurface( void );
 
 	// Documented in IDrawable.h
 	bool GetActive( void );
@@ -58,15 +64,12 @@ private:
 
 private:
 
-	SDL_Surface** m_RotSurfaces;
-	vector<SDL_Surface*> m_FramesCache;
+	vector<MTexture_t> m_FramesCache;
 	MTimer m_FrameTimer;
 	int m_iFrame;
 	int m_iFrameDelay;
-	int m_Coords[2];
-	double m_dAngle;
+	float m_fCoords[2];
 	bool m_bActive;
-	int m_iRotateSteps;
 	float m_fDepth;
 };
 

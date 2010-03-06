@@ -183,10 +183,10 @@ void MConsole::Render( void* pSurface )
 	m_Font->Render(pSurface);
 }
 
-void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown )
+void MConsole::UpdateInput( const Uint8* pKeyState, const int iKey, const bool bKeyDown )
 {
 	// Toggle the console.
-	if( bKeys[SDLK_F5] && !m_bToggling ) {
+	if( pKeyState[SDLK_F5] && !m_bToggling ) {
 		if( m_bActive->GetValueBool() ) {
 			m_bToggleAnimUp = true;
 			Engine::GetInstance()->InputManager()->SetKeyRepeat(1,1);
@@ -198,7 +198,7 @@ void MConsole::UpdateInput( const bool bKeys[], const int iKey, const bool bKeyD
 	}
 
 	if( m_bActive->GetValueBool() && bKeyDown ) {
-		bool bShiftMod = ( bKeys[SDLK_LSHIFT] || bKeys[SDLK_RSHIFT] ) ? true : false;
+		bool bShiftMod = ( pKeyState[SDLK_LSHIFT] || pKeyState[SDLK_RSHIFT] ) ? true : false;
 		switch( iKey ) {
 			case SDLK_a: { m_sCurrentBuffer.append((bShiftMod == true) ? "A" : "a"); } break;
 			case SDLK_b: { m_sCurrentBuffer.append((bShiftMod == true) ? "B" : "b"); } break;

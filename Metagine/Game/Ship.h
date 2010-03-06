@@ -31,16 +31,16 @@ public:
 	~MShip( void );
 
 	// Documented in IInputListener.h
-	void UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown );
+	void UpdateInput( const Uint8* pKeyState, const int iKey, const bool bKeyDown );
 
 	// Documented in IEntity.h
-	void UpdateLogic( int iDelta );
+	void UpdateLogic( float fDelta );
 	bool GetActive( void );
 	bool GetExpired( void );
 	//float GetPositionX( void ) { return m_fPosition[0]; }
 	//float GetPositionY( void ) { return m_fPosition[0]; }
 	ISpritePtr GetSprite( void ) { return m_ShipSprite; }
-	void CollisionEvent( const IEntityPtr pEntity, const int iType, const int iDelta );
+	void CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta );
 	void VKill( void );
 	void SetVelocity( MVector2& vVelocity );
 	void SetPosition( float x, float y );

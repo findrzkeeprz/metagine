@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(SolutionDir)\$(ProjectName)\Libraries\SDL.lib $(SolutionDir)\$(ProjectName)\Libraries\SDLmain.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_ttf.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_gfx.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_image.lib winmm.lib $(SolutionDir)\$(ProjectName)\Libraries\Box2D.lib $(SolutionDir)\$(ProjectName)\Libraries\tinyxml.lib $(SolutionDir)\$(ProjectName)\Libraries\fmodvc.lib"
+				AdditionalDependencies="$(SolutionDir)\$(ProjectName)\Libraries\SDL.lib $(SolutionDir)\$(ProjectName)\Libraries\SDLmain.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_ttf.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_gfx.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_image.lib winmm.lib opengl32.lib $(SolutionDir)\$(ProjectName)\Libraries\Box2D.lib $(SolutionDir)\$(ProjectName)\Libraries\tinyxml.lib $(SolutionDir)\$(ProjectName)\Libraries\fmodvc.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -135,6 +135,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="$(SolutionDir)\$(ProjectName)\Libraries\SDL.lib $(SolutionDir)\$(ProjectName)\Libraries\SDLmain.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_ttf.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_image.lib winmm.lib opengl32.lib $(SolutionDir)\$(ProjectName)\Libraries\tinyxml.lib $(SolutionDir)\$(ProjectName)\Libraries\fmodvc.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"

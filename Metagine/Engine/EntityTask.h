@@ -31,7 +31,7 @@ public:
 	~MEntityTask( void );
 
 	void VInit( void );
-	void VFrame( const int iDelta );
+	void VFrame( const float fDelta );
 	void VKill( void );
 
 	void RegisterEntity( IEntityPtr pEntity );

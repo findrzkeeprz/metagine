@@ -10,11 +10,11 @@ public:
 	~MBaseEnemy( void );
 
 	// Documented in IEntity.h
-	void UpdateLogic( int iDelta );
+	void UpdateLogic( float fDelta );
 	bool GetActive( void );
 	bool GetExpired( void );
 	ISpritePtr GetSprite( void ) { return m_TestSprite; }
-	void CollisionEvent( const IEntityPtr pEntity, const int iType, const int iDelta );
+	void CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta );
 	void VKill( void );
 	void SetVelocity( MVector2& vVelocity );
 	void SetPosition( float x, float y );

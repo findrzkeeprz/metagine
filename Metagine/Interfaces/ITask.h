@@ -25,7 +25,7 @@ public:
     
     virtual ~ITask( void ) { };    
 	virtual void VInit( void ) = 0;
-	virtual void VFrame( const int iDelta ) = 0;
+	virtual void VFrame( const float fDelta ) = 0;
 	virtual void VKill( void ) = 0;
 };
 

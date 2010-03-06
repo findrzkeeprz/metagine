@@ -28,7 +28,7 @@ public:
 
 	virtual void ProcessEntityPairs( void ) = 0;
 	virtual void DeterminePartition( IEntityPtr pEntity ) = 0;
-	virtual void Resolve( vector<IEntityPtr> Entities, int iDelta ) = 0;
+	virtual void Resolve( vector<IEntityPtr>& Entities, float fDelta ) = 0;
 	virtual int GetEntitiesInPartition( const int iPartition ) = 0;
 };
 

@@ -46,7 +46,7 @@ public:
 	
 	void VInit( void );
 	void VKill( void );
-	void VFrame( const int iDelta );
+	void VFrame( const float fDelta );
 
 	/// Determines whether the TTF font library has been loaded.
 	bool FontLibLoaded( void );

@@ -26,7 +26,7 @@ public:
     virtual ~IInputListener( void ) { };
 
     /// Virtual method to update the listener.
-	virtual void UpdateInput( const bool bKeys[], const int iKey, const bool bKeyDown ) = 0;
+	virtual void UpdateInput( const Uint8* pKeyState, const int iKey, const bool bKeyDown ) = 0;
 };
 
 typedef shared_ptr<IInputListener> IInputListenerPtr;

@@ -19,70 +19,69 @@
 #include "Engine.h"
 
 MSprite::MSprite( void ) :
-m_dAngle(0.0),
 m_bActive(false),
-m_iRotateSteps(0),
 m_fDepth(0.0f),
 m_iFrame(0),
 m_iFrameDelay(0)
 {
-	m_Coords[0] = 0;
-	m_Coords[1] = 0;
+	m_fCoords[0] = 0;
+	m_fCoords[1] = 0;
 	
 	printf(" -> MSprite object created (default).\n");
 }
 
-MSprite::MSprite( const char *pszFileName, int iRotateSteps, bool bSmooth, float fDepth ) :
-m_dAngle(0.0),
+MSprite::MSprite( const char *pszFileName, int iWidth, int iHeight, float fDepth ) :
 m_bActive(true),
-m_iRotateSteps(iRotateSteps),
 m_fDepth(fDepth),
 m_iFrame(0),
 m_iFrameDelay(0)
 {
-	m_Coords[0] = 0;
-	m_Coords[1] = 0;
+	m_fCoords[0] = 0;
+	m_fCoords[1] = 0;
 
-	SDL_Surface* pSurface = NULL;
-	if( ( pSurface = (SDL_Surface*)Engine::GetInstance()->SurfaceCache()->SurfFromFile(pszFileName) ) == NULL ) {
+	unsigned int pSurface = NULL;
+	if( ( pSurface = Engine::GetInstance()->SurfaceCache()->SurfFromFile(pszFileName) ) == 0 ) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
 		return;
 	}
 
 	// Add to the frame list and rendering queue.
-	m_FramesCache.push_back(pSurface);
+	MTexture_t texture;
+	texture.iTexture = pSurface;
+	texture.iWidth = iWidth;
+	texture.iHeight = iHeight;
+	m_FramesCache.push_back(texture);
 	//Engine::GetInstance()->Renderer()->RegisterDrawable(shared_from_this());
 }
 
-MSprite::MSprite( const char* pszFileName, int iRotateSteps, bool bSmooth, 
-				 int x, int y, int iWidth, int iHeight, int r, int g, int b, float fDepth ) :
-m_dAngle(0.0),
+MSprite::MSprite( const char* pszFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b, float fDepth ) :
 m_bActive(true),
-m_iRotateSteps(iRotateSteps),
 m_fDepth(fDepth),
 m_iFrame(0),
 m_iFrameDelay(0)
 {
-	m_Coords[0] = 0;
-	m_Coords[1] = 0;
+	m_fCoords[0] = 0;
+	m_fCoords[1] = 0;
 	
-	SDL_Surface* pSurface = NULL;
+	unsigned int pSurface = NULL;
 	string sFileFrame = pszFileName;
 	sFileFrame.append((boost::format("+%1%,%2%,%3%,%4%") % x % y % iWidth % iHeight).str());
-	if( ( pSurface = (SDL_Surface*)Engine::GetInstance()->SurfaceCache()->ClippedSurfFromFile(sFileFrame,x,y,iWidth,iHeight,r,g,b) ) == NULL ) {
+	if( ( pSurface = Engine::GetInstance()->SurfaceCache()->ClippedSurfFromFile(sFileFrame,x,y,iWidth,iHeight,r,g,b) ) == 0 ) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
 		return;
 	}
 
 	// Add to the frame list and rendering queue.
-	m_FramesCache.push_back(pSurface);
+	MTexture_t texture;
+	texture.iTexture = pSurface;
+	texture.iWidth = iWidth;
+	texture.iHeight = iHeight;
+	m_FramesCache.push_back(texture);
 	//Engine::GetInstance()->Renderer()->RegisterDrawable(shared_from_this());
 }
 
 MSprite::MSprite( const char* pszXmlFile ) :
-m_dAngle(0.0),
 m_bActive(true),
-m_iRotateSteps(0),
 m_fDepth(0.0f),
 m_iFrame(0),
 m_iFrameDelay(0)
@@ -99,57 +98,29 @@ m_iFrameDelay(0)
 
 MSprite::~MSprite( void )
 {
-	//Engine::GetInstance()->Renderer()->RemoveDrawable(shared_from_this());
-	//SDL_FreeSurface(m_Surface);
-
-	// We skip [0] since it points to m_Surface.
-	//if( m_iRotateSteps > 0 ) {
-	//	for( int i = 0; i < m_iRotateSteps; i++ ) {
-	//		SDL_FreeSurface(m_RotSurfaces[i]);
-	//	}
-	//	delete[] m_RotSurfaces;
-	//}
-	/*int iFrames = 0;
-	vector<SDL_Surface*>::iterator it;
-	for( it = m_FramesCache.begin(); it < m_FramesCache.end(); ++it ) {
-		if( *it ) {
-			SDL_FreeSurface(*it);
-			iFrames++;
-		}
-	}*/
+	m_FramesCache.clear();
 
 	printf(" -> MSprite object destructed.\n");
 }
 
-void MSprite::SetPosition( int x, int y )
+void MSprite::SetPosition( float x, float y )
 {
-	m_Coords[0] = x;
-	m_Coords[1] = y;
+	m_fCoords[0] = x;
+	m_fCoords[1] = y;
 }
 
-int MSprite::GetPositionX( void )
+float MSprite::GetPositionX( void )
 {
-	return m_Coords[0];
+	return m_fCoords[0];
 }
 
-int MSprite::GetPositionY( void )
+float MSprite::GetPositionY( void )
 {
-	return m_Coords[1];
+	return m_fCoords[1];
 }
 
 void MSprite::SetRotation( double iAngle )
 {
-	/*double dFraction = 360.00 / m_iRotateSteps;
-	
-	
-	for( int i = 0; i < m_iRotateSteps; i++ ) {
-		if( iAngle > (i * dFraction) && iAngle < (i + 1) * dFraction) {
-		//if(isBetween(iAngle,i * dFraction,(i + 1) * dFraction))
-			m_iAngle = i;
-			return;
-		}
-	}*/
-	m_dAngle = iAngle;
 }
 
 void MSprite::SetFrame( int iFrame )
@@ -225,13 +196,17 @@ bool MSprite::ParseFromXml( const char* pszXmlFile )
 		string sFileFrame = sFileName;
 		sFileFrame.append((boost::format("+%1%,%2%,%3%,%4%") % x % y % w % h).str());
 
-		SDL_Surface* pSurface = NULL;
-		if( ( pSurface = (SDL_Surface*)Engine::GetInstance()->SurfaceCache()->ClippedSurfFromFile(sFileFrame,x,y,w,h,r,g,b) ) == NULL ) {
+		unsigned int pSurface = NULL;
+		if( ( pSurface = Engine::GetInstance()->SurfaceCache()->ClippedSurfFromFile(sFileFrame,x,y,w,h,r,g,b) ) == 0 ) {
 			printf(" -! ERROR unable to load sprite file in MSprite::ParseFromXml().\n");
 			return false;
 		}
 
-		m_FramesCache.push_back(pSurface);
+		MTexture_t texture;
+		texture.iTexture = pSurface;
+		texture.iWidth = w;
+		texture.iHeight = h;
+		m_FramesCache.push_back(texture);
 		iCount++;
 	}
 
@@ -251,27 +226,36 @@ float MSprite::GetDepth( void )
 
 int MSprite::GetWidth( void )
 {
-	return m_FramesCache[m_iFrame]->w;
+	return m_FramesCache[m_iFrame].iWidth;
 }
 
 int MSprite::GetHeight( void )
 {
-	return m_FramesCache[m_iFrame]->h;
+	return m_FramesCache[m_iFrame].iHeight;
 }
 
-void* MSprite::GetSurface( void )
+unsigned int MSprite::GetSurface( void )
 {
-	return (void*)m_FramesCache[m_iFrame];
+	return m_FramesCache[m_iFrame].iTexture;
 }
 
 void MSprite::Render( void* pSurface )
 {
-	// Scale to give impression of rotation around the center.
-	SDL_Rect Rect;
-	Rect.x = m_iRotateSteps > 0 ? m_Coords[0] - (m_RotSurfaces[(int)m_dAngle]->w / 2) : m_Coords[0];
-	Rect.y = m_iRotateSteps > 0 ? m_Coords[1] - (m_RotSurfaces[(int)m_dAngle]->h / 2) : m_Coords[1];
-
-	/*if( m_iRotateSteps == 0 )*/ 
-	SDL_BlitSurface(m_FramesCache[m_iFrame],NULL,(SDL_Surface*)pSurface,&Rect);
-	//else SDL_BlitSurface(m_RotSurfaces[(int)m_dAngle],NULL,(SDL_Surface*)pSurface,&Rect);
+	glPushMatrix();
+	glTranslatef(m_fCoords[0],m_fCoords[1],0.0f);
+	glBindTexture(GL_TEXTURE_2D,m_FramesCache[m_iFrame].iTexture);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.0f,1.0f);
+		glVertex2f(0.0f,0.0f);
+		glTexCoord2f(1.0f,1.0f);
+		glVertex2f((float)m_FramesCache[m_iFrame].iWidth,0.0f);
+		glTexCoord2f(1.0f,0.0f);
+		glVertex2f((float)m_FramesCache[m_iFrame].iWidth,(float)m_FramesCache[m_iFrame].iHeight);
+		glTexCoord2f(0.0f,0.0f);
+		glVertex2f(0.0f,(float)m_FramesCache[m_iFrame].iHeight);
+	glEnd();
+	glPopMatrix();
+	glDisable(GL_BLEND);
 }

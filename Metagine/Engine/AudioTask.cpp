@@ -44,8 +44,11 @@ void MAudioTask::VKill( void )
 	FSOUND_Close();
 }
 
-void MAudioTask::VFrame( const int iDelta )
+void MAudioTask::VFrame( const float fDelta )
 {
+	if( m_AudioQueue.size() == 0 )
+		return;
+	
 	// Render all queued objects.
 	vector<FSOUND_SAMPLE*>::iterator sample;
 	for( sample = m_AudioQueue.begin(); sample < m_AudioQueue.end(); ++sample )

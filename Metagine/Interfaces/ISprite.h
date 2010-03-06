@@ -38,7 +38,7 @@ public:
 	/// this to an off-screen positions will cause the sprite to not be drawn.
 	/// @param x The x-screen coordinate.
 	/// @param y The y-screen coordinate.
-	virtual void SetPosition( int x, int y ) = 0;
+	virtual void SetPosition( float x, float y ) = 0;
 	
 	/// Sets the rotation of the sprite.
 	/// This will only work if the sprite was created with the relevant settings
@@ -47,10 +47,10 @@ public:
 	/// @param iAngle An angle between 0 and 359.
 	virtual void SetRotation( double iAngle ) = 0;
 
-	virtual int GetPositionX( void ) = 0;
-	virtual int GetPositionY( void ) = 0;
+	virtual float GetPositionX( void ) = 0;
+	virtual float GetPositionY( void ) = 0;
 
-	virtual void* GetSurface( void ) = 0;
+	virtual unsigned int GetSurface( void ) = 0;
 
 	virtual int GetWidth( void ) = 0;
 	virtual int GetHeight( void ) = 0;

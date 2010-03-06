@@ -38,8 +38,8 @@ MGameBoard::~MGameBoard( void )
 
 void MGameBoard::Init( void )
 {
-	m_BgSprite = ISpritePtr(new MSprite("SpaceBG.png",0,true,1.0f));
-	m_pMonkey = ISpritePtr(new MSprite("gogorisset1.png",0,true,273,9,37,42,255,0,255,0.0f));
+	m_BgSprite = ISpritePtr(new MSprite("SpaceBG.png",1024,576,1.0f));
+	m_pMonkey = ISpritePtr(new MSprite("gogorisset1.png",273,9,37,42,255,0,255,0.0f));
 	m_PlayerShip = IListenEntityPtr(new MShip());
 	//m_pEnemy = IEntityPtr(new MBaseEnemy(20.0f,80.0f));
 	

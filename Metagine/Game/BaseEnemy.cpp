@@ -11,8 +11,6 @@ m_pBoard(pBoard),
 m_iIndex(iIndex),
 m_iRow(iRow)
 {
-	printf("iRow: %i\n",iRow);
-	
 	switch( iRow ) {
 		case 0: { m_TestSprite = ISpritePtr(new MSprite("Enemy1.xml")); } break;
 		case 1: { m_TestSprite = ISpritePtr(new MSprite("Enemy2.xml")); } break;
@@ -38,14 +36,14 @@ MBaseEnemy::~MBaseEnemy( void )
 	printf(" -> MBaseEnemy object deleted.\n");
 }
 
-void MBaseEnemy::UpdateLogic( int iDelta )
+void MBaseEnemy::UpdateLogic( float fDelta )
 {
-	m_TestSprite->Animate(true);
-	m_vPosition += ( ( m_vVelocity * (float)iDelta ) / 1000.0f );
-	m_TestSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
+	//m_TestSprite->Animate(true);
+	m_vPosition += ( ( m_vVelocity * (float)fDelta ) / 1000.0f );
+	m_TestSprite->SetPosition(m_vPosition.x,m_vPosition.y);
 
 	//if( m_ShotTimer.GetTicks() > 5000 && ( rand() % 8 + 1 ) == 5 ) {
-	if( ( rand() % 1000 + 1 ) == 500 ) {
+	/*if( ( rand() % 1000 + 1 ) == 500 ) {
 		if( m_iRow == INVADERS_NUM_ROWS - 1 ) {
 			IEntityPtr pBullet(new MBaseProjectile(2,m_vPosition.x + 15,m_vPosition.y + 35,400.0f));
 			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet);
@@ -60,13 +58,13 @@ void MBaseEnemy::UpdateLogic( int iDelta )
 			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet);
 			Engine::GetInstance()->AudioTask()->PlaySound("Shoot2.wav");
 		}
-	}
+	}*/
 
 	//	m_ShotTimer.Start();
 	//}
 }
 
-void MBaseEnemy::CollisionEvent( const IEntityPtr pEntity, const int iType, const int iDelta )
+void MBaseEnemy::CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta )
 {
 	if( iType == COLLISION_ENTITY )
 		m_bExpired = true;
@@ -99,7 +97,7 @@ void MBaseEnemy::SetPosition( float x, float y )
 {
 	m_vPosition.x = x;
 	m_vPosition.y = y;
-	m_TestSprite->SetPosition((int)m_vPosition.x,(int)m_vPosition.y);
+	m_TestSprite->SetPosition(m_vPosition.x,m_vPosition.y);
 }
 
 MVector2 MBaseEnemy::GetPosition( void )

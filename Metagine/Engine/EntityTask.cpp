@@ -46,8 +46,11 @@ void MEntityTask::VKill( void )
 	m_pCollisionResolver.reset();
 }
 
-void MEntityTask::VFrame( const int iDelta )
+void MEntityTask::VFrame( const float fDelta )
 {
+	if( m_Entities.size() == 0 )
+		return;
+	
 	// Perform a pre-frame check and queue expired entities for deletion.
 	vector<IEntityPtr>::iterator entity;
 	for( entity = m_Entities.begin(); entity < m_Entities.end(); ++entity ) {
@@ -70,10 +73,10 @@ void MEntityTask::VFrame( const int iDelta )
 	// Advance active entities forwards one game frame.
 	for( entity = m_Entities.begin(); entity < m_Entities.end(); ++entity ) {
 		if( (*entity)->GetActive() )
-			(*entity)->UpdateLogic(iDelta);
+			(*entity)->UpdateLogic(fDelta);
 	}
 
-	m_pCollisionResolver->Resolve(m_Entities,iDelta);
+	m_pCollisionResolver->Resolve(m_Entities,fDelta);
 }
 
 void MEntityTask::RegisterEntity( IEntityPtr pEntity )

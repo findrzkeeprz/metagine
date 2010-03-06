@@ -33,7 +33,7 @@ public:
 	
 	void VInit( void );
 	void VKill( void );
-	void VFrame( const int iDelta );
+	void VFrame( const float fDelta );
 	
 	void SetKeyRepeat( int iDelay, int iInterval );
 	void RegisterListener( IInputListenerPtr pListener );
@@ -41,8 +41,7 @@ public:
 
 private:
 
-	void KeyDownEvent( int iKey );
-	void KeyUpEvent( int iKey );
+	void KeyEvent( int iKey, bool bDown );
 
 private:
 

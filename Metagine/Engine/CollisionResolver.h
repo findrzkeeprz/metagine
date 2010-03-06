@@ -36,14 +36,15 @@ public:
 	void ProcessEntityPairs( void );
 	void DeterminePartition( IEntityPtr pEntity );
 	bool CheckScreenBoundary( IEntityPtr pEntity );
-	void Resolve( vector<IEntityPtr> Entities, int iDelta );
+	void Resolve( vector<IEntityPtr>& Entities, float fDelta );
 	int GetEntitiesInPartition( const int iPartition );
+	bool RectangleIntersects( float x1, float y1, float x2, float y2, int w1, int h1, int w2, int h2 );
 
 private:
 
 	vector<IEntityPtr> m_Partitions[4];
 	vector<pair<IEntityPtr,IEntityPtr>> m_EntityPairs;
-	int m_iDelta;
+	float m_fDelta;
 	int m_iLastSize[4];
 };
 
