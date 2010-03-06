@@ -533,18 +533,10 @@
 			<Filter
 				Name="Header Files"
 				>
-				<File
-					RelativePath=".\ThirdParty\SDL_collide.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Source Files"
 				>
-				<File
-					RelativePath=".\ThirdParty\SDL_collide.cpp"
-					>
-				</File>
 			</Filter>
 		</Filter>
 		<File

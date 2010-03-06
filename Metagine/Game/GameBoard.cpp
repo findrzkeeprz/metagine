@@ -46,7 +46,6 @@ void MGameBoard::Init( void )
 	
 	for( int i = 0; i < INVADERS_NUM_ROWS; ++i ) {
 		for( int j = 0; j < INVADERS_NUM_COLS; ++j ) {
-			//m_pEnemies[i][j] = IEntityPtr(new MBaseEnemy(20.0f + (j * 50),80.0f + (i * 30),this,j,i));
 			m_pEnemies[i][j] = IEntityPtr(new MBaseEnemy(MVector2(20.0f + (j * 50),80.0f + (i * 30)),this,j,i));
 			Engine::GetInstance()->EntityManager()->RegisterEntity(m_pEnemies[i][j]);
 		}
