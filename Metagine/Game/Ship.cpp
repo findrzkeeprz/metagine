@@ -23,24 +23,23 @@
 #include "../Engine/RenderTask.h"
 
 MShip::MShip( void ) :
-m_bActive(true),
-m_bExpired(false),
+MBaseEntity(MVector2(0.0f,0.0f),MVector2(0.0f,0.0f),true),
 m_bFireLock(false),
 m_bFlipFlop(false)
 {
 	// This will all need to go through the engine interface in future.
 	//m_ShipSprite(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
 	//m_ShipSprite = ISpritePtr(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
-	m_ShipSprite = ISpritePtr(new MSprite("gogorisset1.png",52,13,39,36,255,0,255,0.99f));
-	Engine::GetInstance()->Renderer()->RegisterDrawable(m_ShipSprite);
+	m_pSprite = ISpritePtr(new MSprite("gogorisset1.png",52,13,39,36,255,0,255,0.99f));
+	Engine::GetInstance()->Renderer()->RegisterDrawable(m_pSprite);
 	
 	// Center the ship on the center of the screen initially.
-	int iCenter = (Engine::GetInstance()->Renderer()->GetScreenWidth() / 2) - ( m_ShipSprite->GetWidth() / 2 );
+	int iCenter = (Engine::GetInstance()->Renderer()->GetScreenWidth() / 2) - ( m_pSprite->GetWidth() / 2 );
 	m_vPosition.x = (float)iCenter;
 	m_vPosition.y = 520.0f;
 	m_vVelocity.Zero();
 	m_vAcceleration.Zero();
-	m_ShipSprite->SetPosition(m_vPosition.x,m_vPosition.y);
+	m_pSprite->SetPosition(m_vPosition.x,m_vPosition.y);
 	
 	//Engine::GetInstance()->InputManager()->RegisterListener(this);
 	//Engine::GetInstance()->RegisterEntity(this);
@@ -66,18 +65,28 @@ void MShip::UpdateInput( const Uint8* pKeyState, const int iKey, const bool bKey
 
 	if( pKeyState[SDLK_SPACE] && !m_bFireLock ) {
 		if( !m_bFlipFlop ){
-			IEntityPtr pBullet(new MBaseProjectile(0,m_vPosition.x - 1,m_vPosition.y - 35,-300.0f));
+			//IEntityPtr pBullet(new MBaseProjectile(0,m_vPosition.x - 1,m_vPosition.y - 35,-300.0f));
+			IEntityPtr pBullet(new MBaseProjectile(MVector2(m_vPosition.x - 1,m_vPosition.y - 35),
+				MVector2(0.0f,-300.0f),0));
+
 			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet);
 
-			IEntityPtr pBullet2(new MBaseProjectile(0,(m_vPosition.x + m_ShipSprite->GetWidth()) - 4,m_vPosition.y - 35,-300.0f));
+			//IEntityPtr pBullet2(new MBaseProjectile(0,(m_vPosition.x + m_ShipSprite->GetWidth()) - 4,m_vPosition.y - 35,-300.0f));
+			IEntityPtr pBullet2(new MBaseProjectile(MVector2((m_vPosition.x + m_pSprite->GetWidth()) - 4,m_vPosition.y - 35),
+				MVector2(0.0f,-300.0f),0));
 			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet2);
 
 			m_bFlipFlop = !m_bFlipFlop;
 		} else {
-			IEntityPtr pBullet3(new MBaseProjectile(1,m_vPosition.x + 8,m_vPosition.y - 35,-500.0f));
+			//IEntityPtr pBullet3(new MBaseProjectile(1,m_vPosition.x + 8,m_vPosition.y - 35,-500.0f));
+			IEntityPtr pBullet3(new MBaseProjectile(MVector2(m_vPosition.x + 8,m_vPosition.y - 35),
+				MVector2(0.0f,-500.0f),1));
+
 			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet3);
 
-			IEntityPtr pBullet4(new MBaseProjectile(1,m_vPosition.x + m_ShipSprite->GetWidth() - 11,m_vPosition.y - 35,-500.0f));
+			//IEntityPtr pBullet4(new MBaseProjectile(1,m_vPosition.x + m_ShipSprite->GetWidth() - 11,m_vPosition.y - 35,-500.0f));
+			IEntityPtr pBullet4(new MBaseProjectile(MVector2(m_vPosition.x + m_pSprite->GetWidth() - 11,m_vPosition.y - 35),
+				MVector2(0.0f,-500.0f),1));
 			Engine::GetInstance()->EntityManager()->RegisterEntity(pBullet4);
 
 			m_bFlipFlop = !m_bFlipFlop;
@@ -112,54 +121,22 @@ void MShip::UpdateLogic( float fDelta )
 	if(m_vVelocity.Magnitude() < m_fCutOff->GetValueFloat()) 
 		m_vVelocity.Zero();
 		
-	m_ShipSprite->SetPosition(m_vPosition.x,m_vPosition.y);
+	m_pSprite->SetPosition(m_vPosition.x,m_vPosition.y);
 }
 
 void MShip::CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta )
 {
 	if( iType == COLLISION_LEFT_SCREEN || iType == COLLISION_RIGHT_SCREEN ) {
 		m_vPosition.x -= ( ( m_vVelocity.x * fDelta ) / 1000.0f );
-		m_ShipSprite->SetPosition(m_vPosition.x,m_vPosition.y);
+		m_pSprite->SetPosition(m_vPosition.x,m_vPosition.y);
 		m_vVelocity.x = 0.0f;
 	} else if( iType == COLLISION_UPPER_SCREEN || iType == COLLISION_LOWER_SCREEN ) {
 		m_vPosition.y += ( ( -m_vVelocity.y * fDelta ) / 1000.0f );
-		m_ShipSprite->SetPosition(m_vPosition.x,m_vPosition.y);
+		m_pSprite->SetPosition(m_vPosition.x,m_vPosition.y);
 		m_vVelocity.y = 0.0f;
 	}
 }
 
-bool MShip::GetActive( void )
-{
-	return m_bActive;
-}
-
-bool MShip::GetExpired( void )
-{
-	return m_bExpired;
-}
-
 void MShip::VKill( void )
 {
-}
-
-void MShip::SetVelocity( MVector2& vVelocity )
-{
-	m_vVelocity = vVelocity;
-}
-
-MVector2 MShip::GetVelocity( void )
-{
-	return m_vVelocity;
-}
-
-void MShip::SetPosition( float x, float y )
-{
-	m_vPosition.x = x;
-	m_vPosition.y = y;
-	m_ShipSprite->SetPosition(m_vPosition.x,m_vPosition.y);
-}
-
-MVector2 MShip::GetPosition( void )
-{
-	return m_vPosition;
 }

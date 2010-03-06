@@ -486,6 +486,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Game\BaseEntity.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Game\BaseProjectile.h"
 					>
 				</File>
@@ -503,6 +507,10 @@
 				>
 				<File
 					RelativePath=".\Game\BaseEnemy.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Game\BaseEntity.cpp"
 					>
 				</File>
 				<File

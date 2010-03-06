@@ -40,19 +40,18 @@ void MGameBoard::Init( void )
 {
 	m_BgSprite = ISpritePtr(new MSprite("SpaceBG.png",1024,576,1.0f));
 	m_pMonkey = ISpritePtr(new MSprite("gogorisset1.png",273,9,37,42,255,0,255,0.0f));
-	m_PlayerShip = IListenEntityPtr(new MShip());
-	//m_pEnemy = IEntityPtr(new MBaseEnemy(20.0f,80.0f));
-	
+	m_PlayerShip = IEntityPtr(new MShip());
 	m_pMonkey->SetPosition(10,10);
+	
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_BgSprite);
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_pMonkey);
-
 	Engine::GetInstance()->EntityManager()->RegisterEntity(m_PlayerShip);
-	Engine::GetInstance()->InputManager()->RegisterListener(m_PlayerShip);
-
+	Engine::GetInstance()->InputManager()->RegisterListener(dynamic_pointer_cast<IInputListener>(m_PlayerShip));
+	
 	for( int i = 0; i < INVADERS_NUM_ROWS; ++i ) {
 		for( int j = 0; j < INVADERS_NUM_COLS; ++j ) {
-			m_pEnemies[i][j] = IEntityPtr(new MBaseEnemy(20.0f + (j * 50),80.0f + (i * 30),this,j,i));
+			//m_pEnemies[i][j] = IEntityPtr(new MBaseEnemy(20.0f + (j * 50),80.0f + (i * 30),this,j,i));
+			m_pEnemies[i][j] = IEntityPtr(new MBaseEnemy(MVector2(20.0f + (j * 50),80.0f + (i * 30)),this,j,i));
 			Engine::GetInstance()->EntityManager()->RegisterEntity(m_pEnemies[i][j]);
 		}
 	}
@@ -93,7 +92,7 @@ void MGameBoard::CollisionEvent( int iType, int iIndex, int iRow )
 				for( int j = 0; j < INVADERS_NUM_COLS; ++j ) {
 					if( m_pEnemies[i][j] ) {
 						MVector2 vPosition = m_pEnemies[i][j]->GetPosition();
-						m_pEnemies[i][j]->SetPosition(vPosition.x,vPosition.y + 20.0f);
+						m_pEnemies[i][j]->SetPosition(MVector2(vPosition.x,vPosition.y + 20.0f));
 					}
 				}
 			}

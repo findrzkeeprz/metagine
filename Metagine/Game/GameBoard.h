@@ -39,7 +39,7 @@ private:
 
 	ISpritePtr m_BgSprite;
 	ISpritePtr m_pMonkey;
-	IListenEntityPtr m_PlayerShip;
+	IEntityPtr m_PlayerShip;
 	IEntityPtr m_pEnemies[INVADERS_NUM_ROWS][INVADERS_NUM_COLS];
 	IEntityPtr m_pEnemy;
 	bool m_bRowShift;

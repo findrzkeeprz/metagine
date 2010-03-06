@@ -23,7 +23,9 @@
 #include "../Interfaces/IVar.h"
 #include "../Public/Vector2.h"
 
-class MShip : public IListenEntity
+#include "BaseEntity.h"
+
+class MShip : public IInputListener, public MBaseEntity
 {
 public:
 
@@ -35,29 +37,15 @@ public:
 
 	// Documented in IEntity.h
 	void UpdateLogic( float fDelta );
-	bool GetActive( void );
-	bool GetExpired( void );
-	//float GetPositionX( void ) { return m_fPosition[0]; }
-	//float GetPositionY( void ) { return m_fPosition[0]; }
-	ISpritePtr GetSprite( void ) { return m_ShipSprite; }
 	void CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta );
 	void VKill( void );
-	void SetVelocity( MVector2& vVelocity );
-	MVector2 GetVelocity( void );
-	void SetPosition( float x, float y );
-	MVector2 GetPosition( void );
 
 private:
 
-	ISpritePtr m_ShipSprite;
-	MVector2 m_vPosition;
-	MVector2 m_vVelocity;
 	MVector2 m_vAcceleration;
 	IVarPtr m_fFriction;
 	IVarPtr m_fImpulse;
 	IVarPtr m_fCutOff;
-	bool m_bActive;
-	bool m_bExpired;
 	bool m_bFireLock;
 	bool m_bFlipFlop;
 };

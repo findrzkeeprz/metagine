@@ -36,7 +36,7 @@ public:
 	virtual ISpritePtr GetSprite( void ) = 0;
 	virtual void SetVelocity( MVector2& vVelocity ) = 0;
 	virtual MVector2 GetVelocity( void ) = 0;
-	virtual void SetPosition( float x, float y ) = 0;
+	virtual void SetPosition( MVector2& vPosition ) = 0;
 	virtual MVector2 GetPosition( void ) = 0;
 	
 	virtual void CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta ) = 0;

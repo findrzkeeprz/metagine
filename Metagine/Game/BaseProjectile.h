@@ -14,34 +14,21 @@
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "../Interfaces/ISprite.h"
-#include "../Interfaces/IEntity.h"
+#include "BaseEntity.h"
 
-class MBaseProjectile : public IEntity
+class MBaseProjectile : public MBaseEntity
 {
 public:
 
-	MBaseProjectile( int iType, float x, float y, float fSpeed );
+	MBaseProjectile( MVector2 vPosition, MVector2 vVelocity, int iType );
 	~MBaseProjectile( void );
 
 	// Documented in IEntity.h
 	void UpdateLogic( float fDelta );
-	bool GetActive( void );
-	bool GetExpired( void );
-	ISpritePtr GetSprite( void ) { return m_TestSprite; }
 	void CollisionEvent( const IEntityPtr pEntity, const int iType, const float fDelta );
 	void VKill( void );
-	void SetVelocity( MVector2& vVelocity );
-	MVector2 GetVelocity( void );
-	void SetPosition( float x, float y );
-	MVector2 GetPosition( void );
 
 private:
 
-	ISpritePtr m_TestSprite;
-	MVector2 m_vPosition;
-	MVector2 m_vVelocity;
 	MVector2 m_vAcceleration;
-	bool m_bActive;
-	bool m_bExpired;
 };
