@@ -13,7 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
-
 #include "BaseEntity.h"
 
 class MBaseProjectile : public MBaseEntity
@@ -25,7 +24,7 @@ public:
 
 	// Documented in IEntity.h
 	void UpdateLogic( float fDelta );
-	void CollisionEvent( const IEntity* pEntity, const int iType, const float fDelta );
+	void CollisionEvent( IEntity* pEntity, const int iType, const float fDelta );
 	void VKill( void );
 
 private:

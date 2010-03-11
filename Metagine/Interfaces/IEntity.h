@@ -33,13 +33,15 @@ public:
 	/// Virtual accessor to determine object validity.
     virtual bool GetActive( void ) = 0;
 	virtual bool GetExpired( void ) = 0;
+	virtual bool GetCollidable( void ) = 0;
 	virtual ISpritePtr GetSprite( void ) = 0;
 	virtual void SetVelocity( MVector2& vVelocity ) = 0;
 	virtual MVector2 GetVelocity( void ) = 0;
 	virtual void SetPosition( MVector2& vPosition ) = 0;
 	virtual MVector2 GetPosition( void ) = 0;
+	virtual int GetType( void ) = 0;
 	
-	virtual void CollisionEvent( const IEntity* pEntity, const int iType, const float fDelta ) = 0;
+	virtual void CollisionEvent( IEntity* pEntity, const int iType, const float fDelta ) = 0;
 	virtual void UpdateLogic( float fDelta ) = 0;
 	virtual void VKill( void ) = 0;
 };

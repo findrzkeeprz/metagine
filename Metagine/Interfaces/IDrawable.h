@@ -26,7 +26,7 @@ public:
     virtual ~IDrawable( void ) { };
 
     /// Virtual method to render the object.
-    virtual void Render( void* pSurface ) = 0;
+    virtual void Render( void ) = 0;
 
     /// Virtual accessor to determine object validity.
     virtual bool GetActive( void ) = 0;

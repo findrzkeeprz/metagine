@@ -119,7 +119,7 @@ float MFont::GetDepth( void )
 	return m_fDepth;
 }
 
-void MFont::Render( void* pSurface )
+void MFont::Render( void )
 {
 	/*if( !m_Surface ) {
 		printf(" -! ERROR invalid surface in MFont::Render().\n");

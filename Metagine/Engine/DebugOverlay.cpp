@@ -33,7 +33,7 @@ MDebugOverlay::~MDebugOverlay( void )
 	printf(" -> MDebugOverlay object destructed.\n");
 }
 
-void MDebugOverlay::Render( void *pSurface )
+void MDebugOverlay::Render( void )
 {
 	if( m_bDebugOverlay->GetValueBool() ) {
 		int iCount = 0;
@@ -42,17 +42,17 @@ void MDebugOverlay::Render( void *pSurface )
 			iCount = m_pEngine->EntityManager()->CollisionResolver()->GetEntitiesInPartition(i);
 			m_Font->SetPosition(15,100 + (i * 20));
 			m_Font->SetText((boost::format("Partition[%1%]: %2%") % i % iCount).str());
-			m_Font->Render(pSurface);
+			m_Font->Render();
 		}
 
 		iCount = m_pEngine->Renderer()->GetDrawableCount();
 		m_Font->SetPosition(15,180);
 		m_Font->SetText((boost::format("Drawables: %1%") % iCount).str());
-		m_Font->Render(pSurface);
+		m_Font->Render();
 
 		iCount = m_pEngine->EntityManager()->GetEntityCount();
 		m_Font->SetPosition(15,200);
 		m_Font->SetText((boost::format("Entities: %1%") % iCount).str());
-		m_Font->Render(pSurface);
+		m_Font->Render();
 	}
 }

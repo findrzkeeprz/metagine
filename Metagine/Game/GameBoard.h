@@ -39,11 +39,19 @@ private:
 
 	ISpritePtr m_BgSprite;
 	ISpritePtr m_pMonkey;
+	ISpritePtr m_pShieldBar;
+	ISpritePtr m_pHealthBar;
 	IEntityPtr m_PlayerShip;
 	IEntityPtr m_pEnemies[INVADERS_NUM_ROWS][INVADERS_NUM_COLS];
 	IEntityPtr m_pEnemy;
+	IVarPtr m_fSpeedTier1;
+	IVarPtr m_fSpeedTier2;
+	IVarPtr m_fSpeedTier3;
+	IVarPtr m_fSpeedTier4;
 	bool m_bRowShift;
+	bool m_bReachedBottom;
 	int m_iRowDepth;
+	int m_iSpeedTier;
 };
 
 #endif // _GAMEBOARD_H_

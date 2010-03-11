@@ -64,7 +64,7 @@ void MOutlineFont::SetText( const string& sText )
 	m_SurfaceBG = TTF_RenderText_Blended(m_Font,sText.c_str(),m_ColourBG);
 }
 
-void MOutlineFont::Render( void* pSurface )
+void MOutlineFont::Render( void )
 {
 	if( !m_Surface || !m_SurfaceBG ) {
 		printf(" -! ERROR invalid surfaces in MOutlineFont::Render().\n");
@@ -84,59 +84,59 @@ void MOutlineFont::Render( void* pSurface )
 	// o o o
 	RectBG.x = m_Coords[0] - m_iStep;
 	RectBG.y = m_Coords[1];
-	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+	//SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
 	
 	// o o o
 	// o o x
 	// o o o
 	RectBG.x = m_Coords[0] + m_iStep;
 	RectBG.y = m_Coords[1];
-	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+	//SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
 	
 	// o x o
 	// o o o
 	// o o o
 	RectBG.x = m_Coords[0];
 	RectBG.y = m_Coords[1] - m_iStep;
-	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+	//SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
 	
 	// o o o
 	// o o o
 	// o x o
 	RectBG.x = m_Coords[0];
 	RectBG.y = m_Coords[1] + m_iStep;
-	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+	//SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
 
 	// x o o
 	// o o o
 	// o o o
 	RectBG.x = m_Coords[0] - m_iStep;
 	RectBG.y = m_Coords[1] - m_iStep;
-	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+	//SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
 
 	// o o x
 	// o o o
 	// o o o
 	RectBG.x = m_Coords[0] + m_iStep;
 	RectBG.y = m_Coords[1] - m_iStep;
-	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+	//SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
 
 	// o o o
 	// o o o
 	// o o x
 	RectBG.x = m_Coords[0] + m_iStep;
 	RectBG.y = m_Coords[1] + m_iStep;
-	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+	//SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
 
 	// o o o
 	// o o o
 	// x o o
 	RectBG.x = m_Coords[0] - m_iStep;
 	RectBG.y = m_Coords[1] + m_iStep;
-	SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
+	//SDL_BlitSurface(m_SurfaceBG,NULL,(SDL_Surface*)pSurface,&RectBG);
 	
 	// o o o
 	// o x o
 	// o o o
-	SDL_BlitSurface(m_Surface,NULL,(SDL_Surface*)pSurface,&Rect);
+	//SDL_BlitSurface(m_Surface,NULL,(SDL_Surface*)pSurface,&Rect);
 }

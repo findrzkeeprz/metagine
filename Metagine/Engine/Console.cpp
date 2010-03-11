@@ -147,7 +147,7 @@ float MConsole::GetDepth( void )
 	return 0.0f;
 }
 
-void MConsole::Render( void* pSurface )
+void MConsole::Render( void )
 {
 	if( m_bToggleAnimDown ) {
 		if( m_iScrollPoint < m_iPositionYon->GetValueInt() ) {
@@ -174,13 +174,13 @@ void MConsole::Render( void* pSurface )
 		if( m_BackBuffer[i].c_str() ) {
 			m_Font->SetPosition(m_iPositionX->GetValueInt(),m_iScrollPoint - (i * m_iFontSpacing->GetValueInt()));
 			m_Font->SetText(m_BackBuffer[(m_BackBuffer.size() - 1) - i]);
-			m_Font->Render(pSurface);
+			m_Font->Render();
 		}
 	}
 
 	m_Font->SetPosition(m_iPositionX->GetValueInt(),m_iScrollPoint + m_iFontSpacing->GetValueInt());
 	m_Font->SetText(m_sCurrentBuffer);
-	m_Font->Render(pSurface);
+	m_Font->Render();
 }
 
 void MConsole::UpdateInput( const Uint8* pKeyState, const int iKey, const bool bKeyDown )

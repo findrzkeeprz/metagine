@@ -78,10 +78,10 @@ private:
 
 	static bool SpriteSortFunc( IDrawablePtr pData1, IDrawablePtr pData2 );
 
-	SDL_Surface* m_Screen;						///< Main SDL screen surface.
-	bool m_bFontLibLoaded;						///< Shows the status of the TTF library.
-	vector<IDrawablePtr> m_RenderQueue;			///< A queue of IDrawable objects to render every frame.
-	int m_iResolution[2];						///< Resolution of the engine screen.
+	SDL_Surface* m_Screen;							///< Main SDL screen surface.
+	bool m_bFontLibLoaded;							///< Shows the status of the TTF library.
+	vector<IDrawablePtr> m_RenderQueue;				///< A queue of IDrawable objects to render every frame.
+	int m_iResolution[2];							///< Resolution of the engine screen.
 };
 
 #endif // _RENDERTASK_H_

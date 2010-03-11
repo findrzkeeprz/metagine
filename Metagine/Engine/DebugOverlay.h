@@ -27,7 +27,7 @@ public:
 	MDebugOverlay( IEngine* pEngine );
 	~MDebugOverlay( void );
 
-	void Render( void* pSurface );
+	void Render( void );
 	float GetDepth( void ) { return 0.0f; }
 	bool GetActive( void ) { return true; }
 

@@ -43,7 +43,7 @@ public:
 	float GetDepth( void );
 
 	// Render the drawable object.
-	virtual void Render( void* pSurface );
+	virtual void Render( void );
 
 protected:
 

@@ -141,14 +141,23 @@ int MSprite::GetNumFrames( void )
 	return (int)m_FramesCache.size();
 }
 
-void MSprite::Animate( bool bLoop )
+bool MSprite::Animate( bool bLoop )
 {
+	bool bResult = true;
+	
 	if( m_FrameTimer.GetTicks() > m_iFrameDelay ) {
-		if( m_iFrame < ( GetNumFrames() - 1 ) )
+		if( m_iFrame < ( GetNumFrames() - 1 ) ) {
 			++m_iFrame;
-		else m_iFrame = 0;
+			bResult = true;
+		} else {
+			if( bLoop ) m_iFrame = 0;
+			bResult = false;
+		}
+		
 		m_FrameTimer.Start();
 	}
+	
+	return bResult;
 }
 
 bool MSprite::ParseFromXml( const char* pszXmlFile )
@@ -239,10 +248,10 @@ unsigned int MSprite::GetSurface( void )
 	return m_FramesCache[m_iFrame].iTexture;
 }
 
-void MSprite::Render( void* pSurface )
+void MSprite::Render( void )
 {
 	glPushMatrix();
-	glTranslatef(m_fCoords[0],m_fCoords[1],0.0f);
+	glTranslatef(m_fCoords[0],m_fCoords[1],m_fDepth);
 	glBindTexture(GL_TEXTURE_2D,m_FramesCache[m_iFrame].iTexture);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_ONE,GL_ONE_MINUS_SRC_ALPHA);

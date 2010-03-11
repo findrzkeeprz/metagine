@@ -23,14 +23,14 @@
 #include "../Engine/RenderTask.h"
 
 MShip::MShip( void ) :
-MBaseEntity(MVector2(0.0f,0.0f),MVector2(0.0f,0.0f),true),
+MBaseEntity(MVector2(0.0f,0.0f),MVector2(0.0f,0.0f),true,true,ENTITY_PLAYER_SHIP),
 m_bFireLock(false),
 m_bFlipFlop(false)
 {
 	// This will all need to go through the engine interface in future.
 	//m_ShipSprite(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
 	//m_ShipSprite = ISpritePtr(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
-	m_pSprite = ISpritePtr(new MSprite("gogorisset1.png",52,13,39,36,255,0,255,0.99f));
+	m_pSprite = ISpritePtr(new MSprite("Sprites/gogorisset1.png",52,13,39,36,255,0,255,0.99f));
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_pSprite);
 	
 	// Center the ship on the center of the screen initially.
@@ -124,7 +124,7 @@ void MShip::UpdateLogic( float fDelta )
 	m_pSprite->SetPosition(m_vPosition.x,m_vPosition.y);
 }
 
-void MShip::CollisionEvent( const IEntity* pEntity, const int iType, const float fDelta )
+void MShip::CollisionEvent( IEntity* pEntity, const int iType, const float fDelta )
 {
 	if( iType == COLLISION_LEFT_SCREEN || iType == COLLISION_RIGHT_SCREEN ) {
 		m_vPosition.x -= ( ( m_vVelocity.x * fDelta ) / 1000.0f );
@@ -134,6 +134,9 @@ void MShip::CollisionEvent( const IEntity* pEntity, const int iType, const float
 		m_vPosition.y += ( ( -m_vVelocity.y * fDelta ) / 1000.0f );
 		m_pSprite->SetPosition(m_vPosition.x,m_vPosition.y);
 		m_vVelocity.y = 0.0f;
+	} else if ( iType == COLLISION_ENTITY ) {
+		//if( pEntity->GetType() == ENTITY_ENEMY_PROJECTILE )
+		//	printf(" OUCH!!!!!!!!!!!!!!\n");
 	}
 }
 

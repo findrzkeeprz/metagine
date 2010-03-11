@@ -48,7 +48,7 @@ public:
 	void SetFrame( int iFrame );
 	int GetFrame( void );
 	int GetNumFrames( void );
-	void Animate( bool bLoop );
+	bool Animate( bool bLoop );
 	int GetWidth( void );
 	int GetHeight( void );
 	unsigned int GetSurface( void );
@@ -56,7 +56,7 @@ public:
 	// Documented in IDrawable.h
 	bool GetActive( void );
 	float GetDepth( void );
-	virtual void Render( void* pSurface );
+	virtual void Render( void );
 
 private:
 

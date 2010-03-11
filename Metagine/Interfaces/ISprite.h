@@ -55,7 +55,7 @@ public:
 	virtual int GetWidth( void ) = 0;
 	virtual int GetHeight( void ) = 0;
 
-	virtual void Animate( bool bLoop ) = 0;
+	virtual bool Animate( bool bLoop ) = 0;
 };
 
 typedef shared_ptr<ISprite> ISpritePtr;

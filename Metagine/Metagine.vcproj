@@ -230,6 +230,14 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath=".\icon1.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Metagine1.rc"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Engine"
@@ -374,6 +382,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\resource2.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Engine\Sprite.h"
 					>
 				</File>
@@ -490,11 +502,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Game\BaseExplosion.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Game\BaseProjectile.h"
 					>
 				</File>
 				<File
 					RelativePath=".\Game\GameBoard.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Game\GameTypes.h"
 					>
 				</File>
 				<File
@@ -511,6 +531,10 @@
 				</File>
 				<File
 					RelativePath=".\Game\BaseEntity.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Game\BaseExplosion.cpp"
 					>
 				</File>
 				<File

@@ -43,7 +43,7 @@ public:
 	//bool RegisterCommand( IConCommand* pCommand );
 
 	// Documented in IDrawable.h
-	void Render( void* pSurface );
+	void Render( void );
 	bool GetActive( void );
 	float GetDepth( void );
 

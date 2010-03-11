@@ -16,7 +16,6 @@
 #include "CollisionResolver.h"
 #include "RenderTask.h"
 #include "Engine.h"
-#include "../ThirdParty/SDL_collide.h"
 
 MCollisionResolver::MCollisionResolver( void ) :
 m_fDelta(0)
@@ -84,11 +83,11 @@ void MCollisionResolver::ProcessEntityPairs( void )
 {
 	vector<pair<IEntity*,IEntity*>>::iterator it;
 	for( it = m_EntityPairs.begin(); it < m_EntityPairs.end(); ++it ) {
-		// Two objects that are not moving will never collide.
-		if( (*it).first->GetVelocity().Magnitude() == 0.0f &&
-			(*it).second->GetVelocity().Magnitude() == 0.0f ) {
-				continue;
-		}
+		if( (*it).first->GetExpired() || (*it).second->GetExpired() )	// Entity may have expired in previous iteration.
+			continue;
+		else if( (*it).first->GetVelocity().Magnitude() == 0.0f &&		// Two objects that are not moving will never collide.
+			(*it).second->GetVelocity().Magnitude() == 0.0f )
+			continue;
 		
 		SDL_Surface* pSurface1 = (SDL_Surface*)(*it).first->GetSprite()->GetSurface();
 		SDL_Surface* pSurface2 = (SDL_Surface*)(*it).second->GetSprite()->GetSurface();
@@ -105,7 +104,6 @@ void MCollisionResolver::ProcessEntityPairs( void )
 		int h2 = pSprite2->GetHeight();
 
 		// Test for collision and inform involved parties.
-		//if( SDL_CollidePixel(pSurface1,x,y,pSurface2,x2,y2,4) ) {
 		if( RectangleIntersects(x1,y1,x2,y2,w1,h1,w2,h2) ) {
 			(*it).first->CollisionEvent((*it).second,COLLISION_ENTITY,m_fDelta);
 			(*it).second->CollisionEvent((*it).first,COLLISION_ENTITY,m_fDelta);
@@ -120,7 +118,9 @@ void MCollisionResolver::Resolve( IEntity** pEntities, int iCount, float fDelta 
 	m_fDelta = fDelta;
 
 	for( int i = 0; i < iCount; ++i ) {
-		if( pEntities[i] && pEntities[i]->GetActive() ) {
+		if( pEntities[i] && 
+			pEntities[i]->GetActive() &&
+			pEntities[i]->GetCollidable() ) {
 			DeterminePartition(pEntities[i]);
 		}
 	}

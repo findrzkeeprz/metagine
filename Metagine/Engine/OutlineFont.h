@@ -35,7 +35,7 @@ public:
 	void SetText( const string& sText );
 
 	// Render the drawable object.
-	void Render( void* pSurface );
+	void Render( void );
 
 private:
 

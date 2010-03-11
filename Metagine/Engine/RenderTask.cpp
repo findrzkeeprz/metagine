@@ -19,40 +19,13 @@ MRenderTask::MRenderTask( void ) :
 m_Screen(NULL),
 m_bFontLibLoaded(false)
 {
-    printf(" -> MRenderTask object created.\n");
+	printf(" -> MRenderTask object created.\n");
 }
 
 MRenderTask::~MRenderTask( void )
 {
 	printf(" -> MRenderTask object destructed.\n");
 }
-
-/*bool MRenderTask::Init( int iWidth, int iHeight )
-{
-	printf(" -> Initialising SDL subsystem.\n");
-
-	m_iResolution[0] = iWidth;
-	m_iResolution[1] = iHeight;
-	
-	if( SDL_Init(SDL_INIT_EVERYTHING) == -1 ) {
-		printf(" -! ERROR initialising SDL.\n");
-		return false;
-	} else if( ( m_Screen = SDL_SetVideoMode(m_iResolution[0],m_iResolution[1],32,SDL_HWSURFACE|SDL_DOUBLEBUF) ) == NULL ) {
-		printf(" -! ERROR setting SDL video mode.\n");
-		return false;
-	} else if( TTF_Init() == -1 ) {
-		printf(" -! ERROR initialising SDL_TTF subsystem.\n");
-		m_bFontLibLoaded = false;
-		return false;
-	} else {
-		m_bFontLibLoaded = true;
-	}
-
-	// Set the window caption.
-	SDL_WM_SetCaption("Metagine",NULL); 
-	
-	return true;
-}*/
 
 void MRenderTask::VInit( void )
 {
@@ -77,7 +50,7 @@ void MRenderTask::VInit( void )
 	}
 
 	// Set the window caption.
-	SDL_WM_SetCaption("Metagine",NULL);
+	SDL_WM_SetCaption("Able in Space",NULL);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
 
 	glEnable( GL_TEXTURE_2D );
@@ -92,6 +65,9 @@ void MRenderTask::VInit( void )
 	glScalef(-1.0f,1.0f,1.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
 }
 
 void MRenderTask::VKill( void )
@@ -115,14 +91,15 @@ void MRenderTask::VKill( void )
 void MRenderTask::VFrame( const float fDelta )
 {
 	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	
 	// Render all queued objects.
 	vector<IDrawablePtr>::iterator it;
 	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it )
-		if( (*it)->GetActive() )
-			(*it)->Render((void*)m_Screen);
-
+		if( (*it)->GetActive() ) (*it)->Render();
+	
 	SDL_GL_SwapBuffers();
-	//SDL_Flip(m_Screen);
+	glFinish();
 }
 
 
@@ -139,6 +116,8 @@ void MRenderTask::RegisterDrawable( IDrawablePtr pDrawable )
 	}
 
 	// Push back and then re-sort the container based on depth.
+	// Sprites need to be drawn back-to-front otherwise areas
+	// with transparency will appear as the background colour.
 	m_RenderQueue.push_back(IDrawablePtr(pDrawable));
 	sort(m_RenderQueue.begin(),m_RenderQueue.end(),MRenderTask::SpriteSortFunc);
 	
@@ -161,7 +140,7 @@ void MRenderTask::RemoveDrawable( IDrawablePtr pDrawable )
 
 bool MRenderTask::SpriteSortFunc( IDrawablePtr pData1, IDrawablePtr pData2 )
 {
-	return pData1->GetDepth() > pData2->GetDepth();
+	return pData1->GetDepth() < pData2->GetDepth();
 }
 
 int MRenderTask::GetScreenWidth( void )
