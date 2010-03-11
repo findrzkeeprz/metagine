@@ -41,16 +41,16 @@ public:
 	~MSprite( void );
 	
 	// Documented in ISprite.h
-	void SetPosition( float x, float y );
-	float GetPositionX( void );
-	float GetPositionY( void );
+	void SetPosition( const float x, const float y );
+	const float GetPositionX( void ) const;
+	const float GetPositionY( void ) const;
 	void SetRotation( double iAngle );
-	void SetFrame( int iFrame );
-	int GetFrame( void );
-	int GetNumFrames( void );
-	bool Animate( bool bLoop );
-	int GetWidth( void );
-	int GetHeight( void );
+	void SetFrame( const int iFrame );
+	const int GetFrame( void ) const;
+	const int GetNumFrames( void ) const;
+	const bool Animate( const bool bLoop );
+	const int GetWidth( void ) const;
+	const int GetHeight( void ) const;
 	unsigned int GetSurface( void );
 
 	// Documented in IDrawable.h

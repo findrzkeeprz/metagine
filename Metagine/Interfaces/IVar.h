@@ -26,28 +26,28 @@ public:
     virtual ~IVar( void ) { };
     
     /// Virtual accessor to return the variable's name.
-    virtual const char* GetName( void ) = 0;
+    virtual const char* GetName( void ) const = 0;
     
     /// Virtual accessor to return the datatype of variable.
-    virtual const int GetType( void ) = 0;
+    virtual const int GetType( void ) const = 0;
     
     /// Virtual accessor to return the variable's integer value.
-    const virtual int GetValueInt( void ) = 0;
+    const virtual int GetValueInt( void ) const = 0;
     
     /// Virtual accessor to return the variable's float value.
-    const virtual float GetValueFloat( void ) = 0;
+    const virtual float GetValueFloat( void ) const = 0;
     
     /// Virtual accessor to return the variable's boolean value.
-    const virtual bool GetValueBool( void ) = 0;
+    const virtual bool GetValueBool( void ) const = 0;
     
     /// Virtual accessor to set the variable's integer value.
-    virtual void SetValueInt( int iValue ) = 0;
+    virtual void SetValueInt( const int iValue ) = 0;
         
     /// Virtual accessor to set the variable's float value.
-    virtual void SetValueFloat( float fValue ) = 0;
+    virtual void SetValueFloat( const float fValue ) = 0;
     
     /// Virtual accessor to set variable's boolean value.
-    virtual void SetValueBool( bool bValue ) = 0;
+    virtual void SetValueBool( const bool bValue ) = 0;
 };
 
 typedef shared_ptr<IVar> IVarPtr;

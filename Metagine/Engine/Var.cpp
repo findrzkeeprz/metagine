@@ -21,7 +21,7 @@ m_iType(CVAR_NULL)
 {
 }
 
-MVar::MVar( const string& sName, int iValue ) :
+MVar::MVar( const string& sName, const int iValue ) :
 m_sName(sName),
 m_iType(CVAR_INT)
 {
@@ -29,7 +29,7 @@ m_iType(CVAR_INT)
 	printf(" -> MVar object constructed (%s).\n",m_sName.c_str());
 }
 
-MVar::MVar( const string& sName, float fValue ) :
+MVar::MVar( const string& sName, const float fValue ) :
 m_sName(sName),
 m_iType(CVAR_FLOAT)
 {
@@ -37,7 +37,7 @@ m_iType(CVAR_FLOAT)
 	printf(" -> MVar object constructed (%s).\n",m_sName.c_str());
 }
 
-MVar::MVar( const string& sName, bool bValue ) :
+MVar::MVar( const string& sName, const bool bValue ) :
 m_sName(sName),
 m_iType(CVAR_BOOL)
 {
@@ -50,47 +50,47 @@ MVar::~MVar( void )
 	printf(" -> MVar object destructed (%s).\n",m_sName.c_str());
 }
 
-const char* MVar::GetName( void )
+const char* MVar::GetName( void ) const
 {
     return m_sName.c_str();
 }
 
-const int MVar::GetType( void )
+const int MVar::GetType( void ) const
 {
     return m_iType;
 }
 
-const int MVar::GetValueInt( void )
+const int MVar::GetValueInt( void ) const
 {
     assert(m_iType == CVAR_INT);
 	return m_Value.iValue;
 }
 
-const float MVar::GetValueFloat( void )
+const float MVar::GetValueFloat( void ) const
 {
     assert(m_iType == CVAR_FLOAT);
 	return m_Value.fValue;
 }
 
-const bool MVar::GetValueBool( void )
+const bool MVar::GetValueBool( void ) const
 {
     assert(m_iType == CVAR_BOOL);
 	return m_Value.bValue;
 }
 
-void MVar::SetValueInt( int iValue )
+void MVar::SetValueInt( const int iValue )
 {
     assert(m_iType == CVAR_INT);
 	m_Value.iValue = iValue;
 }
 
-void MVar::SetValueFloat( float fValue )
+void MVar::SetValueFloat( const float fValue )
 {
     assert(m_iType == CVAR_FLOAT);
 	m_Value.fValue = fValue;
 }
 
-void MVar::SetValueBool( bool bValue )
+void MVar::SetValueBool( const bool bValue )
 {
     assert(m_iType == CVAR_BOOL);
 	m_Value.bValue = bValue;

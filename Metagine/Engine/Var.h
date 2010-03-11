@@ -36,40 +36,40 @@ public:
     MVar( void );
 
     /// Custom constructor (integer).
-    MVar( const string& sName, int iValue );
+    MVar( const string& sName, const int iValue );
     
     /// Custom constructor (float).
-    MVar( const string& sName, float fValue );
+    MVar( const string& sName, const float fValue );
     
     /// Custom constructor (boolean).
-    MVar( const string& sName, bool bValue );
+    MVar( const string& sName, const bool bValue );
     
     /// Destructor method.
     ~MVar( void );
     
     /// Return the variable's name.
-    const char* GetName( void );
+    const char* GetName( void ) const;
     
     /// Return the datatype of variable.
-    const int GetType( void );
+    const int GetType( void ) const;
     
     /// Return the variable's integer value.
-    const int GetValueInt( void );
+    const int GetValueInt( void ) const;
     
     /// Return the variable's float value.
-    const float GetValueFloat( void );
+    const float GetValueFloat( void ) const;
     
     /// Return the variable's boolean value.
-	const bool GetValueBool( void );
+	const bool GetValueBool( void ) const;
     
     /// Set the variable's integer value.
-    void SetValueInt( int iValue );
+    void SetValueInt( const int iValue );
     
     /// Set the variable's float value.
-    void SetValueFloat( float fValue );
+    void SetValueFloat( const float fValue );
     
     /// Set the variable's boolean value.
-    void SetValueBool( bool bValue );
+    void SetValueBool( const bool bValue );
     
     /// Enum to define the different variable datatypes.
     enum Type { CVAR_NULL, CVAR_INT, CVAR_FLOAT, CVAR_BOOL };

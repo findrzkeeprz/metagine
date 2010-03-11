@@ -103,18 +103,18 @@ MSprite::~MSprite( void )
 	printf(" -> MSprite object destructed.\n");
 }
 
-void MSprite::SetPosition( float x, float y )
+void MSprite::SetPosition( const float x, const float y )
 {
 	m_fCoords[0] = x;
 	m_fCoords[1] = y;
 }
 
-float MSprite::GetPositionX( void )
+const float MSprite::GetPositionX( void ) const
 {
 	return m_fCoords[0];
 }
 
-float MSprite::GetPositionY( void )
+const float MSprite::GetPositionY( void ) const
 {
 	return m_fCoords[1];
 }
@@ -123,7 +123,7 @@ void MSprite::SetRotation( double iAngle )
 {
 }
 
-void MSprite::SetFrame( int iFrame )
+void MSprite::SetFrame( const int iFrame )
 {
 	if( iFrame > (GetNumFrames() - 1) ) {
 		printf(" -! ERROR specified sprite frame out of bounds in MSprite::SetFrame().\n");
@@ -131,17 +131,17 @@ void MSprite::SetFrame( int iFrame )
 	}
 }
 
-int MSprite::GetFrame( void )
+const int MSprite::GetFrame( void ) const
 {
 	return m_iFrame;
 }
 
-int MSprite::GetNumFrames( void )
+const int MSprite::GetNumFrames( void ) const
 {
 	return (int)m_FramesCache.size();
 }
 
-bool MSprite::Animate( bool bLoop )
+const bool MSprite::Animate( const bool bLoop )
 {
 	bool bResult = true;
 	
@@ -233,12 +233,12 @@ float MSprite::GetDepth( void )
 	return m_fDepth;
 }
 
-int MSprite::GetWidth( void )
+const int MSprite::GetWidth( void ) const
 {
 	return m_FramesCache[m_iFrame].iWidth;
 }
 
-int MSprite::GetHeight( void )
+const int MSprite::GetHeight( void ) const
 {
 	return m_FramesCache[m_iFrame].iHeight;
 }
