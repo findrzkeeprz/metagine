@@ -20,7 +20,7 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="4"
 			CharacterSet="1"
 			>
 			<Tool
@@ -48,6 +48,7 @@
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				PrecompiledHeaderThrough="Public\Public.h"
+				PrecompiledHeaderFile="Metagine.pch"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -61,18 +62,10 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="$(SolutionDir)\$(ProjectName)\Libraries\SDL.lib $(SolutionDir)\$(ProjectName)\Libraries\SDLmain.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_ttf.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_gfx.lib $(SolutionDir)\$(ProjectName)\Libraries\SDL_image.lib winmm.lib opengl32.lib $(SolutionDir)\$(ProjectName)\Libraries\Box2D.lib $(SolutionDir)\$(ProjectName)\Libraries\tinyxml.lib $(SolutionDir)\$(ProjectName)\Libraries\fmodvc.lib"
-				LinkIncremental="2"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -82,9 +75,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
