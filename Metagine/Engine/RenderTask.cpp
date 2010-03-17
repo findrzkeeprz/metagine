@@ -17,7 +17,21 @@
 
 MRenderTask::MRenderTask( void ) :
 m_Screen(NULL),
-m_bFontLibLoaded(false)
+m_bFontLibLoaded(false),
+m_bShaderCompatible(true),
+m_glCreateProgramObjectARB(NULL),
+m_glDeleteObjectARB(NULL),
+m_glCreateShaderObjectARB(NULL),
+m_glShaderSourceARB(NULL),
+m_glCompileShaderARB(NULL),
+m_glGetObjectParameterivARB(NULL),
+m_glAttachObjectARB(NULL),
+m_glGetInfoLogARB(NULL),
+m_glLinkProgramARB(NULL),
+m_glUseProgramObjectARB(NULL),
+m_glGetUniformLocationARB(NULL),
+m_glUniform1fARB(NULL),
+m_glUniform1iARB(NULL)
 {
 	printf(" -> MRenderTask object created.\n");
 }
@@ -66,8 +80,13 @@ void MRenderTask::VInit( void )
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
+
+	//m_bShaderCompatible = InitExtensions();
+	//if( m_bShaderCompatible ) InitShaders();
 }
 
 void MRenderTask::VKill( void )
@@ -94,9 +113,13 @@ void MRenderTask::VFrame( const float fDelta )
 	glClear(GL_DEPTH_BUFFER_BIT);
 	
 	// Render all queued objects.
-	vector<IDrawablePtr>::iterator it;
-	for( it = m_RenderQueue.begin(); it < m_RenderQueue.end(); ++it )
+	//printf("=====BEGIN======\n");
+	vector<IDrawablePtr>::reverse_iterator it;
+	for( it = m_RenderQueue.rbegin(); it < m_RenderQueue.rend(); ++it ) {
+	//	printf(" DEPTH: %f\n",(*it)->GetDepth());
 		if( (*it)->GetActive() ) (*it)->Render();
+	}
+	//printf("=====END=======\n");
 	
 	SDL_GL_SwapBuffers();
 	glFinish();
@@ -140,7 +163,7 @@ void MRenderTask::RemoveDrawable( IDrawablePtr pDrawable )
 
 bool MRenderTask::SpriteSortFunc( IDrawablePtr pData1, IDrawablePtr pData2 )
 {
-	return pData1->GetDepth() < pData2->GetDepth();
+	return pData1->GetDepth() > pData2->GetDepth();
 }
 
 int MRenderTask::GetScreenWidth( void )
@@ -156,4 +179,82 @@ int MRenderTask::GetScreenHeight( void )
 int MRenderTask::GetDrawableCount( void )
 {
 	return (int)m_RenderQueue.size();
+}
+
+bool MRenderTask::InitExtensions( void )
+{
+	printf(" -> MRenderTask::InitExtensions called\n");
+	
+	char* pszExtensions = (char*)glGetString(GL_EXTENSIONS);
+
+	if( !MMiscFuncs::FindString("GL_ARB_shader_objects",pszExtensions) ||
+		!MMiscFuncs::FindString("GL_ARB_shading_language_100",pszExtensions) ||
+		!MMiscFuncs::FindString("GL_ARB_vertex_shader",pszExtensions) ||
+		!MMiscFuncs::FindString("GL_ARB_fragment_shader",pszExtensions) ) {
+			printf(" -! ERROR graphics hardware is not shader compatible!\n");
+			return false;
+	}
+
+	m_glCreateProgramObjectARB = (PFNGLCREATEPROGRAMOBJECTARBPROC)SDL_GL_GetProcAddress("glCreateProgramObjectARB");
+    m_glDeleteObjectARB = (PFNGLDELETEOBJECTARBPROC)SDL_GL_GetProcAddress("glDeleteObjectARB");
+    m_glCreateShaderObjectARB = (PFNGLCREATESHADEROBJECTARBPROC)SDL_GL_GetProcAddress("glCreateShaderObjectARB");
+    m_glShaderSourceARB = (PFNGLSHADERSOURCEARBPROC)SDL_GL_GetProcAddress("glShaderSourceARB");
+    m_glCompileShaderARB = (PFNGLCOMPILESHADERARBPROC)SDL_GL_GetProcAddress("glCompileShaderARB");
+    m_glGetObjectParameterivARB = (PFNGLGETOBJECTPARAMETERIVARBPROC)SDL_GL_GetProcAddress("glGetObjectParameterivARB");
+    m_glAttachObjectARB = (PFNGLATTACHOBJECTARBPROC)SDL_GL_GetProcAddress("glAttachObjectARB");
+    m_glGetInfoLogARB = (PFNGLGETINFOLOGARBPROC)SDL_GL_GetProcAddress("glGetInfoLogARB");
+    m_glLinkProgramARB = (PFNGLLINKPROGRAMARBPROC)SDL_GL_GetProcAddress("glLinkProgramARB");
+    m_glUseProgramObjectARB = (PFNGLUSEPROGRAMOBJECTARBPROC)SDL_GL_GetProcAddress("glUseProgramObjectARB");
+    m_glGetUniformLocationARB = (PFNGLGETUNIFORMLOCATIONARBPROC)SDL_GL_GetProcAddress("glGetUniformLocationARB");
+    m_glUniform1fARB = (PFNGLUNIFORM1FARBPROC)SDL_GL_GetProcAddress("glUniform1fARB");
+    m_glUniform1iARB = (PFNGLUNIFORM1IARBPROC)SDL_GL_GetProcAddress("glUniform1iARB");
+
+	if( !m_glCreateProgramObjectARB		||
+		!m_glDeleteObjectARB			||
+		!m_glCreateShaderObjectARB		||
+		!m_glShaderSourceARB			||
+		!m_glCompileShaderARB			||
+		!m_glGetObjectParameterivARB	||
+		!m_glAttachObjectARB			||
+		!m_glGetInfoLogARB				||
+		!m_glLinkProgramARB				||
+		!m_glUseProgramObjectARB		||
+		!m_glGetUniformLocationARB		||
+		!m_glUniform1fARB				||
+		!m_glUniform1iARB ) {
+			printf(" -! ERROR graphics hardware is shader compatible but unable to obtain required pointers!\n");
+			return false;
+	}
+
+	printf(" -> Shader support successfully initialised.\n");
+	return true;
+}
+
+char* shader_frag_source = "uniform sampler2D tex; void main() \
+						   { \
+						   vec4 texel = texture2D(tex, gl_TexCoord[0].st); \
+						   vec4 tempcolor = (texel.r + texel.g + texel.b + texel.a) / 4.0f; \
+						   gl_FragColor = tempcolor; }\0";
+
+/*char* shader_frag_source = "void main() \
+						   { \
+						   vec3 R0 = texture2DRect( S, gl_TexCoord[0].st ).rgb; \
+						   gl_FragColor = vec4( mix( vec3( dot( R0, vec3( 0.2125, 0.7154, 0.0721 ) ) ),R0, T ), gl_Color.a ); }\0";*/
+
+//char* shader_vert_source = "void main() { gl_TexCoord[0] = -gl_MultiTexCoord0; gl_Position = ftransform(); }\0";
+char* shader_vert_source = "void main() { gl_TexCoord[0] = -gl_MultiTexCoord0; gl_Position = ftransform(); }\0";
+
+void MRenderTask::InitShaders( void )
+{
+	m_iShaderProg = m_glCreateProgramObjectARB();
+	m_iShaderVert = m_glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
+	m_iShaderFrag = m_glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
+	m_glShaderSourceARB(m_iShaderVert,1,(const char**)&shader_vert_source,NULL);
+	m_glShaderSourceARB(m_iShaderFrag,1,(const char**)&shader_frag_source,NULL);
+	m_glCompileShaderARB(m_iShaderVert);
+	m_glCompileShaderARB(m_iShaderFrag);
+	m_glAttachObjectARB(m_iShaderProg, m_iShaderVert);
+	m_glAttachObjectARB(m_iShaderProg, m_iShaderFrag);
+	m_glLinkProgramARB(m_iShaderProg);
+	m_glUseProgramObjectARB(m_iShaderProg);
 }

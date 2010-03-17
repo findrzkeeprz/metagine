@@ -28,6 +28,8 @@ public:
 
 	// Calculate the distance between 2 vectors.
 	static float Distance( const MVector3* pSrc, const MVector3* pDst );
+
+	static long Round( float fValue );
 };
 
 #endif // _MATH_H_

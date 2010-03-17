@@ -16,10 +16,13 @@
 #ifndef _THIRDPARTY_H_
 #define _THIRDPARTY_H_
 
+#define NO_SDL_GLEXT
+
 #include "../Includes/SDL/SDL.h"
 #include "../Includes/SDL/SDL_ttf.h"
 #include "../Includes/SDL/SDL_image.h"
 #include "../Includes/SDL/SDL_opengl.h"
+#include "../Includes/glext.h"
 #include "../Includes/TinyXml/tinyxml.h"
 #include "../Includes/FMOD/fmod.h"
 

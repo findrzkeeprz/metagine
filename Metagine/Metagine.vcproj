@@ -192,6 +192,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Public\MiscFuncs.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Public\Public.h"
 					>
 				</File>
@@ -217,6 +221,10 @@
 				>
 				<File
 					RelativePath=".\Public\Math.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Public\MiscFuncs.cpp"
 					>
 				</File>
 				<File
@@ -518,7 +526,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Game\PlayerShield.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Game\Ship.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Game\TempEntity.h"
 					>
 				</File>
 			</Filter>
@@ -546,7 +562,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Game\PlayerShield.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Game\Ship.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Game\TempEntity.cpp"
 					>
 				</File>
 			</Filter>

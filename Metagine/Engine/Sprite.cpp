@@ -160,6 +160,25 @@ const bool MSprite::Animate( const bool bLoop )
 	return bResult;
 }
 
+void MSprite::AnimateCycle( void )
+{
+	static bool bReverse = false;
+	
+	if( m_FrameTimer.GetTicks() > m_iFrameDelay ) {
+		if( !bReverse ) {
+			if( m_iFrame < ( GetNumFrames() - 1 ) )
+				++m_iFrame;
+			else bReverse = true;
+		} else {
+			if( m_iFrame > 0 )
+				--m_iFrame;
+			else bReverse = false;
+		}
+
+		m_FrameTimer.Start();
+	}
+}
+
 bool MSprite::ParseFromXml( const char* pszXmlFile )
 {
 	TiXmlDocument xmlDoc(pszXmlFile);
@@ -177,7 +196,7 @@ bool MSprite::ParseFromXml( const char* pszXmlFile )
 
 	// We do this here because depth is a per-sprite (not frame) attribute
 	// and there is little sense in using frames from multiple files.
-	m_fDepth = (float)atof(pRoot->Attribute("depth"));
+	pRoot->QueryFloatAttribute("depth",&m_fDepth);
 	m_iFrameDelay = atoi(pRoot->Attribute("frameDelay"));
 	string sFileName = pRoot->Attribute("fileName");
 	int r = atoi(pRoot->Attribute("keyR"));
@@ -251,19 +270,20 @@ unsigned int MSprite::GetSurface( void )
 void MSprite::Render( void )
 {
 	glPushMatrix();
-	glTranslatef(m_fCoords[0],m_fCoords[1],m_fDepth);
+	glTranslatef((float)MMath::Round(m_fCoords[0]),
+		(float)MMath::Round(m_fCoords[1]),m_fDepth);
 	glBindTexture(GL_TEXTURE_2D,m_FramesCache[m_iFrame].iTexture);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_ONE,GL_ONE_MINUS_SRC_ALPHA);
 	glBegin(GL_QUADS);
-		glTexCoord2f(0.0f,1.0f);
-		glVertex2f(0.0f,0.0f);
-		glTexCoord2f(1.0f,1.0f);
-		glVertex2f((float)m_FramesCache[m_iFrame].iWidth,0.0f);
-		glTexCoord2f(1.0f,0.0f);
-		glVertex2f((float)m_FramesCache[m_iFrame].iWidth,(float)m_FramesCache[m_iFrame].iHeight);
-		glTexCoord2f(0.0f,0.0f);
-		glVertex2f(0.0f,(float)m_FramesCache[m_iFrame].iHeight);
+		glTexCoord2i(0,1);
+		glVertex2i(0,0);
+		glTexCoord2i(1,1);
+		glVertex2i(m_FramesCache[m_iFrame].iWidth,0);
+		glTexCoord2i(1,0);
+		glVertex2i(m_FramesCache[m_iFrame].iWidth,m_FramesCache[m_iFrame].iHeight);
+		glTexCoord2i(0,0);
+		glVertex2i(0,m_FramesCache[m_iFrame].iHeight);
 	glEnd();
 	glPopMatrix();
 	glDisable(GL_BLEND);

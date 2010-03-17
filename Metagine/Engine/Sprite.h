@@ -49,11 +49,13 @@ public:
 	const int GetFrame( void ) const;
 	const int GetNumFrames( void ) const;
 	const bool Animate( const bool bLoop );
+	void AnimateCycle( void );
 	const int GetWidth( void ) const;
 	const int GetHeight( void ) const;
 	unsigned int GetSurface( void );
 
 	// Documented in IDrawable.h
+	void SetActive( bool bActive ) { m_bActive = bActive; }
 	bool GetActive( void );
 	float GetDepth( void );
 	virtual void Render( void );

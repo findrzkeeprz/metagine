@@ -24,6 +24,7 @@
 #include "../Public/Vector2.h"
 
 #include "BaseEntity.h"
+#include "PlayerShield.h"
 
 class MShip : public IInputListener, public MBaseEntity
 {
@@ -42,6 +43,7 @@ public:
 
 private:
 
+	IEntityPtr m_pShield;
 	MVector2 m_vAcceleration;
 	IVarPtr m_fFriction;
 	IVarPtr m_fImpulse;

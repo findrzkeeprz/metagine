@@ -20,6 +20,16 @@
 #include "../Public/BaseTypes.h"
 #include "../Public/Interfaces.h"
 
+typedef struct ScreenPartition_s
+{
+	int x;
+	int y;
+	int iWidth;
+	int iHeight;
+} ScreenPartition_t;
+
+#define SCREEN_PARTITION_NUM 8
+
 /// Fix me.
 class MCollisionResolver : public ICollisionResolver, public noncopyable
 {
@@ -38,14 +48,15 @@ public:
 	bool CheckScreenBoundary( IEntity* pEntity );
 	void Resolve( IEntity** pEntities, int iCount, float fDelta );
 	int GetEntitiesInPartition( const int iPartition );
-	bool RectangleIntersects( float x1, float y1, float x2, float y2, int w1, int h1, int w2, int h2 );
+	static bool RectangleIntersects( float x1, float y1, float x2, float y2, int w1, int h1, int w2, int h2 );
 
 private:
 
-	vector<IEntity*> m_Partitions[4];
-	vector<pair<IEntity*,IEntity*>> m_EntityPairs;
+	ScreenPartition_t m_ScreenPartitions[4][4];
+	vector<IEntity*> m_Partitions[4][4];
+	vector<pair<IEntity*,IEntity*>> m_EntityPairs[4][4];
 	float m_fDelta;
-	int m_iLastSize[4];
+	int m_iLastSize[16];
 };
 
 //typedef MSingleton<MCollisionResolver> CollisionResolver;

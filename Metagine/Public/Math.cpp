@@ -32,3 +32,10 @@ float MMath::Distance( const MVector3* pSrc, const MVector3* pDst )
 
 	return sqrt((x * x) + (y * y) + (z * z));
 }
+
+long MMath::Round( float fValue )
+{
+	if (fValue >= 0.0f)
+		return (long)(fValue + 0.5f);
+	return (long)(fValue - 0.5f);
+}

@@ -39,6 +39,7 @@ public:
 
 	virtual void SetPosition( int x, int y );
 
+	void SetActive( bool bActive ) { m_bActive = bActive; }
 	bool GetActive( void );
 	float GetDepth( void );
 

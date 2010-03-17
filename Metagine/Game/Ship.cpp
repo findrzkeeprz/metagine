@@ -30,7 +30,8 @@ m_bFlipFlop(false)
 	// This will all need to go through the engine interface in future.
 	//m_ShipSprite(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
 	//m_ShipSprite = ISpritePtr(new MSprite("Ship1.png",0,true,71,0,50,65,255,0,255,0.95f));
-	m_pSprite = ISpritePtr(new MSprite("Sprites/gogorisset1.png",52,13,39,36,255,0,255,0.99f));
+	m_pSprite = ISpritePtr(new MSprite("Sprites/gogorisset1.png",52,13,39,36,255,0,255,0.5f));
+	
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_pSprite);
 	
 	// Center the ship on the center of the screen initially.
@@ -40,7 +41,10 @@ m_bFlipFlop(false)
 	m_vVelocity.Zero();
 	m_vAcceleration.Zero();
 	m_pSprite->SetPosition(m_vPosition.x,m_vPosition.y);
-	
+
+	m_pShield = IEntityPtr(new MPlayerShield(MVector2(m_vPosition.x - 2,m_vPosition.y - 10),MVector2(0.0f,0.0f)));
+	m_pShield->SetActive(false);
+	Engine::GetInstance()->EntityManager()->RegisterEntity(m_pShield);	
 	//Engine::GetInstance()->InputManager()->RegisterListener(this);
 	//Engine::GetInstance()->RegisterEntity(this);
 
@@ -51,10 +55,22 @@ m_bFlipFlop(false)
 
 MShip::~MShip( void )
 {
+	m_pShield.reset();
 }
 
 void MShip::UpdateInput( const Uint8* pKeyState, const int iKey, const bool bKeyDown )
 {
+	//m_pShield->Set
+	//pKeyState[SDLK_LALT] ? m_pShield->SetActive(true) : m_pShield->SetActive(false);
+	if( pKeyState[SDLK_LALT] ) {
+		m_pShield->SetActive(true);
+		m_pShield->GetSprite()->SetActive(true);
+	} else if( !pKeyState[SDLK_LALT] ) {
+		m_pShield->SetActive(false);
+		m_pShield->GetSprite()->SetActive(false);
+	}
+
+	
 	if( !pKeyState[SDLK_SPACE] && m_bFireLock ) 
 		m_bFireLock = false;
 
@@ -101,12 +117,8 @@ void MShip::UpdateLogic( float fDelta )
 {
 	if( m_vVelocity.Magnitude() <= 0.0f )
 		return;
-	//printf("fDelta: %f\n",fDelta);
 	
 	m_vAcceleration = -m_vVelocity.Normalised();
-
-	// Friction force = constant * mg.
-	// F=Ma, so acceleration = force/mass = constant*g
 	m_vAcceleration *= m_fFriction->GetValueFloat();
 
 	MVector2 vDeltaVelocity = ( ( m_vAcceleration * fDelta ) / 1000.0f );
@@ -122,6 +134,7 @@ void MShip::UpdateLogic( float fDelta )
 		m_vVelocity.Zero();
 		
 	m_pSprite->SetPosition(m_vPosition.x,m_vPosition.y);
+	m_pShield->SetPosition(MVector2(m_vPosition.x,m_vPosition.y - 10));
 }
 
 void MShip::CollisionEvent( IEntity* pEntity, const int iType, const float fDelta )

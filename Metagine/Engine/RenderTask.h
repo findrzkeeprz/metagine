@@ -70,6 +70,9 @@ public:
 	/// currently tracking.
 	//void Frame( void );
 
+	bool InitExtensions( void );
+	void InitShaders( void );
+
 	int GetDrawableCount( void );
 	int GetScreenWidth( void );
 	int GetScreenHeight( void );
@@ -82,6 +85,25 @@ private:
 	bool m_bFontLibLoaded;							///< Shows the status of the TTF library.
 	vector<IDrawablePtr> m_RenderQueue;				///< A queue of IDrawable objects to render every frame.
 	int m_iResolution[2];							///< Resolution of the engine screen.
+
+	PFNGLCREATEPROGRAMOBJECTARBPROC m_glCreateProgramObjectARB;
+	PFNGLDELETEOBJECTARBPROC m_glDeleteObjectARB;
+	PFNGLCREATESHADEROBJECTARBPROC m_glCreateShaderObjectARB;
+	PFNGLSHADERSOURCEARBPROC m_glShaderSourceARB;
+	PFNGLCOMPILESHADERARBPROC m_glCompileShaderARB;
+	PFNGLGETOBJECTPARAMETERIVARBPROC m_glGetObjectParameterivARB;
+	PFNGLATTACHOBJECTARBPROC m_glAttachObjectARB;
+	PFNGLGETINFOLOGARBPROC m_glGetInfoLogARB;
+	PFNGLLINKPROGRAMARBPROC m_glLinkProgramARB;
+	PFNGLUSEPROGRAMOBJECTARBPROC m_glUseProgramObjectARB;
+	PFNGLGETUNIFORMLOCATIONARBPROC m_glGetUniformLocationARB;
+	PFNGLUNIFORM1FARBPROC m_glUniform1fARB;
+	PFNGLUNIFORM1IARBPROC m_glUniform1iARB;
+
+	unsigned int m_iShaderProg;
+	unsigned int m_iShaderVert;
+	unsigned int m_iShaderFrag;
+	bool m_bShaderCompatible;
 };
 
 #endif // _RENDERTASK_H_

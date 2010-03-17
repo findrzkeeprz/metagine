@@ -154,6 +154,11 @@ public:
 		y = 0.0f;
 	}
 
+	float Dot( const MVector2& vec ) const 
+	{
+		return ( x * vec.x ) + ( y *  vec.y );
+	}
+
 	float x;
 	float y;
 };

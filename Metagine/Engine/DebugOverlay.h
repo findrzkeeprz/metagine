@@ -29,10 +29,12 @@ public:
 
 	void Render( void );
 	float GetDepth( void ) { return 0.0f; }
-	bool GetActive( void ) { return true; }
+	void SetActive( bool bActive ) { m_bActive = bActive; }
+	bool GetActive( void ) { return m_bActive; }
 
 private:
 
+	bool m_bActive;
 	IEngine* m_pEngine;
 	shared_ptr<MFont> m_Font;
 	IVarPtr m_bDebugOverlay;

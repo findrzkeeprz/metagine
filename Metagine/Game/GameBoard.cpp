@@ -20,6 +20,7 @@
 #include "../Engine/Sprite.h"
 #include "../Engine/InputTask.h"
 #include "../Public/Public.h"
+#include "TempEntity.h"
 
 MGameBoard::MGameBoard( void ) :
 m_bRowShift(false),
@@ -37,17 +38,26 @@ MGameBoard::~MGameBoard( void )
 void MGameBoard::Init( void )
 {
 	m_BgSprite = ISpritePtr(new MSprite("Sprites/SpaceBG.png",1024,576,0.0f));
-	m_pMonkey = ISpritePtr(new MSprite("Sprites/gogorisset1.png",273,9,37,42,255,0,255,1.0f));
+	/*m_pMonkey = ISpritePtr(new MSprite("Sprites/gogorisset1.png",273,9,37,42,255,0,255,1.0f));
 	m_pHealthBar = ISpritePtr(new MSprite("Manifests/HealthBar.xml"));
 	m_pShieldBar = ISpritePtr(new MSprite("Manifests/ShieldBar.xml"));
 	m_PlayerShip = IEntityPtr(new MShip());
 	
 	m_pMonkey->SetPosition(15,10);
 	m_pShieldBar->SetPosition(60,20);
-	m_pHealthBar->SetPosition(60,35);
+	m_pHealthBar->SetPosition(60,35);*/
 	
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_BgSprite);
-	Engine::GetInstance()->Renderer()->RegisterDrawable(m_pMonkey);
+
+	for( int i = 0; i < 15; ++i ) {
+		for( int j = 0; j < 67; ++j ) {
+			//shared_ptr<MTempEntity> TempEnt(new MTempEntity(MVector2(10.0f + (j * 15),10.0f + (i * 15)),MVector2(rand() % 300 + 100,rand() % 300 + 100)));
+			shared_ptr<MTempEntity> TempEnt(new MTempEntity(MVector2(10.0f + (j * 15),10.0f + (i * 15)),MVector2(50.0f,50.0f)));
+			Engine::GetInstance()->EntityManager()->RegisterEntity(TempEnt);
+		}
+	}
+
+	/*Engine::GetInstance()->Renderer()->RegisterDrawable(m_pMonkey);
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_pHealthBar);
 	Engine::GetInstance()->Renderer()->RegisterDrawable(m_pShieldBar);
 	Engine::GetInstance()->EntityManager()->RegisterEntity(m_PlayerShip);
@@ -63,7 +73,7 @@ void MGameBoard::Init( void )
 			m_pEnemies[i][j] = IEntityPtr(new MBaseEnemy(MVector2(20.0f + (j * 50),80.0f + (i * 30)),this,j,i));
 			Engine::GetInstance()->EntityManager()->RegisterEntity(m_pEnemies[i][j]);
 		}
-	}
+	}*/
 }
 
 void MGameBoard::Kill( void )

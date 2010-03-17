@@ -56,6 +56,7 @@ public:
 	virtual const int GetHeight( void ) const = 0;
 
 	virtual const bool Animate( const bool bLoop ) = 0;
+	virtual void AnimateCycle( void ) = 0;
 };
 
 typedef shared_ptr<ISprite> ISpritePtr;

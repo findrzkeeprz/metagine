@@ -31,7 +31,8 @@ public:
     virtual ~IEntity( void ) { };
 
 	/// Virtual accessor to determine object validity.
-    virtual bool GetActive( void ) = 0;
+    virtual void SetActive( bool bActive ) = 0;
+	virtual bool GetActive( void ) = 0;
 	virtual bool GetExpired( void ) = 0;
 	virtual bool GetCollidable( void ) = 0;
 	virtual ISpritePtr GetSprite( void ) = 0;

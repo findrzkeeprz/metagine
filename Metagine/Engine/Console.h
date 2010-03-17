@@ -44,6 +44,7 @@ public:
 
 	// Documented in IDrawable.h
 	void Render( void );
+	void SetActive( bool bActive ) { m_bActive->SetValueBool(bActive); }
 	bool GetActive( void );
 	float GetDepth( void );
 
