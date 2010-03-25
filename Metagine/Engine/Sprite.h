@@ -20,6 +20,8 @@
 #include "../Public/Public.h"
 #include "../Public/BaseTypes.h"
 
+class MEngine;
+
 typedef struct MTexture_s
 {
 	unsigned int iTexture;
@@ -32,10 +34,10 @@ class MSprite : public ISprite
 public:
 
 	/// Default constructor (takes no arguments).
-	MSprite( void );
-	MSprite( const char* pszFileName, int iWidth, int iHeight, float fDepth );
-	MSprite( const char* pszFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b, float fDepth );
-	MSprite( const char* pszXmlFile );
+	MSprite( MEngine* pEngine );
+	MSprite( MEngine* pEngine, const char* pszFileName, int iWidth, int iHeight, float fDepth );
+	MSprite( MEngine* pEngine, const char* pszFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b, float fDepth );
+	MSprite( MEngine* pEngine, const char* pszXmlFile );
 
 	/// Destructor method.
 	~MSprite( void );
@@ -66,6 +68,7 @@ private:
 
 private:
 
+	MEngine* m_pEngine;
 	vector<MTexture_t> m_FramesCache;
 	MTimer m_FrameTimer;
 	int m_iFrame;

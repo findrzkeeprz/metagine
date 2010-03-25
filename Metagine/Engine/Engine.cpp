@@ -45,17 +45,23 @@ void MEngine::Init( void )
     printf(" -> MEngine::Init() called.\n");
     
 	// Create the main engine tasks.
-	m_pVarManager = IVarManagerPtr(new MVarManager());
+	/*m_pVarManager = IVarManagerPtr(new MVarManager());
 	m_pTaskManager = MTaskManagerPtr(new MTaskManager());
 	m_pRenderer = IRendererPtr(new MRenderTask());
 	m_pEntityManager = IEntityManagerPtr(new MEntityTask());
 	m_pInputManager = IInputManagerPtr(new MInputTask());
-	m_pAudioTask = IAudioTaskPtr(new MAudioTask());
+	m_pAudioTask = IAudioTaskPtr(new MAudioTask());*/
+	m_pVarManager = shared_ptr<MVarManager>(new MVarManager());
+	m_pTaskManager = shared_ptr<MTaskManager>(new MTaskManager());
+	m_pRenderTask = shared_ptr<MRenderTask>(new MRenderTask());
+	m_pEntityTask = shared_ptr<MEntityTask>(new MEntityTask());
+	m_pInputTask = shared_ptr<MInputTask>(new MInputTask());
+	m_pAudioTask = shared_ptr<MAudioTask>(new MAudioTask());
 
-	m_pTaskManager->Attach(m_pInputManager,m_pTaskManager->INPUT_TASK);
-	m_pTaskManager->Attach(m_pEntityManager,m_pTaskManager->LOGIC_TASK);
+	m_pTaskManager->Attach(m_pInputTask,m_pTaskManager->INPUT_TASK);
+	m_pTaskManager->Attach(m_pEntityTask,m_pTaskManager->LOGIC_TASK);
 	m_pTaskManager->Attach(m_pAudioTask,m_pTaskManager->AUDIO_TASK);
-	m_pTaskManager->Attach(m_pRenderer,m_pTaskManager->RENDER_TASK);
+	m_pTaskManager->Attach(m_pRenderTask,m_pTaskManager->RENDER_TASK);
 	m_pTaskManager->InitTasks();
 	
 	// Create the remaining engine components (dependent on above systems).

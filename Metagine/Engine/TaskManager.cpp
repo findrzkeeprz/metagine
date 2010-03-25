@@ -17,7 +17,7 @@
 #include "ThirdParty.h"
 #include "Engine.h"
 
-MTaskManager::MTaskManager( void ) :
+MTaskManager::MTaskManager( MEngine* pEngine ) :
 m_bKilledTasks(false),
 m_bEarlyAbort(false),
 m_bActive(false)
@@ -25,7 +25,7 @@ m_bActive(false)
 	m_FrameTimer.Start();
 	m_TaskTimer.Start();
 
-	m_iFrameCap = Engine::GetInstance()->VarManager()->CreateVar("i_framecap",0);
+	m_iFrameCap = m_pEngine->VarManager()->CreateVar("i_framecap",0);
 }
 
 MTaskManager::~MTaskManager( void )

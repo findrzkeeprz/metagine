@@ -23,13 +23,15 @@
 #include "OutlineFont.h"
 #include "Sprite.h"
 
+class MEngine;
+
 /// Fix me.
 class MConsole : public IConsole, public noncopyable
 {
 public:
 
 	/// Default constructor.
-	MConsole( void );
+	MConsole( MEngine* pEngine );
 
 	/// Destructor method.
 	/// Perform required cleanup operations on graphical subsystems and free
@@ -58,6 +60,7 @@ private:
 
 private:
 
+	MEngine* m_pEngine;
 	IVarPtr m_bActive;							///< Determines whether visible/receiving input.
 	IVarPtr m_iFontSpacing;						///< Font spacing between console lines.
 	IVarPtr m_iPositionX;						///< X coordinate of the console;

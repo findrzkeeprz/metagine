@@ -21,12 +21,14 @@
 #include "../Public/Interfaces.h"
 #include "ThirdParty.h"
 
+class MEngine;
+
 class MInputTask : public IInputTask, public noncopyable
 {
 public:
 
     /// Default constructor (takes no arguments).
-	MInputTask( void );
+	MInputTask( MEngine* pEngine );
 
     /// Destructor method.
     ~MInputTask( void );
@@ -46,6 +48,7 @@ private:
 private:
 
     /// Container to catalog all variables created through this class.
+	MEngine* m_pEngine;
     vector<IInputListenerPtr> m_Listeners;
 	SDL_Event m_Event;
 	bool m_bKeysHeld[323];

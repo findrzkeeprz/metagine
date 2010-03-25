@@ -21,7 +21,8 @@
 #include "VarManager.h"
 #include "Var.h"
 
-MConsole::MConsole( void ) :
+MConsole::MConsole( MEngine* pEngine ) :
+m_pEngine(pEngine),
 m_iScrollPoint(0),
 m_bToggleAnimUp(false),
 m_bToggleAnimDown(true),
@@ -40,15 +41,15 @@ MConsole::~MConsole( void )
 
 bool MConsole::Init( void )
 {	
-	m_bActive = Engine::GetInstance()->VarManager()->CreateVar("b_con_active",true);
-	m_iFontSpacing = Engine::GetInstance()->VarManager()->CreateVar("b_con_fontspacing",15);
-	m_iPositionX = Engine::GetInstance()->VarManager()->CreateVar("b_con_posx",10);
-	m_iPositionYon = Engine::GetInstance()->VarManager()->CreateVar("b_con_posyon",60);
-	m_iPositionYoff = Engine::GetInstance()->VarManager()->CreateVar("b_con_posyoff",-30);
-	m_iScrollFactor = Engine::GetInstance()->VarManager()->CreateVar("b_con_scrollfactor",3);
+	m_bActive = m_pEngine->VarManager()->CreateVar("b_con_active",true);
+	m_iFontSpacing = m_pEngine->VarManager()->CreateVar("b_con_fontspacing",15);
+	m_iPositionX = m_pEngine->VarManager()->CreateVar("b_con_posx",10);
+	m_iPositionYon = m_pEngine->VarManager()->CreateVar("b_con_posyon",60);
+	m_iPositionYoff = m_pEngine->VarManager()->CreateVar("b_con_posyoff",-30);
+	m_iScrollFactor = m_pEngine->VarManager()->CreateVar("b_con_scrollfactor",3);
 	
 	m_Font = shared_ptr<MFont>(new MFont("crayon_alphabet.ttf",15,193,254,154,0.0f));
-	Engine::GetInstance()->Renderer()->RegisterDrawable(m_Font);
+	m_pEngine->Renderer()->RegisterDrawable(m_Font);
 	
 	return true;
 }

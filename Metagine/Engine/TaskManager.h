@@ -20,12 +20,14 @@
 #include "../Interfaces/IVarManager.h"
 #include "../Interfaces/ITask.h"
 
+class MEngine;
+
 /// Fix me.
 class MTaskManager : public noncopyable
 {
 public:
 
-	MTaskManager( void );
+	MTaskManager( MEngine* pEngine );
 	~MTaskManager( void );
 
 	void Attach( ITaskPtr pTask, int iType );
@@ -45,6 +47,7 @@ public:
 
 private:
 
+	MEngine* m_pEngine;
 	bool m_bKilledTasks;
 	bool m_bEarlyAbort;
 	bool m_bActive;

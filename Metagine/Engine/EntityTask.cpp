@@ -28,7 +28,7 @@ MEntityTask::~MEntityTask( void )
 void MEntityTask::VInit( void )
 {
 	memset(&m_pEntities,0,1024);
-	m_pCollisionResolver = ICollisionResolverPtr(new MCollisionResolver());
+	m_pCollisionResolver = shared_ptr<MCollisionResolver>(new MCollisionResolver());
 }
 
 void MEntityTask::VKill( void )

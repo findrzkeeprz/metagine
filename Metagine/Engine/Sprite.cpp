@@ -18,7 +18,8 @@
 #include "RenderTask.h"
 #include "Engine.h"
 
-MSprite::MSprite( void ) :
+MSprite::MSprite( MEngine* pEngine ) :
+m_pEngine(pEngine),
 m_bActive(false),
 m_fDepth(0.0f),
 m_iFrame(0),
@@ -30,7 +31,8 @@ m_iFrameDelay(0)
 	printf(" -> MSprite object created (default).\n");
 }
 
-MSprite::MSprite( const char *pszFileName, int iWidth, int iHeight, float fDepth ) :
+MSprite::MSprite( MEngine* pEngine, const char *pszFileName, int iWidth, int iHeight, float fDepth ) :
+m_pEngine(pEngine),
 m_bActive(true),
 m_fDepth(fDepth),
 m_iFrame(0),
@@ -40,7 +42,7 @@ m_iFrameDelay(0)
 	m_fCoords[1] = 0;
 
 	unsigned int pSurface = NULL;
-	if( ( pSurface = Engine::GetInstance()->SurfaceCache()->SurfFromFile(pszFileName) ) == 0 ) {
+	if( ( pSurface = m_pEngine->SurfaceCache()->SurfFromFile(pszFileName) ) == 0 ) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
 		return;
 	}
@@ -54,7 +56,8 @@ m_iFrameDelay(0)
 	//Engine::GetInstance()->Renderer()->RegisterDrawable(shared_from_this());
 }
 
-MSprite::MSprite( const char* pszFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b, float fDepth ) :
+MSprite::MSprite( MEngine* pEngine, const char* pszFileName, int x, int y, int iWidth, int iHeight, int r, int g, int b, float fDepth ) :
+m_pEngine(pEngine),
 m_bActive(true),
 m_fDepth(fDepth),
 m_iFrame(0),
@@ -66,7 +69,7 @@ m_iFrameDelay(0)
 	unsigned int pSurface = NULL;
 	string sFileFrame = pszFileName;
 	sFileFrame.append((boost::format("+%1%,%2%,%3%,%4%") % x % y % iWidth % iHeight).str());
-	if( ( pSurface = Engine::GetInstance()->SurfaceCache()->ClippedSurfFromFile(sFileFrame,x,y,iWidth,iHeight,r,g,b) ) == 0 ) {
+	if( ( pSurface = m_pEngine->SurfaceCache()->ClippedSurfFromFile(sFileFrame,x,y,iWidth,iHeight,r,g,b) ) == 0 ) {
 		printf(" -! ERROR unable to load image file in MSprite().\n");
 		return;
 	}
@@ -80,7 +83,8 @@ m_iFrameDelay(0)
 	//Engine::GetInstance()->Renderer()->RegisterDrawable(shared_from_this());
 }
 
-MSprite::MSprite( const char* pszXmlFile ) :
+MSprite::MSprite( MEngine* pEngine, const char* pszXmlFile ) :
+m_pEngine(pEngine),
 m_bActive(true),
 m_fDepth(0.0f),
 m_iFrame(0),
@@ -225,7 +229,7 @@ bool MSprite::ParseFromXml( const char* pszXmlFile )
 		sFileFrame.append((boost::format("+%1%,%2%,%3%,%4%") % x % y % w % h).str());
 
 		unsigned int pSurface = NULL;
-		if( ( pSurface = Engine::GetInstance()->SurfaceCache()->ClippedSurfFromFile(sFileFrame,x,y,w,h,r,g,b) ) == 0 ) {
+		if( ( pSurface = m_pEngine->SurfaceCache()->ClippedSurfFromFile(sFileFrame,x,y,w,h,r,g,b) ) == 0 ) {
 			printf(" -! ERROR unable to load sprite file in MSprite::ParseFromXml().\n");
 			return false;
 		}

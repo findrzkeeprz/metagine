@@ -31,7 +31,7 @@ typedef struct ScreenPartition_s
 #define SCREEN_PARTITION_NUM 8
 
 /// Fix me.
-class MCollisionResolver : public ICollisionResolver, public noncopyable
+class MCollisionResolver : public noncopyable
 {
 public:
 

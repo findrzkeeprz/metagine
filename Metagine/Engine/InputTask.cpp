@@ -16,7 +16,8 @@
 #include "InputTask.h"
 #include "Engine.h"
 
-MInputTask::MInputTask( void )
+MInputTask::MInputTask( MEngine* pEngine ) :
+m_pEngine(pEngine)
 {
     printf(" -> MInputTask object created.\n");
 
@@ -50,7 +51,7 @@ void MInputTask::VKill( void )
 void MInputTask::VFrame( const float fDelta )
 {
 	while( SDL_PollEvent(&m_Event) ) {
-		if( m_Event.type == SDL_QUIT ) Engine::GetInstance()->TaskManager()->EarlyAbort();
+		if( m_Event.type == SDL_QUIT ) m_pEngine->GetInstance()->TaskManager()->EarlyAbort();
 		else if( m_Event.type == SDL_KEYDOWN ) KeyEvent(m_Event.key.keysym.sym,true);
 		else if( m_Event.type == SDL_KEYUP ) KeyEvent(m_Event.key.keysym.sym,false);
 	}

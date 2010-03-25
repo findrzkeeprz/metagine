@@ -37,15 +37,13 @@ public:
 	void RegisterEntity( IEntityPtr pEntity );
 	void RemoveEntity( IEntityPtr pEntity );
 
-	ICollisionResolverPtr CollisionResolver( void ) { return m_pCollisionResolver; }
-
 	int GetEntityCount( void );
 
 private:
 
 	vector<IEntityPtr> m_Entities;
 	vector<IEntityPtr> m_ExpiredEntities;
-	ICollisionResolverPtr m_pCollisionResolver;
+	shared_ptr<MCollisionResolver> m_pCollisionResolver;
 	IEntity* m_pEntities[1024];
 };
 

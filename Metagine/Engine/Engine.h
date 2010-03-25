@@ -21,8 +21,13 @@
 #include "../Public/BaseTypes.h"
 #include "../Public/Interfaces.h"
 
-#include "TaskManager.h"
+#include "Console.h"
+#include "VarManager.h"
+#include "RenderTask.h"
+#include "InputTask.h"
 #include "EntityTask.h"
+#include "AudioTask.h"
+#include "TaskManager.h"
 #include "DebugOverlay.h"
 
 /// Main game engine interface.
@@ -31,7 +36,7 @@
 /// last piece of code that is executed at game runtime. This object is also
 /// responsible for interfacing game components through a simple interface
 /// tracking system.
-class MEngine : public IEngine, public noncopyable
+class MEngine : public noncopyable
 {
 public:
 
@@ -49,15 +54,6 @@ public:
     void Init( void );
     void Shutdown( void );
 	
-	IConsolePtr Console( void )	{ return m_pConsole; }
-	IVarManagerPtr VarManager( void ) { return m_pVarManager; }
-	IRendererPtr Renderer( void ) { return m_pRenderer; }
-	IInputManagerPtr InputManager( void ) { return m_pInputManager; }
-	ISurfaceCachePtr SurfaceCache( void ) { return m_pSurfaceCache; }
-	IEntityManagerPtr EntityManager( void ) { return m_pEntityManager; }
-	IAudioTaskPtr AudioTask( void ) { return m_pAudioTask; }
-	MTaskManagerPtr TaskManager( void ) { return m_pTaskManager; }
-
 public:
 
     void Run( void );
@@ -65,10 +61,29 @@ public:
 	// Load the game module.
 	bool LoadGameModule( void );
 
+public:
+
+	shared_ptr<MConsole>		Console( void );
+	shared_ptr<MVarManager>		VarManager( void );
+	shared_ptr<MRenderTask>		Renderer( void );
+	shared_ptr<MInputTask>		InputManager( void );
+	shared_ptr<MEntityTask>		EntityManager( void );
+	shared_ptr<MAudioTask>		AudioTask( void );
+	shared_ptr<MTaskManager>	TaskManager( void );
+
 private:
 
-	//MGameBoard m_GameBoard;
-	IConsolePtr m_pConsole;
+	//shared_ptr m_GameBoard;
+	shared_ptr<MConsole>		m_pConsole;
+	shared_ptr<MVarManager>		m_pVarManager;
+	shared_ptr<MRenderTask>		m_pRenderTask;
+	shared_ptr<MInputTask>		m_pInputTask;
+	shared_ptr<MEntityTask>		m_pEntityTask;
+	shared_ptr<MAudioTask>		m_pAudioTask;
+	shared_ptr<MTaskManager>	m_pTaskManager;
+	shared_ptr<MDebugOverlay>	m_pDebugOverlay;
+
+	/*IConsolePtr m_pConsole;
 	IVarManagerPtr m_pVarManager;
 	IRendererPtr m_pRenderer;
 	IInputManagerPtr m_pInputManager;
@@ -76,13 +91,11 @@ private:
 	ISurfaceCachePtr m_pSurfaceCache;
 	IAudioTaskPtr m_pAudioTask;
 	MTaskManagerPtr m_pTaskManager;
-	MDebugOverlayPtr m_pDebugOverlay;
+	MDebugOverlayPtr m_pDebugOverlay;*
 
 	//IEntity
 	// Game interface pointer.
-	//IGame* m_pGame;
+	//IGame* m_pGame;*/
 };
-
-typedef MSingleton<MEngine> Engine;
 
 #endif // _MENGINE_H_

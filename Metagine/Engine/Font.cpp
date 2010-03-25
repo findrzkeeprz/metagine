@@ -43,10 +43,10 @@ m_iAlpha(255)
 	printf(" -> MFont object created (%s,%i,%i,%i,%i).\n",
 			pszName,iSize,iRed,iGreen,iBlue);
 
-	if( !Engine::GetInstance()->Renderer()->FontLibLoaded() ) {
+	/*if( !Engine::GetInstance()->Renderer()->FontLibLoaded() ) {
 	    printf(" -! ERROR trying to load font object before initializing library!\n");
 	    return;
-	}
+	}*/
 
 	if( ( m_Font = TTF_OpenFont(pszName,iSize) ) == NULL ) {
 		printf(" -! ERROR loading game font: %s.\n",TTF_GetError());
