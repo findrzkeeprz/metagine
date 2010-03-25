@@ -60,6 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="$(SolutionDir)\Metagine\Libraries\SDL.lib $(SolutionDir)\Metagine\Libraries\SDLmain.lib $(SolutionDir)\Metagine\Libraries\SDL_ttf.lib $(SolutionDir)\Metagine\Libraries\SDL_gfx.lib $(SolutionDir)\Metagine\Libraries\SDL_image.lib winmm.lib opengl32.lib $(SolutionDir)\Metagine\Libraries\Box2D.lib $(SolutionDir)\Metagine\Libraries\tinyxml.lib $(SolutionDir)\Metagine\Libraries\fmodvc.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -170,12 +171,84 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\BaseEnemy.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\BaseEntity.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\BaseExplosion.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\BaseProjectile.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\GameBoard.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PlayerShield.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Ship.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TempEntity.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\BaseEnemy.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BaseEntity.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BaseExplosion.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BaseProjectile.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GameBoard.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GameTypes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PlayerShield.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Ship.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TempEntity.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

@@ -16,12 +16,12 @@
 #ifndef _SHIP_H_
 #define _SHIP_H_
 
-#include "../Interfaces/ISprite.h"
-#include "../Interfaces/IInputListener.h"
-#include "../Interfaces/IEntity.h"
-#include "../Interfaces/IListenEntity.h"
-#include "../Interfaces/IVar.h"
-#include "../Public/Vector2.h"
+#include "../Metagine/Interfaces/ISprite.h"
+#include "../Metagine/Interfaces/IInputListener.h"
+#include "../Metagine/Interfaces/IEntity.h"
+#include "../Metagine/Interfaces/IListenEntity.h"
+#include "../Metagine/Interfaces/IVar.h"
+#include "../Metagine/Public/Vector2.h"
 
 #include "BaseEntity.h"
 #include "PlayerShield.h"

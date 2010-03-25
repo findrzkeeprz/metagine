@@ -3,6 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Metagine", "Metagine\Metagine.vcproj", "{0ED4D293-5CA6-4A38-B395-947249852087}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Able", "Able\Able.vcproj", "{F6E11065-8C97-4BE3-8E4E-5AE916AE8124}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0ED4D293-5CA6-4A38-B395-947249852087} = {0ED4D293-5CA6-4A38-B395-947249852087}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tetris", "Tetris\Tetris.vcproj", "{A441AEA5-C549-4E09-89FA-67E738A27005}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +20,14 @@ Global
 		{0ED4D293-5CA6-4A38-B395-947249852087}.Debug|Win32.Build.0 = Debug|Win32
 		{0ED4D293-5CA6-4A38-B395-947249852087}.Release|Win32.ActiveCfg = Release|Win32
 		{0ED4D293-5CA6-4A38-B395-947249852087}.Release|Win32.Build.0 = Release|Win32
+		{F6E11065-8C97-4BE3-8E4E-5AE916AE8124}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F6E11065-8C97-4BE3-8E4E-5AE916AE8124}.Debug|Win32.Build.0 = Debug|Win32
+		{F6E11065-8C97-4BE3-8E4E-5AE916AE8124}.Release|Win32.ActiveCfg = Release|Win32
+		{F6E11065-8C97-4BE3-8E4E-5AE916AE8124}.Release|Win32.Build.0 = Release|Win32
+		{A441AEA5-C549-4E09-89FA-67E738A27005}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A441AEA5-C549-4E09-89FA-67E738A27005}.Debug|Win32.Build.0 = Debug|Win32
+		{A441AEA5-C549-4E09-89FA-67E738A27005}.Release|Win32.ActiveCfg = Release|Win32
+		{A441AEA5-C549-4E09-89FA-67E738A27005}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

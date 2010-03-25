@@ -16,7 +16,7 @@
 #ifndef _GAMEBOARD_H_
 #define _GAMEBOARD_H_
 
-#include "../Interfaces/ISprite.h"
+#include "../Metagine/Interfaces/ISprite.h"
 #include "Ship.h"
 #include "BaseProjectile.h"
 

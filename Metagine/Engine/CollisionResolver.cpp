@@ -16,7 +16,7 @@
 #include "CollisionResolver.h"
 #include "RenderTask.h"
 #include "Engine.h"
-#include <tbb/task.h>
+/*#include <tbb/task.h>
 #include <tbb/task_scheduler_init.h>
 #include <tbb/concurrent_vector.h>
 
@@ -49,8 +49,8 @@ public:
 		//ProcessEntityPairs();
 		//m_EntityPairs.clear();
 		
-		return NULL;
-	}
+		//return NULL;
+	//}
 	
 	/*bool CheckScreenBoundary( IEntity* pEntity )
 	{
@@ -77,17 +77,17 @@ public:
 		return true;
 	}*/
 
-	float m_fDelta;
+	//float m_fDelta;
 	//vector<pair<IEntity*,IEntity*>>& m_Entities;
 	//vector<pair<IEntity*,IEntity*>> m_EntityPairs;
 	//tbb::concurrent_vector<pair<IEntity*,IEntity*>> m_EntityPairs;
 	//pair<IEntity*,IEntity*> m_EntityPairs[1024];
-};
+//};
 
 MCollisionResolver::MCollisionResolver( void ) :
 m_fDelta(0)
 {
-	tbb::task_scheduler_init init(4);
+	//tbb::task_scheduler_init init(4);
 
 	int w = 1024;
 	int h = 576;

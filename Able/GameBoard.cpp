@@ -15,11 +15,11 @@
 
 #include "GameBoard.h"
 #include "BaseEnemy.h"
-#include "../Engine/RenderTask.h"
-#include "../Engine/Engine.h"
-#include "../Engine/Sprite.h"
-#include "../Engine/InputTask.h"
-#include "../Public/Public.h"
+#include "../Metagine/Engine/RenderTask.h"
+#include "../Metagine/Engine/Engine.h"
+#include "../Metagine/Engine/Sprite.h"
+#include "../Metagine/Engine/InputTask.h"
+#include "../Metagine/Public/Public.h"
 #include "TempEntity.h"
 
 MGameBoard::MGameBoard( void ) :

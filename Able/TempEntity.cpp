@@ -14,9 +14,9 @@
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "TempEntity.h"
-#include "../Engine/Engine.h"
-#include "../Engine/Sprite.h"
-#include "../Engine/RenderTask.h"
+#include "../Metagine/Engine/Engine.h"
+#include "../Metagine/Engine/Sprite.h"
+#include "../Metagine/Engine/RenderTask.h"
 
 MTempEntity::MTempEntity( MVector2 vPosition, MVector2 vVelocity ) :
 MBaseEntity(vPosition,vVelocity,true,true,ENTITY_UNDEFINED)

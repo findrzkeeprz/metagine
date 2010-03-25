@@ -24,7 +24,6 @@
 #include "TaskManager.h"
 #include "EntityTask.h"
 #include "DebugOverlay.h"
-#include "../Game/GameBoard.h"
 
 /// Main game engine interface.
 /// This object is responsible for the creation and
@@ -68,7 +67,7 @@ public:
 
 private:
 
-	MGameBoard m_GameBoard;
+	//MGameBoard m_GameBoard;
 	IConsolePtr m_pConsole;
 	IVarManagerPtr m_pVarManager;
 	IRendererPtr m_pRenderer;

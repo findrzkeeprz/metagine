@@ -286,10 +286,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Engine\Main.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\Engine\ObjectFactory.cpp"
 					>
 				</File>
@@ -481,86 +477,6 @@
 				</File>
 				<File
 					RelativePath=".\Interfaces\IVarManager.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="Game"
-			>
-			<Filter
-				Name="Header Files"
-				>
-				<File
-					RelativePath=".\Game\BaseEnemy.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\BaseEntity.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\BaseExplosion.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\BaseProjectile.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\GameBoard.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\GameTypes.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\PlayerShield.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\Ship.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\TempEntity.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Source Files"
-				>
-				<File
-					RelativePath=".\Game\BaseEnemy.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\BaseEntity.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\BaseExplosion.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\BaseProjectile.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\GameBoard.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\PlayerShield.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\Ship.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Game\TempEntity.cpp"
 					>
 				</File>
 			</Filter>

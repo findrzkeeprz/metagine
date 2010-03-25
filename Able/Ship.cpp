@@ -14,13 +14,14 @@
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "Ship.h"
-#include "../Engine/VarManager.h"
+#include "BaseProjectile.h"
+#include "../Metagine/Engine/VarManager.h"
 
 // Temp.
-#include "../Engine/Engine.h"
-#include "../Engine/Sprite.h"
-#include "../Engine/InputTask.h"
-#include "../Engine/RenderTask.h"
+#include "../Metagine/Engine/Engine.h"
+#include "../Metagine/Engine/Sprite.h"
+#include "../Metagine/Engine/InputTask.h"
+#include "../Metagine/Engine/RenderTask.h"
 
 MShip::MShip( void ) :
 MBaseEntity(MVector2(0.0f,0.0f),MVector2(0.0f,0.0f),true,true,ENTITY_PLAYER_SHIP),

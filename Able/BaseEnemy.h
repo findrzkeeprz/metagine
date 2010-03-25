@@ -1,6 +1,6 @@
 #include "GameBoard.h"
-#include "../Interfaces/ISprite.h"
-#include "../Interfaces/IEntity.h"
+#include "../Metagine/Interfaces/ISprite.h"
+#include "../Metagine/Interfaces/IEntity.h"
 
 #include "BaseEntity.h"
 

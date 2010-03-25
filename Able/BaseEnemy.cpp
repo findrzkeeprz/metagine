@@ -15,10 +15,10 @@
 
 #include "BaseEnemy.h"
 #include "BaseExplosion.h"
-#include "../Engine/Engine.h"
-#include "../Engine/Sprite.h"
-#include "../Engine/InputTask.h"
-#include "../Engine/RenderTask.h"
+#include "../Metagine/Engine/Engine.h"
+#include "../Metagine/Engine/Sprite.h"
+#include "../Metagine/Engine/InputTask.h"
+#include "../Metagine/Engine/RenderTask.h"
 
 MBaseEnemy::MBaseEnemy( MVector2 vPosition, MGameBoard* pBoard, int iIndex, int iRow ) :
 MBaseEntity(vPosition,MVector2(50.0f,0.0f),true,true,ENTITY_ENEMY_INVADER),

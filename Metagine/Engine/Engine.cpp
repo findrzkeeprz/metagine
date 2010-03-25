@@ -84,14 +84,14 @@ void MEngine::Init( void )
 	m_pConsole->Echo("Testing 4.");
 	m_pConsole->Echo("Testing 5.");
 
-	m_GameBoard.Init();
+	//m_GameBoard.Init();
 }
 
 void MEngine::Shutdown( void )
 {
 	printf(" -> MEngine::Shutdown() called.\n");
 	
-	m_GameBoard.Kill();
+	//m_GameBoard.Kill();
 	
 	m_pConsole.reset();
 	m_pDebugOverlay.reset();

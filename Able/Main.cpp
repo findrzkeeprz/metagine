@@ -14,7 +14,7 @@
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdio.h>
-#include "Engine.h"
+#include "../Metagine/Engine/Engine.h"
 
 int main( int argc, char *argv[] )
 {

@@ -14,9 +14,9 @@
 // along with Metagine.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "PlayerShield.h"
-#include "../Engine/Engine.h"
-#include "../Engine/Sprite.h"
-#include "../Engine/RenderTask.h"
+#include "../Metagine/Engine/Engine.h"
+#include "../Metagine/Engine/Sprite.h"
+#include "../Metagine/Engine/RenderTask.h"
 
 MPlayerShield::MPlayerShield( MVector2 vPosition, MVector2 vVelocity ) :
 MBaseEntity(vPosition,vVelocity,true,true,ENTITY_PLAYER_SHIELD)

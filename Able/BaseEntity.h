@@ -17,8 +17,8 @@
 #define _BASEENTITY_H_
 
 #include "GameTypes.h"
-#include "../Interfaces/ISprite.h"
-#include "../Interfaces/IEntity.h"
+#include "../Metagine/Interfaces/ISprite.h"
+#include "../Metagine/Interfaces/IEntity.h"
 
 class MBaseEntity : public IEntity
 {
